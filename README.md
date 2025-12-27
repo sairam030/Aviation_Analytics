@@ -92,7 +92,24 @@ git clone https://github.com/sairam030/Aviation_Analytics.git
 cd Aviation_Analytics
 ```
 
-### 2. Set OpenSky Credentials (Optional)
+### 2. Download Historical Data (Optional)
+
+Download OpenSky historical flight data for batch processing:
+
+```bash
+# Create data directory
+mkdir -p /media/D/data/aviation_data/states
+
+# Download from OpenSky (requires free account)
+# Visit: https://opensky-network.org/datasets/states/
+# Download parquet files and place in the states folder
+```
+
+**Data Source:** [OpenSky Network Datasets](https://opensky-network.org/datasets/states/)
+
+> **Note:** The batch pipeline requires historical parquet files. Without them, only the real-time speed layer will work.
+
+### 3. Set OpenSky Credentials (Optional)
 
 Edit `src/speed/config.py`:
 ```python
@@ -100,7 +117,9 @@ OPENSKY_CLIENT_ID = "your-client-id"
 OPENSKY_CLIENT_SECRET = "your-client-secret"
 ```
 
-### 3. Start Services
+Get credentials at: [OpenSky Account](https://opensky-network.org/my-opensky/account)
+
+### 4. Start Services
 
 ```bash
 docker compose up -d
@@ -108,7 +127,7 @@ docker compose up -d
 
 Wait ~2 minutes for all services to initialize.
 
-### 4. Access the Applications
+### 5. Access the Applications
 
 | Application | URL | Credentials |
 |-------------|-----|-------------|
@@ -118,7 +137,7 @@ Wait ~2 minutes for all services to initialize.
 | Kafka UI | http://localhost:8084 | - |
 | Metabase | http://localhost:3000 | Setup on first visit |
 
-### 5. Trigger Batch Pipeline
+### 6. Trigger Batch Pipeline
 
 In Airflow UI, enable and trigger `aviation_states_pipeline` DAG.
 
