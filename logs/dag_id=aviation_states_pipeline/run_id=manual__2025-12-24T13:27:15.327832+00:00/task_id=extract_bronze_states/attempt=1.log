@@ -1,0 +1,81 @@
+[2025-12-24T13:27:25.348+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T13:27:25.618+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_states_pipeline.extract_bronze_states manual__2025-12-24T13:27:15.327832+00:00 [queued]>
+[2025-12-24T13:27:25.630+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_states_pipeline.extract_bronze_states manual__2025-12-24T13:27:15.327832+00:00 [queued]>
+[2025-12-24T13:27:25.630+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2025-12-24T13:27:25.644+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): extract_bronze_states> on 2025-12-24 13:27:15.327832+00:00
+[2025-12-24T13:27:25.654+0000] {standard_task_runner.py:63} INFO - Started process 1653 to run task
+[2025-12-24T13:27:25.658+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_states_pipeline', 'extract_bronze_states', 'manual__2025-12-24T13:27:15.327832+00:00', '--job-id', '76', '--raw', '--subdir', 'DAGS_FOLDER/aviation_states_pipeline.py', '--cfg-path', '/tmp/tmp5idcty3d']
+[2025-12-24T13:27:25.660+0000] {standard_task_runner.py:91} INFO - Job 76: Subtask extract_bronze_states
+[2025-12-24T13:27:25.747+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_states_pipeline.extract_bronze_states manual__2025-12-24T13:27:15.327832+00:00 [running]> on host 6c6ccfef5674
+[2025-12-24T13:27:25.913+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_states_pipeline' AIRFLOW_CTX_TASK_ID='extract_bronze_states' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T13:27:15.327832+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T13:27:15.327832+00:00'
+[2025-12-24T13:27:25.914+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T13:27:26.148+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:27:26.148+0000] {logging_mixin.py:188} INFO - BRONZE LAYER: Extracting India Flight States
+[2025-12-24T13:27:26.149+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:27:29.123+0000] {logging_mixin.py:188} INFO - Found 2722 tar files in /data/aviation_data/states
+[2025-12-24T13:27:35.534+0000] {logging_mixin.py:188} INFO -   Ensured output directory exists: /tmp/aviation/bronze/states
+[2025-12-24T13:27:35.534+0000] {logging_mixin.py:188} INFO - Processing 2722 tar files... (Target: 0.01 GB)
+[2025-12-24T13:27:35.535+0000] {logging_mixin.py:188} INFO - Processing batch 1/545 (5 files)
+[2025-12-24T13:27:35.535+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-00.csv.tar
+[2025-12-24T13:27:35.575+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-00.csv.tar
+[2025-12-24T13:27:36.120+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-01.csv.tar
+[2025-12-24T13:27:36.129+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-01.csv.tar
+[2025-12-24T13:27:36.618+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-02.csv.tar
+[2025-12-24T13:27:36.626+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T13:27:48.722+0000] {logging_mixin.py:188} INFO -   Batch 1: 19094 India-related records
+[2025-12-24T13:27:58.985+0000] {logging_mixin.py:188} INFO -   Batch 1: Saved to /tmp/aviation/bronze/states | Current size: 0.006 GB
+[2025-12-24T13:27:59.010+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T13:27:59.022+0000] {logging_mixin.py:188} INFO - Processing batch 2/545 (5 files)
+[2025-12-24T13:27:59.022+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-02.csv.tar
+[2025-12-24T13:27:59.468+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-03.csv.tar
+[2025-12-24T13:27:59.481+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-03.csv.tar
+[2025-12-24T13:27:59.971+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-04.csv.tar
+[2025-12-24T13:27:59.984+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-04.csv.tar
+[2025-12-24T13:28:00.433+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T13:28:07.192+0000] {logging_mixin.py:188} INFO -   Batch 2: 37879 India-related records
+[2025-12-24T13:28:14.622+0000] {logging_mixin.py:188} INFO -   Batch 2: Saved to /tmp/aviation/bronze/states | Current size: 0.008 GB
+[2025-12-24T13:28:14.676+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T13:28:14.677+0000] {logging_mixin.py:188} INFO - Processing batch 3/545 (5 files)
+[2025-12-24T13:28:14.677+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-05.csv.tar
+[2025-12-24T13:28:14.691+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-05.csv.tar
+[2025-12-24T13:28:15.201+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-06.csv.tar
+[2025-12-24T13:28:15.209+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-06.csv.tar
+[2025-12-24T13:28:15.725+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-07.csv.tar
+[2025-12-24T13:28:15.742+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T13:28:21.508+0000] {logging_mixin.py:188} INFO -   Batch 3: 28376 India-related records
+[2025-12-24T13:28:28.226+0000] {logging_mixin.py:188} INFO -   Batch 3: Saved to /tmp/aviation/bronze/states | Current size: 0.009 GB
+[2025-12-24T13:28:28.263+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T13:28:28.264+0000] {logging_mixin.py:188} INFO - Processing batch 4/545 (5 files)
+[2025-12-24T13:28:28.265+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-07.csv.tar
+[2025-12-24T13:28:28.800+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-08.csv.tar
+[2025-12-24T13:28:28.808+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-08.csv.tar
+[2025-12-24T13:28:29.590+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-09.csv.tar
+[2025-12-24T13:28:29.611+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-09.csv.tar
+[2025-12-24T13:28:30.793+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T13:28:37.395+0000] {logging_mixin.py:188} INFO -   Batch 4: 23886 India-related records
+[2025-12-24T13:28:45.806+0000] {logging_mixin.py:188} INFO -   Batch 4: Saved to /tmp/aviation/bronze/states | Current size: 0.010 GB
+[2025-12-24T13:28:45.856+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T13:28:45.857+0000] {logging_mixin.py:188} INFO - Processing batch 5/545 (5 files)
+[2025-12-24T13:28:45.858+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-10.csv.tar
+[2025-12-24T13:28:45.874+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-10.csv.tar
+[2025-12-24T13:28:46.525+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-11.csv.tar
+[2025-12-24T13:28:46.535+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-11.csv.tar
+[2025-12-24T13:28:47.288+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-12.csv.tar
+[2025-12-24T13:28:47.297+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T13:28:58.196+0000] {logging_mixin.py:188} INFO -   Batch 5: 10941 India-related records
+[2025-12-24T13:29:10.555+0000] {logging_mixin.py:188} INFO -   Batch 5: Saved to /tmp/aviation/bronze/states | Current size: 0.010 GB
+[2025-12-24T13:29:10.555+0000] {logging_mixin.py:188} INFO - 
+✅ TARGET SIZE REACHED: 0.010 GB >= 0.01 GB
+[2025-12-24T13:29:10.555+0000] {logging_mixin.py:188} INFO -    Processed 5/545 batches (25/2722 files)
+[2025-12-24T13:29:10.597+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T13:29:11.357+0000] {logging_mixin.py:188} INFO - 
+✅ BRONZE LAYER COMPLETE
+[2025-12-24T13:29:11.358+0000] {logging_mixin.py:188} INFO -    Records: 263,582
+[2025-12-24T13:29:11.362+0000] {logging_mixin.py:188} INFO -    Size: 0.0101 GB
+[2025-12-24T13:29:11.364+0000] {logging_mixin.py:188} INFO -    Path: /tmp/aviation/bronze/states
+[2025-12-24T13:29:11.918+0000] {python.py:237} INFO - Done. Returned value was: {'layer': 'bronze', 'output_path': '/tmp/aviation/bronze/states', 'size_gb': 0.0101, 'record_count': 263582, 'target_reached': True, 'tar_files_available': 2722}
+[2025-12-24T13:29:11.919+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T13:29:11.964+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_states_pipeline, task_id=extract_bronze_states, execution_date=20251224T132715, start_date=20251224T132725, end_date=20251224T132911
+[2025-12-24T13:29:12.017+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T13:29:12.067+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T13:29:12.068+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

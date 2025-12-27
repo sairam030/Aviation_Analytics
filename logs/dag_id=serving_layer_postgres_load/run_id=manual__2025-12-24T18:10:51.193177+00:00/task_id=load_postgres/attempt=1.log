@@ -1,0 +1,234 @@
+[2025-12-24T18:21:40.083+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T18:21:40.274+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:10:51.193177+00:00 [queued]>
+[2025-12-24T18:21:40.296+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:10:51.193177+00:00 [queued]>
+[2025-12-24T18:21:40.297+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T18:21:40.338+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): load_postgres> on 2025-12-24 18:10:51.193177+00:00
+[2025-12-24T18:21:40.368+0000] {standard_task_runner.py:63} INFO - Started process 1647 to run task
+[2025-12-24T18:21:40.379+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'serving_layer_postgres_load', 'load_postgres', 'manual__2025-12-24T18:10:51.193177+00:00', '--job-id', '123', '--raw', '--subdir', 'DAGS_FOLDER/serving_layer_postgres_load.py', '--cfg-path', '/tmp/tmppv_nct5x']
+[2025-12-24T18:21:40.393+0000] {standard_task_runner.py:91} INFO - Job 123: Subtask load_postgres
+[2025-12-24T18:21:40.789+0000] {task_command.py:426} INFO - Running <TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:10:51.193177+00:00 [running]> on host 2f0396c9313f
+[2025-12-24T18:21:41.461+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='serving_layer_postgres_load' AIRFLOW_CTX_TASK_ID='load_postgres' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T18:10:51.193177+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T18:10:51.193177+00:00'
+[2025-12-24T18:21:41.462+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T18:21:41.489+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.489+0000] {logging_mixin.py:188} INFO - RUNNING INCREMENTAL LOAD (only new files)
+[2025-12-24T18:21:41.490+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.490+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.493+0000] {logging_mixin.py:188} INFO - AVIATION SERVING LAYER - INCREMENTAL LOAD
+[2025-12-24T18:21:41.493+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.510+0000] {logging_mixin.py:188} INFO - ✓ Database exists: aviation_db
+[2025-12-24T18:21:41.539+0000] {logging_mixin.py:188} INFO - ✓ Tracking table ready: processed_files
+[2025-12-24T18:21:41.568+0000] {logging_mixin.py:188} INFO -   Already processed: 0 files
+[2025-12-24T18:22:05.434+0000] {logging_mixin.py:188} INFO - 
+1. Checking for new data in Silver layer...
+[2025-12-24T18:22:05.436+0000] {logging_mixin.py:188} INFO -   Reading batch data from: s3a://aviation-silver/enriched_states
+[2025-12-24T18:22:08.675+0000] {logging_mixin.py:188} INFO -   Found 18 new files (out of 18 total)
+[2025-12-24T18:22:15.675+0000] {logging_mixin.py:188} INFO -   Reading speed data from: s3a://aviation-silver/speed_layer/enriched_flight_states
+[2025-12-24T18:22:15.948+0000] {logging_mixin.py:188} INFO -   Found 4 new files (out of 4 total)
+[2025-12-24T18:22:16.703+0000] {logging_mixin.py:188} INFO - 
+2. Merging new data...
+[2025-12-24T18:22:16.706+0000] {logging_mixin.py:188} INFO -   Merging batch and speed layer data...
+[2025-12-24T18:22:26.689+0000] {logging_mixin.py:188} INFO -   New records: 2,077,883
+[2025-12-24T18:22:26.704+0000] {logging_mixin.py:188} INFO - 
+3. Appending to flight_states...
+[2025-12-24T18:22:28.717+0000] {logging_mixin.py:188} INFO -   Loading to PostgreSQL table: flight_states (mode: append)
+[2025-12-24T18:23:31.313+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2025-12-24T18:23:31.387+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-12-24T18:23:31.429+0000] {process_utils.py:132} INFO - Sending 15 to group 1647. PIDs of all processes in the group: [1657, 1647]
+[2025-12-24T18:23:31.433+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 1647
+[2025-12-24T18:23:31.479+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T18:23:33.660+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/src/serving/postgres_loader.py", line 581, in incremental_load
+    load_to_postgres(merged_df, FLIGHT_STATES_TABLE, mode="append")
+  File "/opt/airflow/src/serving/postgres_loader.py", line 329, in load_to_postgres
+    .save()
+     ^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T18:23:33.759+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:33.768+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/src/serving/postgres_loader.py", line 581, in incremental_load
+    load_to_postgres(merged_df, FLIGHT_STATES_TABLE, mode="append")
+  File "/opt/airflow/src/serving/postgres_loader.py", line 329, in load_to_postgres
+    .save()
+     ^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T18:23:33.870+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T18:23:33.996+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.005+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T18:23:34.030+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/src/serving/postgres_loader.py", line 581, in incremental_load
+    load_to_postgres(merged_df, FLIGHT_STATES_TABLE, mode="append")
+  File "/opt/airflow/src/serving/postgres_loader.py", line 329, in load_to_postgres
+    .save()
+     ^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/serving_layer_postgres_load.py", line 65, in load_postgres_task
+    incremental_load()
+  File "/opt/airflow/src/serving/postgres_loader.py", line 634, in incremental_load
+    spark.stop()
+  File "/opt/spark/python/pyspark/sql/session.py", line 1799, in stop
+    self._jvm.SparkSession.clearDefaultSession()
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1712, in __getattr__
+    answer = self._gateway_client.send_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1036, in send_command
+    connection = self._get_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 284, in _get_connection
+    connection = self._create_new_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 291, in _create_new_connection
+    connection.connect_to_java_server()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 438, in connect_to_java_server
+    self.socket.connect((self.java_address, self.java_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[2025-12-24T18:23:34.277+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=serving_layer_postgres_load, task_id=load_postgres, execution_date=20251224T181051, start_date=20251224T182140, end_date=20251224T182334
+[2025-12-24T18:23:34.351+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+[2025-12-24T18:23:34.374+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.390+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T18:23:34.402+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.418+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.418+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.418+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.419+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.434+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.434+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.435+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.442+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.454+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.456+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.457+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.464+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.465+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.469+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.470+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.471+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.477+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.478+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.494+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.501+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 123 for task load_postgres ([Errno 111] Connection refused; 1647)
+[2025-12-24T18:23:34.511+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.515+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.515+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:34.528+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=1657, status='terminated', started='18:21:40') (1657) terminated with exit code None
+[2025-12-24T18:23:34.557+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=1647, status='terminated', exitcode=1, started='18:21:39') (1647) terminated with exit code 1

@@ -1,0 +1,463 @@
+[2025-12-24T10:13:58.944+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T10:13:59.085+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T10:03:57.751217+00:00 [queued]>
+[2025-12-24T10:13:59.108+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T10:03:57.751217+00:00 [queued]>
+[2025-12-24T10:13:59.109+0000] {taskinstance.py:2303} INFO - Starting attempt 4 of 4
+[2025-12-24T10:13:59.154+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): run_batch_pipeline> on 2025-12-24 10:03:57.751217+00:00
+[2025-12-24T10:13:59.170+0000] {standard_task_runner.py:63} INFO - Started process 203 to run task
+[2025-12-24T10:13:59.180+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_batch_pipeline', 'run_batch_pipeline', 'manual__2025-12-24T10:03:57.751217+00:00', '--job-id', '38', '--raw', '--subdir', 'DAGS_FOLDER/aviation_batch_dag.py', '--cfg-path', '/tmp/tmpv4cziuny']
+[2025-12-24T10:13:59.185+0000] {standard_task_runner.py:91} INFO - Job 38: Subtask run_batch_pipeline
+[2025-12-24T10:13:59.819+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T10:03:57.751217+00:00 [running]> on host 849a36138e84
+[2025-12-24T10:14:00.128+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_batch_pipeline' AIRFLOW_CTX_TASK_ID='run_batch_pipeline' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T10:03:57.751217+00:00' AIRFLOW_CTX_TRY_NUMBER='4' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T10:03:57.751217+00:00'
+[2025-12-24T10:14:00.136+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T10:14:14.537+0000] {logging_mixin.py:188} INFO - 
+============================================================
+[2025-12-24T10:14:14.539+0000] {logging_mixin.py:188} INFO - STAGE 1: Processing States Data
+[2025-12-24T10:14:14.541+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T10:14:14.547+0000] {logging_mixin.py:188} INFO - Using states path: /data/aviation_data/states
+[2025-12-24T10:14:17.767+0000] {logging_mixin.py:188} INFO - Found 2722 tar files to process
+[2025-12-24T10:14:17.768+0000] {logging_mixin.py:188} INFO -   Ensured output directory exists: /tmp/aviation/filtered_states
+[2025-12-24T10:14:17.769+0000] {logging_mixin.py:188} INFO - Processing 2722 tar files...
+[2025-12-24T10:14:17.770+0000] {logging_mixin.py:188} INFO - Processing batch 1/545 (5 files)
+[2025-12-24T10:14:17.772+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-00.csv.tar
+[2025-12-24T10:14:17.835+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-00.csv.tar
+[2025-12-24T10:14:18.404+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-01.csv.tar
+[2025-12-24T10:14:18.421+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-01.csv.tar
+[2025-12-24T10:14:18.953+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-02.csv.tar
+[2025-12-24T10:14:18.973+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T10:14:37.326+0000] {logging_mixin.py:188} INFO -   Batch 1: 19094 India-related records
+[2025-12-24T10:14:52.115+0000] {logging_mixin.py:188} INFO -   Batch 1: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:14:52.145+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:14:52.156+0000] {logging_mixin.py:188} INFO - Processing batch 2/545 (5 files)
+[2025-12-24T10:14:52.158+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-02.csv.tar
+[2025-12-24T10:14:53.916+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-03.csv.tar
+[2025-12-24T10:14:53.928+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-03.csv.tar
+[2025-12-24T10:14:54.416+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-04.csv.tar
+[2025-12-24T10:14:54.443+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-04.csv.tar
+[2025-12-24T10:14:54.936+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T10:15:03.403+0000] {logging_mixin.py:188} INFO -   Batch 2: 37879 India-related records
+[2025-12-24T10:15:11.551+0000] {logging_mixin.py:188} INFO -   Batch 2: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:15:11.561+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:15:11.562+0000] {logging_mixin.py:188} INFO - Processing batch 3/545 (5 files)
+[2025-12-24T10:15:11.568+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-05.csv.tar
+[2025-12-24T10:15:11.730+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-05.csv.tar
+[2025-12-24T10:15:12.250+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-06.csv.tar
+[2025-12-24T10:15:12.257+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-06.csv.tar
+[2025-12-24T10:15:12.775+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-07.csv.tar
+[2025-12-24T10:15:12.792+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T10:15:19.509+0000] {logging_mixin.py:188} INFO -   Batch 3: 28376 India-related records
+[2025-12-24T10:15:27.456+0000] {logging_mixin.py:188} INFO -   Batch 3: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:15:27.492+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:15:27.493+0000] {logging_mixin.py:188} INFO - Processing batch 4/545 (5 files)
+[2025-12-24T10:15:27.498+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-07.csv.tar
+[2025-12-24T10:15:28.352+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-08.csv.tar
+[2025-12-24T10:15:28.368+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-08.csv.tar
+[2025-12-24T10:15:29.050+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-09.csv.tar
+[2025-12-24T10:15:29.080+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-09.csv.tar
+[2025-12-24T10:15:29.701+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T10:15:36.598+0000] {logging_mixin.py:188} INFO -   Batch 4: 23886 India-related records
+[2025-12-24T10:15:45.729+0000] {logging_mixin.py:188} INFO -   Batch 4: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:15:45.759+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:15:45.760+0000] {logging_mixin.py:188} INFO - Processing batch 5/545 (5 files)
+[2025-12-24T10:15:45.761+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-10.csv.tar
+[2025-12-24T10:15:45.824+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-10.csv.tar
+[2025-12-24T10:15:46.782+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-11.csv.tar
+[2025-12-24T10:15:46.793+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-11.csv.tar
+[2025-12-24T10:15:47.534+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-12.csv.tar
+[2025-12-24T10:15:47.545+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T10:15:55.146+0000] {logging_mixin.py:188} INFO -   Batch 5: 10941 India-related records
+[2025-12-24T10:16:06.098+0000] {logging_mixin.py:188} INFO -   Batch 5: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:16:06.134+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:16:06.138+0000] {logging_mixin.py:188} INFO - Processing batch 6/545 (5 files)
+[2025-12-24T10:16:06.138+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-12.csv.tar
+[2025-12-24T10:16:07.096+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-13.csv.tar
+[2025-12-24T10:16:07.114+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-13.csv.tar
+[2025-12-24T10:16:07.986+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-14.csv.tar
+[2025-12-24T10:16:08.002+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-14.csv.tar
+[2025-12-24T10:16:08.888+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T10:16:18.556+0000] {logging_mixin.py:188} INFO -   Batch 6: 11390 India-related records
+[2025-12-24T10:16:31.709+0000] {logging_mixin.py:188} INFO -   Batch 6: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:16:31.735+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:16:31.735+0000] {logging_mixin.py:188} INFO - Processing batch 7/545 (5 files)
+[2025-12-24T10:16:31.736+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-15.csv.tar
+[2025-12-24T10:16:31.827+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-15.csv.tar
+[2025-12-24T10:16:32.928+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-16.csv.tar
+[2025-12-24T10:16:32.989+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-16.csv.tar
+[2025-12-24T10:16:33.860+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-17.csv.tar
+[2025-12-24T10:16:33.867+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T10:16:42.764+0000] {logging_mixin.py:188} INFO -   Batch 7: 11840 India-related records
+[2025-12-24T10:16:54.953+0000] {logging_mixin.py:188} INFO -   Batch 7: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:16:54.984+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:16:54.985+0000] {logging_mixin.py:188} INFO - Processing batch 8/545 (5 files)
+[2025-12-24T10:16:54.985+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-17.csv.tar
+[2025-12-24T10:16:56.419+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-18.csv.tar
+[2025-12-24T10:16:56.432+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-18.csv.tar
+[2025-12-24T10:16:57.280+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-19.csv.tar
+[2025-12-24T10:16:57.290+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-19.csv.tar
+[2025-12-24T10:16:58.099+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T10:17:07.926+0000] {logging_mixin.py:188} INFO -   Batch 8: 14892 India-related records
+[2025-12-24T10:17:21.261+0000] {logging_mixin.py:188} INFO -   Batch 8: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:17:21.310+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:17:21.310+0000] {logging_mixin.py:188} INFO - Processing batch 9/545 (5 files)
+[2025-12-24T10:17:21.311+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-20.csv.tar
+[2025-12-24T10:17:21.359+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-20.csv.tar
+[2025-12-24T10:17:22.146+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-21.csv.tar
+[2025-12-24T10:17:22.177+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-21.csv.tar
+[2025-12-24T10:17:22.918+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-22.csv.tar
+[2025-12-24T10:17:22.932+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T10:17:30.192+0000] {logging_mixin.py:188} INFO -   Batch 9: 13336 India-related records
+[2025-12-24T10:17:40.440+0000] {logging_mixin.py:188} INFO -   Batch 9: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:17:40.477+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:17:40.478+0000] {logging_mixin.py:188} INFO - Processing batch 10/545 (5 files)
+[2025-12-24T10:17:40.479+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-22.csv.tar
+[2025-12-24T10:17:41.854+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-23.csv.tar
+[2025-12-24T10:17:41.898+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-23.csv.tar
+[2025-12-24T10:17:42.467+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-00.csv.tar
+[2025-12-24T10:17:43.112+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-01.csv.tar
+[2025-12-24T10:17:43.619+0000] {logging_mixin.py:188} INFO -   Reading 4 CSV files with Spark...
+[2025-12-24T10:17:50.973+0000] {logging_mixin.py:188} INFO -   Batch 10: 14505 India-related records
+[2025-12-24T10:18:00.961+0000] {logging_mixin.py:188} INFO -   Batch 10: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:18:01.027+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:18:01.027+0000] {logging_mixin.py:188} INFO - Processing batch 11/545 (5 files)
+[2025-12-24T10:18:01.028+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-02.csv.tar
+[2025-12-24T10:18:01.761+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-03.csv.tar
+[2025-12-24T10:18:02.169+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-04.csv.tar
+[2025-12-24T10:18:02.570+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-05.csv.tar
+[2025-12-24T10:18:03.096+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-06.csv.tar
+[2025-12-24T10:18:03.658+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T10:18:12.023+0000] {logging_mixin.py:188} INFO -   Batch 11: 17718 India-related records
+[2025-12-24T10:18:22.333+0000] {logging_mixin.py:188} INFO -   Batch 11: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:18:22.371+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:18:22.373+0000] {logging_mixin.py:188} INFO - Processing batch 12/545 (5 files)
+[2025-12-24T10:18:22.374+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-07.csv.tar
+[2025-12-24T10:18:23.604+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-08.csv.tar
+[2025-12-24T10:18:24.165+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-09.csv.tar
+[2025-12-24T10:18:24.755+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-10.csv.tar
+[2025-12-24T10:18:25.439+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-11.csv.tar
+[2025-12-24T10:18:26.129+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T10:18:35.978+0000] {logging_mixin.py:188} INFO -   Batch 12: 20371 India-related records
+[2025-12-24T10:18:48.624+0000] {logging_mixin.py:188} INFO -   Batch 12: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:18:48.696+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:18:48.697+0000] {logging_mixin.py:188} INFO - Processing batch 13/545 (5 files)
+[2025-12-24T10:18:48.697+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-12.csv.tar
+[2025-12-24T10:18:50.086+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-13.csv.tar
+[2025-12-24T10:18:50.865+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-14.csv.tar
+[2025-12-24T10:18:51.703+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-15.csv.tar
+[2025-12-24T10:18:52.538+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-16.csv.tar
+[2025-12-24T10:18:55.115+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T10:19:07.831+0000] {logging_mixin.py:188} INFO -   Batch 13: 23968 India-related records
+[2025-12-24T10:19:27.100+0000] {logging_mixin.py:188} INFO -   Batch 13: Saved to /tmp/aviation/filtered_states
+[2025-12-24T10:19:27.129+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:19:27.130+0000] {logging_mixin.py:188} INFO - Processing batch 14/545 (5 files)
+[2025-12-24T10:19:27.130+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-17.csv.tar
+[2025-12-24T10:19:28.626+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-18.csv.tar
+[2025-12-24T10:19:29.534+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-19.csv.tar
+[2025-12-24T10:19:30.364+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-20.csv.tar
+[2025-12-24T10:19:31.124+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-21.csv.tar
+[2025-12-24T10:19:31.771+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T10:19:44.047+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses
+[2025-12-24T10:19:44.342+0000] {process_utils.py:132} INFO - Sending 15 to group 203. PIDs of all processes in the group: [204, 203]
+[2025-12-24T10:19:44.355+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 203
+[2025-12-24T10:19:44.370+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T10:19:44.661+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T10:19:46.486+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    stats = pipeline.run_full_pipeline(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 201, in process_tar_files_to_parquet
+    count = df_filtered.count()
+            ^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T10:19:46.592+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T10:19:46.600+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    stats = pipeline.run_full_pipeline(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 201, in process_tar_files_to_parquet
+    count = df_filtered.count()
+            ^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T10:19:46.741+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T10:19:47.165+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T10:19:47.176+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T10:19:47.203+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    stats = pipeline.run_full_pipeline(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 201, in process_tar_files_to_parquet
+    count = df_filtered.count()
+            ^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 460, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 151, in run_batch_pipeline
+    pipeline.stop()
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 366, in stop
+    self.spark.stop()
+  File "/opt/spark/python/pyspark/sql/session.py", line 1799, in stop
+    self._jvm.SparkSession.clearDefaultSession()
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1712, in __getattr__
+    answer = self._gateway_client.send_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1036, in send_command
+    connection = self._get_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 284, in _get_connection
+    connection = self._create_new_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 291, in _create_new_connection
+    connection.connect_to_java_server()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 438, in connect_to_java_server
+    self.socket.connect((self.java_address, self.java_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[2025-12-24T10:19:47.434+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 38 for task run_batch_pipeline ((psycopg2.OperationalError) connection to server at "postgres" (172.18.0.7), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8); 203)
+[2025-12-24T10:19:47.539+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=204, status='terminated', started='10:14:00') (204) terminated with exit code None
+[2025-12-24T10:19:47.544+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=203, status='terminated', exitcode=1, started='10:13:58') (203) terminated with exit code 1
+[2025-12-24T10:19:47.561+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 143
+[2025-12-24T10:19:47.611+0000] {taskinstance.py:3488} INFO - Skipping mini scheduling run due to exception: None
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+           ^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "postgres" (172.18.0.7), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 3442, in _schedule_downstream_tasks
+    ).one()
+      ^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2870, in one
+    return self._iter().one()
+           ^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2916, in _iter
+    result = self.session.execute(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1716, in execute
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1555, in _connection_for_bind
+    return self._transaction._connection_for_bind(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 750, in _connection_for_bind
+    conn = bind.connect()
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/future/engine.py", line 412, in connect
+    return super(Engine, self).connect()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3325, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 96, in __init__
+    else engine.raw_connection()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3404, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3374, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2208, in _handle_dbapi_exception_noconnection
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+           ^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "postgres" (172.18.0.7), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-24T10:19:49.347+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

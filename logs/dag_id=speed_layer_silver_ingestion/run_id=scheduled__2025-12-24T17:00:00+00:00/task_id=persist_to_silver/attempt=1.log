@@ -1,0 +1,95 @@
+[2025-12-24T18:06:45.038+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T18:06:45.099+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2025-12-24T17:00:00+00:00 [queued]>
+[2025-12-24T18:06:45.124+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2025-12-24T17:00:00+00:00 [queued]>
+[2025-12-24T18:06:45.126+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T18:06:45.237+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): persist_to_silver> on 2025-12-24 17:00:00+00:00
+[2025-12-24T18:06:45.260+0000] {standard_task_runner.py:63} INFO - Started process 211 to run task
+[2025-12-24T18:06:45.288+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'persist_to_silver', 'scheduled__2025-12-24T17:00:00+00:00', '--job-id', '120', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmp590oew8h']
+[2025-12-24T18:06:45.293+0000] {standard_task_runner.py:91} INFO - Job 120: Subtask persist_to_silver
+[2025-12-24T18:06:45.443+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2025-12-24T17:00:00+00:00 [running]> on host 2f0396c9313f
+[2025-12-24T18:06:45.663+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='persist_to_silver' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-24T17:00:00+00:00'
+[2025-12-24T18:06:45.666+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T18:08:55.905+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:320 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2025-12-24T18:46:22.739+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses
+[2025-12-24T18:46:22.956+0000] {process_utils.py:132} INFO - Sending 15 to group 211. PIDs of all processes in the group: [212, 211]
+[2025-12-24T18:46:22.970+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 211
+[2025-12-24T18:46:22.996+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T18:46:26.278+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/speed_layer_silver_ingestion.py", line 205, in persist_to_bronze
+    .parquet(output_path)
+     ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1721, in parquet
+    self._jwrite.parquet(path)
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T18:46:26.425+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:46:26.437+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/speed_layer_silver_ingestion.py", line 205, in persist_to_bronze
+    .parquet(output_path)
+     ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1721, in parquet
+    self._jwrite.parquet(path)
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T18:46:26.551+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T18:46:26.911+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses

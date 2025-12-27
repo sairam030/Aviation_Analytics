@@ -1,0 +1,254 @@
+"""
+Airflow DAG for Aviation Data Batch Processing Pipeline.
+
+This DAG orchestrates the batch processing of aviation data:
+1. Extract India-related flight data from raw states
+2. Create callsign -> route mapping from FlightsV5
+3. Enrich states data with route information
+4. Create analytics aggregates
+5. Load to MinIO for serving
+
+Schedule: Weekly (processes historical data)
+"""
+import os
+import sys
+from datetime import datetime, timedelta
+
+# Add src to path for imports
+sys.path.insert(0, '/opt/airflow')
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.empty import EmptyOperator
+
+from src.batch.config import DataPaths, FilterConfig
+
+
+# Default arguments for the DAG
+default_args = {
+    'owner': 'aviation_team',
+    'depends_on_past': False,
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=5),
+    'execution_timeout': timedelta(hours=6),
+}
+
+# DAG definition
+dag = DAG(
+    'aviation_batch_pipeline',
+    default_args=default_args,
+    description='Batch processing pipeline for India aviation data',
+    schedule_interval='@weekly',  # Run weekly
+    start_date=datetime(2024, 1, 1),
+    catchup=False,
+    tags=['aviation', 'batch', 'spark'],
+    max_active_runs=1,
+)
+
+
+# Task functions
+def check_data_availability(**context):
+    """Check if source data is available."""
+    import os
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    # Config automatically resolves to available path (Docker or local)
+    states_path = paths.STATES_PATH
+    flights_path = paths.FLIGHTS_V5_PATH
+    
+    states_exists = os.path.exists(states_path)
+    flights_exists = os.path.exists(flights_path)
+    
+    if not states_exists:
+        raise ValueError(
+            f"States data not found. "
+            f"Docker path: {paths.RAW_DATA_ROOT}/states, "
+            f"Local path: {paths.LOCAL_DATA_ROOT}/states"
+        )
+    
+    # Count available files
+    states_count = sum(1 for _ in os.walk(states_path))
+    flights_count = sum(1 for _ in os.walk(flights_path)) if flights_exists else 0
+    
+    print(f"Data root: {paths.DATA_ROOT}")
+    print(f"States data: {states_exists}, path: {states_path}, directories: {states_count}")
+    print(f"Flights data: {flights_exists}, path: {flights_path}, directories: {flights_count}")
+    
+    # Push paths to XCom for downstream tasks
+    context['task_instance'].xcom_push(key='states_path', value=states_path)
+    context['task_instance'].xcom_push(key='flights_path', value=flights_path)
+    
+    return {
+        "states_available": states_exists,
+        "flights_available": flights_exists,
+        "states_path": states_path,
+        "flights_path": flights_path
+    }
+
+
+def create_minio_buckets(**context):
+    """Create MinIO buckets if they don't exist."""
+    from minio import Minio
+    from minio.error import S3Error
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    client = Minio(
+        "minio:9000",
+        access_key=paths.MINIO_ACCESS_KEY,
+        secret_key=paths.MINIO_SECRET_KEY,
+        secure=False
+    )
+    
+    buckets = [paths.RAW_BUCKET, paths.PROCESSED_BUCKET, paths.ANALYTICS_BUCKET]
+    
+    for bucket in buckets:
+        try:
+            if not client.bucket_exists(bucket):
+                client.make_bucket(bucket)
+                print(f"Created bucket: {bucket}")
+            else:
+                print(f"Bucket exists: {bucket}")
+        except S3Error as e:
+            print(f"Error with bucket {bucket}: {e}")
+    
+    return buckets
+
+
+def run_batch_pipeline(**context):
+    """Run the main batch processing pipeline - States extraction only."""
+    from src.batch.batch_pipeline import AviationBatchPipeline
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    pipeline = AviationBatchPipeline(
+        use_minio=False,
+        local_output_base=paths.LOCAL_OUTPUT
+    )
+    
+    try:
+        # Only extract states data (10GB target)
+        # Flight mapping and enrichment are in separate DAG
+        stats = pipeline.run_full_pipeline(
+            process_states=True,
+            create_mappings=False,  # Separate DAG
+            enrich_data=False,      # Separate DAG
+            create_analytics=False, # Separate DAG
+            states_limit=None  # Process all available files
+        )
+        
+        # Push stats to XCom
+        context['task_instance'].xcom_push(key='pipeline_stats', value=stats)
+        
+        return stats
+    finally:
+        pipeline.stop()
+
+
+def upload_to_minio(**context):
+    """Upload processed data to MinIO."""
+    import os
+    from minio import Minio
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    client = Minio(
+        "minio:9000",
+        access_key=paths.MINIO_ACCESS_KEY,
+        secret_key=paths.MINIO_SECRET_KEY,
+        secure=False
+    )
+    
+    local_base = paths.LOCAL_OUTPUT
+    
+    # Upload paths mapping
+    uploads = [
+        ("analytics", paths.ANALYTICS_BUCKET),
+        ("enriched_data", paths.PROCESSED_BUCKET),
+        ("flight_mapping", paths.PROCESSED_BUCKET),
+    ]
+    
+    uploaded_files = 0
+    for local_folder, bucket in uploads:
+        local_path = os.path.join(local_base, local_folder)
+        if os.path.exists(local_path):
+            for root, dirs, files in os.walk(local_path):
+                for file in files:
+                    local_file = os.path.join(root, file)
+                    remote_path = os.path.relpath(local_file, local_base)
+                    
+                    client.fput_object(bucket, remote_path, local_file)
+                    uploaded_files += 1
+    
+    print(f"Uploaded {uploaded_files} files to MinIO")
+    return uploaded_files
+
+
+def notify_completion(**context):
+    """Send completion notification."""
+    stats = context['task_instance'].xcom_pull(
+        task_ids='run_batch_pipeline', 
+        key='pipeline_stats'
+    )
+    
+    print("="*60)
+    print("BATCH PIPELINE COMPLETED")
+    print("="*60)
+    
+    if stats:
+        print(f"Status: {stats.get('status', 'UNKNOWN')}")
+        for stage, stage_stats in stats.get('stages', {}).items():
+            print(f"\n{stage}: {stage_stats}")
+
+
+# Task definitions
+with dag:
+    
+    # Start marker
+    start = EmptyOperator(task_id='start')
+    
+    # Check data availability
+    check_data = PythonOperator(
+        task_id='check_data_availability',
+        python_callable=check_data_availability,
+    )
+    
+    # Create MinIO buckets
+    create_buckets = PythonOperator(
+        task_id='create_minio_buckets',
+        python_callable=create_minio_buckets,
+    )
+    
+    # Run batch pipeline using PythonOperator
+    # This runs Spark in local mode within the Airflow worker
+    # For distributed Spark, configure spark_default connection in Airflow UI
+    run_pipeline = PythonOperator(
+        task_id='run_batch_pipeline',
+        python_callable=run_batch_pipeline,
+        execution_timeout=timedelta(hours=4),
+    )
+    
+    # Upload to MinIO
+    upload_data = PythonOperator(
+        task_id='upload_to_minio',
+        python_callable=upload_to_minio,
+    )
+    
+    # Notify completion
+    notify = PythonOperator(
+        task_id='notify_completion',
+        python_callable=notify_completion,
+    )
+    
+    # End marker
+    end = EmptyOperator(task_id='end')
+    
+    # Task dependencies
+    start >> check_data >> create_buckets >> run_pipeline >> upload_data >> notify >> end

@@ -1,0 +1,329 @@
+[2025-12-24T18:21:40.122+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T18:21:40.277+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:21:09+00:00 [queued]>
+[2025-12-24T18:21:40.316+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:21:09+00:00 [queued]>
+[2025-12-24T18:21:40.317+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T18:21:40.357+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): load_postgres> on 2025-12-24 18:21:09+00:00
+[2025-12-24T18:21:40.390+0000] {standard_task_runner.py:63} INFO - Started process 1648 to run task
+[2025-12-24T18:21:40.412+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'serving_layer_postgres_load', 'load_postgres', 'manual__2025-12-24T18:21:09+00:00', '--job-id', '122', '--raw', '--subdir', 'DAGS_FOLDER/serving_layer_postgres_load.py', '--cfg-path', '/tmp/tmpfphm01sj']
+[2025-12-24T18:21:40.422+0000] {standard_task_runner.py:91} INFO - Job 122: Subtask load_postgres
+[2025-12-24T18:21:40.639+0000] {task_command.py:426} INFO - Running <TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:21:09+00:00 [running]> on host 2f0396c9313f
+[2025-12-24T18:21:41.258+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='serving_layer_postgres_load' AIRFLOW_CTX_TASK_ID='load_postgres' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T18:21:09+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T18:21:09+00:00'
+[2025-12-24T18:21:41.264+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T18:21:41.319+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.319+0000] {logging_mixin.py:188} INFO - RUNNING FULL LOAD (overwriting all data)
+[2025-12-24T18:21:41.320+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.320+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.320+0000] {logging_mixin.py:188} INFO - AVIATION SERVING LAYER - INITIAL FULL LOAD
+[2025-12-24T18:21:41.321+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.358+0000] {logging_mixin.py:188} INFO - ✓ Database exists: aviation_db
+[2025-12-24T18:21:41.430+0000] {logging_mixin.py:188} INFO - ✓ Tracking table ready: processed_files
+[2025-12-24T18:22:05.511+0000] {logging_mixin.py:188} INFO - 
+1. Reading ALL data from Silver layer...
+[2025-12-24T18:22:05.514+0000] {logging_mixin.py:188} INFO -   Reading batch data from: s3a://aviation-silver/enriched_states
+[2025-12-24T18:22:26.457+0000] {logging_mixin.py:188} INFO -   Batch layer (full): 2077361 records from 18 files
+[2025-12-24T18:22:26.463+0000] {logging_mixin.py:188} INFO -   Reading speed data from: s3a://aviation-silver/speed_layer/enriched_flight_states
+[2025-12-24T18:22:30.550+0000] {logging_mixin.py:188} INFO -   Speed layer (full): 522 records from 4 files
+[2025-12-24T18:22:30.554+0000] {logging_mixin.py:188} INFO - 
+2. Merging data...
+[2025-12-24T18:22:30.561+0000] {logging_mixin.py:188} INFO -   Merging batch and speed layer data...
+[2025-12-24T18:22:34.434+0000] {logging_mixin.py:188} INFO -   Total merged records: 2,077,883
+[2025-12-24T18:22:34.447+0000] {logging_mixin.py:188} INFO - 
+3. Loading to flight_states (overwrite)...
+[2025-12-24T18:22:36.485+0000] {logging_mixin.py:188} INFO -   Loading to PostgreSQL table: flight_states (mode: overwrite)
+[2025-12-24T18:23:26.274+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2025-12-24T18:23:26.440+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-12-24T18:23:26.505+0000] {process_utils.py:132} INFO - Sending 15 to group 1648. PIDs of all processes in the group: [1654, 1648]
+[2025-12-24T18:23:26.514+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 1648
+[2025-12-24T18:23:26.547+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T18:23:30.176+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/src/serving/postgres_loader.py", line 501, in initial_full_load
+    load_to_postgres(merged_df, FLIGHT_STATES_TABLE, mode="overwrite")
+  File "/opt/airflow/src/serving/postgres_loader.py", line 329, in load_to_postgres
+    .save()
+     ^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T18:23:30.560+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:30.572+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/src/serving/postgres_loader.py", line 501, in initial_full_load
+    load_to_postgres(merged_df, FLIGHT_STATES_TABLE, mode="overwrite")
+  File "/opt/airflow/src/serving/postgres_loader.py", line 329, in load_to_postgres
+    .save()
+     ^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T18:23:30.716+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T18:23:30.983+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.005+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T18:23:31.037+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/src/serving/postgres_loader.py", line 501, in initial_full_load
+    load_to_postgres(merged_df, FLIGHT_STATES_TABLE, mode="overwrite")
+  File "/opt/airflow/src/serving/postgres_loader.py", line 329, in load_to_postgres
+    .save()
+     ^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1461, in save
+    self._jwrite.save()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/serving_layer_postgres_load.py", line 60, in load_postgres_task
+    initial_full_load()
+  File "/opt/airflow/src/serving/postgres_loader.py", line 538, in initial_full_load
+    spark.stop()
+  File "/opt/spark/python/pyspark/sql/session.py", line 1799, in stop
+    self._jvm.SparkSession.clearDefaultSession()
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1712, in __getattr__
+    answer = self._gateway_client.send_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1036, in send_command
+    connection = self._get_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 284, in _get_connection
+    connection = self._create_new_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 291, in _create_new_connection
+    connection.connect_to_java_server()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 438, in connect_to_java_server
+    self.socket.connect((self.java_address, self.java_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[2025-12-24T18:23:31.590+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=serving_layer_postgres_load, task_id=load_postgres, execution_date=20251224T182109, start_date=20251224T182140, end_date=20251224T182331
+[2025-12-24T18:23:31.585+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+[2025-12-24T18:23:31.604+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.605+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T18:23:31.612+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.645+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.646+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.655+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.657+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.658+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.659+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.661+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.661+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.662+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.677+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.684+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.687+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.688+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.690+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.692+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.702+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.703+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.703+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.704+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.711+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.712+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.712+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.713+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.719+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.720+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.720+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.727+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.737+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.738+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.745+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.746+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.746+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.752+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.765+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.766+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.767+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.775+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.783+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.784+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.785+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.785+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.786+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.792+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.792+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.800+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.801+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.802+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.802+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.803+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.806+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.820+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.821+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.821+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.822+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.823+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.832+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.832+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.833+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.833+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.834+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.842+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.856+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.863+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.864+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.864+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.865+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.865+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.866+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.872+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.873+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.874+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.874+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.875+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.876+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.883+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.899+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.899+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.906+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.907+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.907+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.908+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.916+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.917+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.918+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.925+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.925+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.926+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.927+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.935+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.936+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.936+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.937+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.937+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.938+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.938+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.944+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.952+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.952+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.953+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.959+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.959+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.966+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.966+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.968+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.970+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.970+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.971+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.972+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.972+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.973+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.973+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.974+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.975+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.976+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.977+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.979+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.981+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:31.983+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T18:23:32.187+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 122 for task load_postgres ([Errno 111] Connection refused; 1648)
+[2025-12-24T18:23:32.262+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=1654, status='terminated', started='18:21:40') (1654) terminated with exit code None
+[2025-12-24T18:23:32.268+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=1648, status='terminated', exitcode=1, started='18:21:39') (1648) terminated with exit code 1

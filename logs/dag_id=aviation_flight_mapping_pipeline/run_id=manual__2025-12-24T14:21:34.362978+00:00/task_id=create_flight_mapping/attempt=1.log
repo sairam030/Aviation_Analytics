@@ -1,0 +1,32 @@
+[2025-12-24T14:21:43.661+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T14:21:43.725+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T14:21:34.362978+00:00 [queued]>
+[2025-12-24T14:21:43.751+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T14:21:34.362978+00:00 [queued]>
+[2025-12-24T14:21:43.751+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2025-12-24T14:21:43.784+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): create_flight_mapping> on 2025-12-24 14:21:34.362978+00:00
+[2025-12-24T14:21:43.800+0000] {standard_task_runner.py:63} INFO - Started process 4026 to run task
+[2025-12-24T14:21:43.807+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_flight_mapping_pipeline', 'create_flight_mapping', 'manual__2025-12-24T14:21:34.362978+00:00', '--job-id', '84', '--raw', '--subdir', 'DAGS_FOLDER/aviation_flight_mapping_pipeline.py', '--cfg-path', '/tmp/tmp0sc91xbg']
+[2025-12-24T14:21:43.812+0000] {standard_task_runner.py:91} INFO - Job 84: Subtask create_flight_mapping
+[2025-12-24T14:21:43.917+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T14:21:34.362978+00:00 [running]> on host 6c6ccfef5674
+[2025-12-24T14:21:44.130+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='aviation_flight_mapping_pipeline' AIRFLOW_CTX_TASK_ID='create_flight_mapping' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T14:21:34.362978+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T14:21:34.362978+00:00'
+[2025-12-24T14:21:44.132+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T14:21:44.155+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T14:21:44.155+0000] {logging_mixin.py:188} INFO - CREATING FLIGHT MAPPING TABLE
+[2025-12-24T14:21:44.155+0000] {logging_mixin.py:188} INFO - Output: s3a://aviation-mapping/flight_routes
+[2025-12-24T14:21:44.156+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T14:21:51.256+0000] {logging_mixin.py:188} INFO - Found 30 CSV files
+[2025-12-24T14:21:51.257+0000] {logging_mixin.py:188} INFO - Reading FlightsV5 data...
+[2025-12-24T14:22:09.897+0000] {logging_mixin.py:188} INFO -   Total records: 3,198,513
+[2025-12-24T14:22:14.145+0000] {logging_mixin.py:188} INFO -   Valid records: 2,184,022
+[2025-12-24T14:22:14.146+0000] {logging_mixin.py:188} INFO - Creating callsign -> route mapping...
+[2025-12-24T14:22:31.035+0000] {logging_mixin.py:188} INFO -   Unique callsigns: 213,409
+[2025-12-24T14:22:31.038+0000] {logging_mixin.py:188} INFO -   India routes: 4,591
+[2025-12-24T14:22:56.382+0000] {logging_mixin.py:188} INFO - 
+✅ MAPPING CREATED
+[2025-12-24T14:22:56.384+0000] {logging_mixin.py:188} INFO -    Callsigns: 213,409
+[2025-12-24T14:22:56.387+0000] {logging_mixin.py:188} INFO -    India routes: 4,591
+[2025-12-24T14:22:56.759+0000] {python.py:237} INFO - Done. Returned value was: {'total_records': 3198513, 'unique_callsigns': 213409, 'india_routes': 4591}
+[2025-12-24T14:22:56.770+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T14:22:57.296+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_flight_mapping_pipeline, task_id=create_flight_mapping, execution_date=20251224T142134, start_date=20251224T142143, end_date=20251224T142257
+[2025-12-24T14:22:57.514+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T14:22:57.771+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T14:22:57.773+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

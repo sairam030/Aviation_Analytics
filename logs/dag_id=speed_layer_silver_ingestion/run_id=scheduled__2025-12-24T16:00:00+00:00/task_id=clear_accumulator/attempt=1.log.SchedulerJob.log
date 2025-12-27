@@ -1,0 +1,1 @@
+[2025-12-24T17:38:57.680+0000] {task_context_logger.py:104} ERROR - Executor reports task instance <TaskInstance: speed_layer_silver_ingestion.clear_accumulator scheduled__2025-12-24T16:00:00+00:00 [queued]> finished (success) although the task says it's queued. (Info: None) Was the task killed externally?

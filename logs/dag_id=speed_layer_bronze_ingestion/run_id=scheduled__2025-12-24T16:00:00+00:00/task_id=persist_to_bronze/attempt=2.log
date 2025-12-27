@@ -1,0 +1,59 @@
+[2025-12-24T17:29:24.462+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T17:29:24.493+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_bronze_ingestion.persist_to_bronze scheduled__2025-12-24T16:00:00+00:00 [queued]>
+[2025-12-24T17:29:24.504+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_bronze_ingestion.persist_to_bronze scheduled__2025-12-24T16:00:00+00:00 [queued]>
+[2025-12-24T17:29:24.505+0000] {taskinstance.py:2303} INFO - Starting attempt 2 of 3
+[2025-12-24T17:29:24.520+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): persist_to_bronze> on 2025-12-24 16:00:00+00:00
+[2025-12-24T17:29:24.531+0000] {standard_task_runner.py:63} INFO - Started process 1228 to run task
+[2025-12-24T17:29:24.535+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_bronze_ingestion', 'persist_to_bronze', 'scheduled__2025-12-24T16:00:00+00:00', '--job-id', '105', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_bronze_ingestion.py', '--cfg-path', '/tmp/tmptn3w5h2c']
+[2025-12-24T17:29:24.538+0000] {standard_task_runner.py:91} INFO - Job 105: Subtask persist_to_bronze
+[2025-12-24T17:29:24.631+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_bronze_ingestion.persist_to_bronze scheduled__2025-12-24T16:00:00+00:00 [running]> on host 78d90b6f9520
+[2025-12-24T17:29:24.782+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='speed_layer_bronze_ingestion' AIRFLOW_CTX_TASK_ID='persist_to_bronze' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T16:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-24T16:00:00+00:00'
+[2025-12-24T17:29:24.783+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T17:29:35.486+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T17:29:35.488+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/speed_layer_bronze_ingestion.py", line 179, in persist_to_bronze
+    df = spark.createDataFrame(clean_flights, schema=schema)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/session.py", line 1443, in createDataFrame
+    return self._create_dataframe(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/session.py", line 1485, in _create_dataframe
+    rdd, struct = self._createFromLocal(map(prepare, data), schema)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/session.py", line 1090, in _createFromLocal
+    data = list(data)
+           ^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/session.py", line 1459, in prepare
+    verify_func(obj)
+  File "/opt/spark/python/pyspark/sql/types.py", line 2187, in verify
+    verify_value(obj)
+  File "/opt/spark/python/pyspark/sql/types.py", line 2147, in verify_struct
+    verifier(obj.get(f))
+  File "/opt/spark/python/pyspark/sql/types.py", line 2187, in verify
+    verify_value(obj)
+  File "/opt/spark/python/pyspark/sql/types.py", line 2181, in verify_default
+    verify_acceptable_types(obj)
+  File "/opt/spark/python/pyspark/sql/types.py", line 2006, in verify_acceptable_types
+    raise PySparkTypeError(
+pyspark.errors.exceptions.base.PySparkTypeError: [CANNOT_ACCEPT_OBJECT_IN_TYPE] `DoubleType()` can not accept object `0` in type `int`.
+[2025-12-24T17:29:35.522+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=speed_layer_bronze_ingestion, task_id=persist_to_bronze, execution_date=20251224T160000, start_date=20251224T172924, end_date=20251224T172935
+[2025-12-24T17:29:35.551+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 105 for task persist_to_bronze ([CANNOT_ACCEPT_OBJECT_IN_TYPE] `DoubleType()` can not accept object `0` in type `int`.; 1228)
+[2025-12-24T17:29:35.604+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2025-12-24T17:29:35.657+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T17:29:35.659+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

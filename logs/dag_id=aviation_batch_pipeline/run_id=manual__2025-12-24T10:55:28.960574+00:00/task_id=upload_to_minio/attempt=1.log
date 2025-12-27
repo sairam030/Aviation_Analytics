@@ -1,0 +1,18 @@
+[2025-12-24T11:13:30.242+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T11:13:30.300+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_batch_pipeline.upload_to_minio manual__2025-12-24T10:55:28.960574+00:00 [queued]>
+[2025-12-24T11:13:30.311+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_batch_pipeline.upload_to_minio manual__2025-12-24T10:55:28.960574+00:00 [queued]>
+[2025-12-24T11:13:30.311+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T11:13:30.543+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): upload_to_minio> on 2025-12-24 10:55:28.960574+00:00
+[2025-12-24T11:13:30.556+0000] {standard_task_runner.py:63} INFO - Started process 11474 to run task
+[2025-12-24T11:13:30.560+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_batch_pipeline', 'upload_to_minio', 'manual__2025-12-24T10:55:28.960574+00:00', '--job-id', '51', '--raw', '--subdir', 'DAGS_FOLDER/aviation_batch_dag.py', '--cfg-path', '/tmp/tmph45clzck']
+[2025-12-24T11:13:30.563+0000] {standard_task_runner.py:91} INFO - Job 51: Subtask upload_to_minio
+[2025-12-24T11:13:30.650+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_batch_pipeline.upload_to_minio manual__2025-12-24T10:55:28.960574+00:00 [running]> on host 849a36138e84
+[2025-12-24T11:13:30.825+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_batch_pipeline' AIRFLOW_CTX_TASK_ID='upload_to_minio' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T10:55:28.960574+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T10:55:28.960574+00:00'
+[2025-12-24T11:13:30.827+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T11:13:31.621+0000] {logging_mixin.py:188} INFO - Uploaded 40 files to MinIO
+[2025-12-24T11:13:31.622+0000] {python.py:237} INFO - Done. Returned value was: 40
+[2025-12-24T11:13:31.622+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T11:13:31.672+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_batch_pipeline, task_id=upload_to_minio, execution_date=20251224T105528, start_date=20251224T111330, end_date=20251224T111331
+[2025-12-24T11:13:31.736+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T11:13:31.815+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T11:13:31.818+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

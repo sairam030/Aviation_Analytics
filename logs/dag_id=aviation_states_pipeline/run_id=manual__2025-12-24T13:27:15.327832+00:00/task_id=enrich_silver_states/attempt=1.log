@@ -1,0 +1,31 @@
+[2025-12-24T13:29:21.245+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T13:29:21.729+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_states_pipeline.enrich_silver_states manual__2025-12-24T13:27:15.327832+00:00 [queued]>
+[2025-12-24T13:29:21.749+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_states_pipeline.enrich_silver_states manual__2025-12-24T13:27:15.327832+00:00 [queued]>
+[2025-12-24T13:29:21.750+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2025-12-24T13:29:21.777+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): enrich_silver_states> on 2025-12-24 13:27:15.327832+00:00
+[2025-12-24T13:29:21.793+0000] {standard_task_runner.py:63} INFO - Started process 2126 to run task
+[2025-12-24T13:29:21.799+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_states_pipeline', 'enrich_silver_states', 'manual__2025-12-24T13:27:15.327832+00:00', '--job-id', '79', '--raw', '--subdir', 'DAGS_FOLDER/aviation_states_pipeline.py', '--cfg-path', '/tmp/tmp23j47lcj']
+[2025-12-24T13:29:21.803+0000] {standard_task_runner.py:91} INFO - Job 79: Subtask enrich_silver_states
+[2025-12-24T13:29:21.933+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_states_pipeline.enrich_silver_states manual__2025-12-24T13:27:15.327832+00:00 [running]> on host 6c6ccfef5674
+[2025-12-24T13:29:22.150+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_states_pipeline' AIRFLOW_CTX_TASK_ID='enrich_silver_states' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T13:27:15.327832+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T13:27:15.327832+00:00'
+[2025-12-24T13:29:22.152+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T13:29:22.644+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:29:22.645+0000] {logging_mixin.py:188} INFO - SILVER LAYER: Enriching States with Route Information
+[2025-12-24T13:29:22.645+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:29:31.161+0000] {logging_mixin.py:188} INFO - Reading bronze data from /tmp/aviation/bronze/states
+[2025-12-24T13:29:42.373+0000] {logging_mixin.py:188} INFO -   Bronze records: 263,582
+[2025-12-24T13:29:42.374+0000] {logging_mixin.py:188} INFO - Reading mapping from /tmp/aviation/mapping/flight_routes
+[2025-12-24T13:29:43.550+0000] {logging_mixin.py:188} INFO -   Mapping records: 213,409
+[2025-12-24T13:29:44.040+0000] {logging_mixin.py:188} INFO - Writing silver data to /tmp/aviation/silver/enriched_states
+[2025-12-24T13:29:52.822+0000] {logging_mixin.py:188} INFO - 
+✅ SILVER LAYER COMPLETE
+[2025-12-24T13:29:52.823+0000] {logging_mixin.py:188} INFO -    Records: 263,582
+[2025-12-24T13:29:52.824+0000] {logging_mixin.py:188} INFO -    With route info: 86,185 (32.7%)
+[2025-12-24T13:29:52.824+0000] {logging_mixin.py:188} INFO -    Size: 0.0077 GB
+[2025-12-24T13:29:52.824+0000] {logging_mixin.py:188} INFO -    Path: /tmp/aviation/silver/enriched_states
+[2025-12-24T13:29:53.413+0000] {python.py:237} INFO - Done. Returned value was: {'layer': 'silver', 'output_path': '/tmp/aviation/silver/enriched_states', 'size_gb': 0.0077, 'record_count': 263582, 'matched_with_route': 86185, 'match_rate_percent': 32.7}
+[2025-12-24T13:29:53.414+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T13:29:53.469+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_states_pipeline, task_id=enrich_silver_states, execution_date=20251224T132715, start_date=20251224T132921, end_date=20251224T132953
+[2025-12-24T13:29:53.544+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T13:29:53.578+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T13:29:53.579+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

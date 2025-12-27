@@ -1,0 +1,19 @@
+[2025-12-24T18:06:42.765+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T18:06:42.801+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.fetch_accumulated_data scheduled__2025-12-24T17:00:00+00:00 [queued]>
+[2025-12-24T18:06:42.816+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.fetch_accumulated_data scheduled__2025-12-24T17:00:00+00:00 [queued]>
+[2025-12-24T18:06:42.817+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T18:06:42.841+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): fetch_accumulated_data> on 2025-12-24 17:00:00+00:00
+[2025-12-24T18:06:42.858+0000] {standard_task_runner.py:63} INFO - Started process 209 to run task
+[2025-12-24T18:06:42.863+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'fetch_accumulated_data', 'scheduled__2025-12-24T17:00:00+00:00', '--job-id', '119', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmp_6f__5xh']
+[2025-12-24T18:06:42.867+0000] {standard_task_runner.py:91} INFO - Job 119: Subtask fetch_accumulated_data
+[2025-12-24T18:06:42.978+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.fetch_accumulated_data scheduled__2025-12-24T17:00:00+00:00 [running]> on host 2f0396c9313f
+[2025-12-24T18:06:43.188+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='fetch_accumulated_data' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-24T17:00:00+00:00'
+[2025-12-24T18:06:43.190+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T18:06:43.283+0000] {logging_mixin.py:188} INFO - ✓ Fetched 248 flights from accumulator
+[2025-12-24T18:06:43.284+0000] {logging_mixin.py:188} INFO -   Stats: {'total_messages': 13077, 'updates': 12829, 'new_flights': 248, 'unique_flights': 248}
+[2025-12-24T18:06:43.357+0000] {python.py:237} INFO - Done. Returned value was: 248
+[2025-12-24T18:06:43.358+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T18:06:43.409+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=fetch_accumulated_data, execution_date=20251224T170000, start_date=20251224T180642, end_date=20251224T180643
+[2025-12-24T18:06:43.477+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T18:06:43.534+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T18:06:43.536+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

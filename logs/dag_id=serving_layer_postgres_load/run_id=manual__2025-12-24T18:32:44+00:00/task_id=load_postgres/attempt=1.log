@@ -1,0 +1,51 @@
+[2025-12-24T18:32:48.110+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T18:32:48.165+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:32:44+00:00 [queued]>
+[2025-12-24T18:32:48.175+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:32:44+00:00 [queued]>
+[2025-12-24T18:32:48.176+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T18:32:48.190+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): load_postgres> on 2025-12-24 18:32:44+00:00
+[2025-12-24T18:32:48.199+0000] {standard_task_runner.py:63} INFO - Started process 4376 to run task
+[2025-12-24T18:32:48.205+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'serving_layer_postgres_load', 'load_postgres', 'manual__2025-12-24T18:32:44+00:00', '--job-id', '128', '--raw', '--subdir', 'DAGS_FOLDER/serving_layer_postgres_load.py', '--cfg-path', '/tmp/tmp5ze98rap']
+[2025-12-24T18:32:48.209+0000] {standard_task_runner.py:91} INFO - Job 128: Subtask load_postgres
+[2025-12-24T18:32:48.281+0000] {task_command.py:426} INFO - Running <TaskInstance: serving_layer_postgres_load.load_postgres manual__2025-12-24T18:32:44+00:00 [running]> on host 2f0396c9313f
+[2025-12-24T18:32:48.435+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='serving_layer_postgres_load' AIRFLOW_CTX_TASK_ID='load_postgres' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T18:32:44+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T18:32:44+00:00'
+[2025-12-24T18:32:48.436+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T18:32:48.467+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:32:48.467+0000] {logging_mixin.py:188} INFO - RUNNING FULL LOAD (overwriting all data)
+[2025-12-24T18:32:48.467+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:32:48.468+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:32:48.468+0000] {logging_mixin.py:188} INFO - AVIATION SERVING LAYER - INITIAL FULL LOAD
+[2025-12-24T18:32:48.468+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:32:48.487+0000] {logging_mixin.py:188} INFO - ✓ Database exists: aviation_db
+[2025-12-24T18:32:53.703+0000] {logging_mixin.py:188} INFO - ⚠️ Database setup error: column "timestamp" does not exist
+[2025-12-24T18:32:53.703+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T18:32:53.704+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/serving_layer_postgres_load.py", line 60, in load_postgres_task
+    initial_full_load()
+  File "/opt/airflow/src/serving/postgres_loader.py", line 701, in initial_full_load
+    create_database_and_tables()
+  File "/opt/airflow/src/serving/postgres_loader.py", line 188, in create_database_and_tables
+    cursor.execute(f"""
+psycopg2.errors.UndefinedColumn: column "timestamp" does not exist
+
+[2025-12-24T18:32:53.735+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=serving_layer_postgres_load, task_id=load_postgres, execution_date=20251224T183244, start_date=20251224T183248, end_date=20251224T183253
+[2025-12-24T18:32:53.754+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 128 for task load_postgres (column "timestamp" does not exist
+; 4376)
+[2025-12-24T18:32:53.784+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2025-12-24T18:32:53.812+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T18:32:53.814+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

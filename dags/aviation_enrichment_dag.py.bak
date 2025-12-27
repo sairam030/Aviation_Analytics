@@ -1,0 +1,372 @@
+"""
+Airflow DAG for Aviation Data Enrichment Pipeline.
+
+This DAG handles flight mapping and data enrichment:
+1. Create callsign -> route mapping from FlightsV5
+2. Enrich states data with route information
+3. Create analytics aggregates
+4. Upload to MinIO (separate buckets for each stage)
+
+Schedule: Triggered after batch pipeline or manually
+Depends on: aviation_batch_pipeline (states extraction must complete first)
+"""
+import os
+import sys
+from datetime import datetime, timedelta
+
+# Add src to path for imports
+sys.path.insert(0, '/opt/airflow')
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.empty import EmptyOperator
+from airflow.sensors.external_task import ExternalTaskSensor
+
+from src.batch.config import DataPaths
+
+
+# Default arguments for the DAG
+default_args = {
+    'owner': 'aviation_team',
+    'depends_on_past': False,
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=5),
+    'execution_timeout': timedelta(hours=4),
+}
+
+# DAG definition
+dag = DAG(
+    'aviation_enrichment_pipeline',
+    default_args=default_args,
+    description='Flight mapping and enrichment pipeline for India aviation data',
+    schedule_interval=None,  # Triggered manually or after batch pipeline
+    start_date=datetime(2024, 1, 1),
+    catchup=False,
+    tags=['aviation', 'enrichment', 'spark', 'mapping'],
+    max_active_runs=1,
+)
+
+
+def check_states_data(**context):
+    """Check if states data from batch pipeline is available."""
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    # Check for extracted states data
+    states_output = f"{paths.LOCAL_OUTPUT}/filtered_states"
+    sampled_output = f"{paths.LOCAL_OUTPUT}/sampled_states"
+    
+    # Check if either path exists
+    states_exists = os.path.exists(states_output) or os.path.exists(sampled_output)
+    
+    if not states_exists:
+        raise ValueError(
+            f"States data not found. Run aviation_batch_pipeline first. "
+            f"Expected at: {states_output} or {sampled_output}"
+        )
+    
+    # Use sampled if available, otherwise filtered
+    data_path = sampled_output if os.path.exists(sampled_output) else states_output
+    
+    # Count parquet files
+    parquet_count = 0
+    for root, dirs, files in os.walk(data_path):
+        parquet_count += sum(1 for f in files if f.endswith('.parquet'))
+    
+    print(f"States data available at: {data_path}")
+    print(f"Parquet files: {parquet_count}")
+    
+    context['task_instance'].xcom_push(key='states_data_path', value=data_path)
+    
+    return {"path": data_path, "parquet_files": parquet_count}
+
+
+def create_flight_mapping(**context):
+    """Create callsign -> route mapping from FlightsV5 data."""
+    from src.batch.batch_pipeline import AviationBatchPipeline
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    pipeline = AviationBatchPipeline(
+        use_minio=False,
+        local_output_base=paths.LOCAL_OUTPUT
+    )
+    
+    try:
+        # Only create flight mappings
+        stats = pipeline.run_full_pipeline(
+            process_states=False,
+            create_mappings=True,
+            enrich_data=False,
+            create_analytics=False
+        )
+        
+        context['task_instance'].xcom_push(key='mapping_stats', value=stats)
+        return stats
+    finally:
+        pipeline.stop()
+
+
+def enrich_states_data(**context):
+    """Enrich states data with route information."""
+    from src.batch.batch_pipeline import AviationBatchPipeline
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    pipeline = AviationBatchPipeline(
+        use_minio=False,
+        local_output_base=paths.LOCAL_OUTPUT
+    )
+    
+    try:
+        # Only enrich data
+        stats = pipeline.run_full_pipeline(
+            process_states=False,
+            create_mappings=False,
+            enrich_data=True,
+            create_analytics=False
+        )
+        
+        context['task_instance'].xcom_push(key='enrichment_stats', value=stats)
+        return stats
+    finally:
+        pipeline.stop()
+
+
+def create_analytics(**context):
+    """Create analytics aggregates."""
+    from src.batch.batch_pipeline import AviationBatchPipeline
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    pipeline = AviationBatchPipeline(
+        use_minio=False,
+        local_output_base=paths.LOCAL_OUTPUT
+    )
+    
+    try:
+        # Only create analytics
+        stats = pipeline.run_full_pipeline(
+            process_states=False,
+            create_mappings=False,
+            enrich_data=False,
+            create_analytics=True
+        )
+        
+        context['task_instance'].xcom_push(key='analytics_stats', value=stats)
+        return stats
+    finally:
+        pipeline.stop()
+
+
+def upload_mapping_to_minio(**context):
+    """Upload flight mapping data to dedicated MinIO bucket."""
+    from minio import Minio
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    client = Minio(
+        "minio:9000",
+        access_key=paths.MINIO_ACCESS_KEY,
+        secret_key=paths.MINIO_SECRET_KEY,
+        secure=False
+    )
+    
+    # Create dedicated bucket for flight mapping
+    bucket_name = "aviation-flight-mapping"
+    try:
+        if not client.bucket_exists(bucket_name):
+            client.make_bucket(bucket_name)
+            print(f"Created bucket: {bucket_name}")
+    except Exception as e:
+        print(f"Bucket error: {e}")
+    
+    local_path = f"{paths.LOCAL_OUTPUT}/flight_mapping"
+    uploaded = 0
+    
+    if os.path.exists(local_path):
+        for root, dirs, files in os.walk(local_path):
+            for file in files:
+                local_file = os.path.join(root, file)
+                remote_path = os.path.relpath(local_file, local_path)
+                
+                client.fput_object(bucket_name, remote_path, local_file)
+                uploaded += 1
+    
+    print(f"Uploaded {uploaded} mapping files to {bucket_name}")
+    return {"bucket": bucket_name, "files": uploaded}
+
+
+def upload_enriched_to_minio(**context):
+    """Upload enriched data to dedicated MinIO bucket."""
+    from minio import Minio
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    client = Minio(
+        "minio:9000",
+        access_key=paths.MINIO_ACCESS_KEY,
+        secret_key=paths.MINIO_SECRET_KEY,
+        secure=False
+    )
+    
+    # Create dedicated bucket for enriched data
+    bucket_name = "aviation-enriched-data"
+    try:
+        if not client.bucket_exists(bucket_name):
+            client.make_bucket(bucket_name)
+            print(f"Created bucket: {bucket_name}")
+    except Exception as e:
+        print(f"Bucket error: {e}")
+    
+    local_path = f"{paths.LOCAL_OUTPUT}/enriched_data"
+    uploaded = 0
+    
+    if os.path.exists(local_path):
+        for root, dirs, files in os.walk(local_path):
+            for file in files:
+                local_file = os.path.join(root, file)
+                remote_path = os.path.relpath(local_file, local_path)
+                
+                client.fput_object(bucket_name, remote_path, local_file)
+                uploaded += 1
+    
+    print(f"Uploaded {uploaded} enriched files to {bucket_name}")
+    return {"bucket": bucket_name, "files": uploaded}
+
+
+def upload_analytics_to_minio(**context):
+    """Upload analytics data to dedicated MinIO bucket."""
+    from minio import Minio
+    from src.batch.config import DataPaths
+    
+    paths = DataPaths()
+    
+    client = Minio(
+        "minio:9000",
+        access_key=paths.MINIO_ACCESS_KEY,
+        secret_key=paths.MINIO_SECRET_KEY,
+        secure=False
+    )
+    
+    # Use existing analytics bucket
+    bucket_name = paths.ANALYTICS_BUCKET
+    try:
+        if not client.bucket_exists(bucket_name):
+            client.make_bucket(bucket_name)
+            print(f"Created bucket: {bucket_name}")
+    except Exception as e:
+        print(f"Bucket error: {e}")
+    
+    local_path = f"{paths.LOCAL_OUTPUT}/analytics"
+    uploaded = 0
+    
+    if os.path.exists(local_path):
+        for root, dirs, files in os.walk(local_path):
+            for file in files:
+                local_file = os.path.join(root, file)
+                remote_path = os.path.relpath(local_file, local_path)
+                
+                client.fput_object(bucket_name, remote_path, local_file)
+                uploaded += 1
+    
+    print(f"Uploaded {uploaded} analytics files to {bucket_name}")
+    return {"bucket": bucket_name, "files": uploaded}
+
+
+def notify_completion(**context):
+    """Send completion notification."""
+    mapping_stats = context['task_instance'].xcom_pull(
+        task_ids='create_flight_mapping', 
+        key='mapping_stats'
+    )
+    enrichment_stats = context['task_instance'].xcom_pull(
+        task_ids='enrich_states_data', 
+        key='enrichment_stats'
+    )
+    
+    print("="*60)
+    print("ENRICHMENT PIPELINE COMPLETED")
+    print("="*60)
+    
+    if mapping_stats:
+        print(f"Mapping Stats: {mapping_stats}")
+    if enrichment_stats:
+        print(f"Enrichment Stats: {enrichment_stats}")
+    
+    print("\nData stored in MinIO buckets:")
+    print("  - aviation-flight-mapping (for later processing)")
+    print("  - aviation-enriched-data")
+    print("  - aviation-analytics")
+    print("="*60)
+
+
+# Define tasks
+with dag:
+    start = EmptyOperator(task_id='start')
+    
+    check_states = PythonOperator(
+        task_id='check_states_data',
+        python_callable=check_states_data,
+    )
+    
+    create_mapping = PythonOperator(
+        task_id='create_flight_mapping',
+        python_callable=create_flight_mapping,
+    )
+    
+    enrich_data = PythonOperator(
+        task_id='enrich_states_data',
+        python_callable=enrich_states_data,
+    )
+    
+    create_analytics_task = PythonOperator(
+        task_id='create_analytics',
+        python_callable=create_analytics,
+    )
+    
+    upload_mapping = PythonOperator(
+        task_id='upload_mapping_to_minio',
+        python_callable=upload_mapping_to_minio,
+    )
+    
+    upload_enriched = PythonOperator(
+        task_id='upload_enriched_to_minio',
+        python_callable=upload_enriched_to_minio,
+    )
+    
+    upload_analytics = PythonOperator(
+        task_id='upload_analytics_to_minio',
+        python_callable=upload_analytics_to_minio,
+    )
+    
+    notify = PythonOperator(
+        task_id='notify_completion',
+        python_callable=notify_completion,
+        trigger_rule='all_done',
+    )
+    
+    end = EmptyOperator(task_id='end')
+    
+    # Define dependencies
+    start >> check_states >> create_mapping
+    
+    # Mapping uploads immediately after creation
+    create_mapping >> upload_mapping
+    
+    # Enrichment depends on mapping
+    create_mapping >> enrich_data >> upload_enriched
+    
+    # Analytics depends on enrichment
+    enrich_data >> create_analytics_task >> upload_analytics
+    
+    # All uploads complete before notification
+    [upload_mapping, upload_enriched, upload_analytics] >> notify >> end

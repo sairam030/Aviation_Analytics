@@ -1,0 +1,415 @@
+[2025-12-24T11:03:26.550+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T11:03:26.601+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T10:55:28.960574+00:00 [queued]>
+[2025-12-24T11:03:26.619+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T10:55:28.960574+00:00 [queued]>
+[2025-12-24T11:03:26.619+0000] {taskinstance.py:2303} INFO - Starting attempt 3 of 5
+[2025-12-24T11:03:28.155+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): run_batch_pipeline> on 2025-12-24 10:55:28.960574+00:00
+[2025-12-24T11:03:28.165+0000] {standard_task_runner.py:63} INFO - Started process 8892 to run task
+[2025-12-24T11:03:28.171+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_batch_pipeline', 'run_batch_pipeline', 'manual__2025-12-24T10:55:28.960574+00:00', '--job-id', '49', '--raw', '--subdir', 'DAGS_FOLDER/aviation_batch_dag.py', '--cfg-path', '/tmp/tmpjxzc24t5']
+[2025-12-24T11:03:28.174+0000] {standard_task_runner.py:91} INFO - Job 49: Subtask run_batch_pipeline
+[2025-12-24T11:03:28.262+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T10:55:28.960574+00:00 [running]> on host 849a36138e84
+[2025-12-24T11:03:28.426+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_batch_pipeline' AIRFLOW_CTX_TASK_ID='run_batch_pipeline' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T10:55:28.960574+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T10:55:28.960574+00:00'
+[2025-12-24T11:03:28.427+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T11:03:34.184+0000] {logging_mixin.py:188} INFO - 
+============================================================
+[2025-12-24T11:03:34.185+0000] {logging_mixin.py:188} INFO - STAGE 1: Processing States Data
+[2025-12-24T11:03:34.186+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T11:03:34.186+0000] {logging_mixin.py:188} INFO - Using states path: /data/aviation_data/states
+[2025-12-24T11:03:36.958+0000] {logging_mixin.py:188} INFO - Found 2722 tar files to process
+[2025-12-24T11:03:36.959+0000] {logging_mixin.py:188} INFO -   Ensured output directory exists: /tmp/aviation/filtered_states
+[2025-12-24T11:03:36.959+0000] {logging_mixin.py:188} INFO - Processing 2722 tar files...
+[2025-12-24T11:03:36.959+0000] {logging_mixin.py:188} INFO - Processing batch 1/545 (5 files)
+[2025-12-24T11:03:36.960+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-00.csv.tar
+[2025-12-24T11:03:36.982+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-00.csv.tar
+[2025-12-24T11:03:37.517+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-01.csv.tar
+[2025-12-24T11:03:37.528+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-01.csv.tar
+[2025-12-24T11:03:38.016+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-02.csv.tar
+[2025-12-24T11:03:38.024+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T11:03:50.676+0000] {logging_mixin.py:188} INFO -   Batch 1: 19094 India-related records
+[2025-12-24T11:04:00.390+0000] {logging_mixin.py:188} INFO -   Batch 1: Saved to /tmp/aviation/filtered_states | Current size: 0.128 GB
+[2025-12-24T11:04:00.430+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:04:00.442+0000] {logging_mixin.py:188} INFO - Processing batch 2/545 (5 files)
+[2025-12-24T11:04:00.442+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-02.csv.tar
+[2025-12-24T11:04:00.915+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-03.csv.tar
+[2025-12-24T11:04:00.927+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-03.csv.tar
+[2025-12-24T11:04:01.361+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-04.csv.tar
+[2025-12-24T11:04:01.386+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-04.csv.tar
+[2025-12-24T11:04:01.835+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T11:04:07.964+0000] {logging_mixin.py:188} INFO -   Batch 2: 37879 India-related records
+[2025-12-24T11:04:16.196+0000] {logging_mixin.py:188} INFO -   Batch 2: Saved to /tmp/aviation/filtered_states | Current size: 0.129 GB
+[2025-12-24T11:04:16.239+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:04:16.240+0000] {logging_mixin.py:188} INFO - Processing batch 3/545 (5 files)
+[2025-12-24T11:04:16.241+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-05.csv.tar
+[2025-12-24T11:04:16.250+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-05.csv.tar
+[2025-12-24T11:04:16.761+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-06.csv.tar
+[2025-12-24T11:04:16.769+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-06.csv.tar
+[2025-12-24T11:04:17.285+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-07.csv.tar
+[2025-12-24T11:04:17.291+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T11:04:23.833+0000] {logging_mixin.py:188} INFO -   Batch 3: 28376 India-related records
+[2025-12-24T11:04:31.918+0000] {logging_mixin.py:188} INFO -   Batch 3: Saved to /tmp/aviation/filtered_states | Current size: 0.130 GB
+[2025-12-24T11:04:31.953+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:04:31.954+0000] {logging_mixin.py:188} INFO - Processing batch 4/545 (5 files)
+[2025-12-24T11:04:31.954+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-07.csv.tar
+[2025-12-24T11:04:32.478+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-08.csv.tar
+[2025-12-24T11:04:32.483+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-08.csv.tar
+[2025-12-24T11:04:33.043+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-09.csv.tar
+[2025-12-24T11:04:33.050+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-09.csv.tar
+[2025-12-24T11:04:33.638+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T11:04:41.517+0000] {logging_mixin.py:188} INFO -   Batch 4: 23886 India-related records
+[2025-12-24T11:04:51.176+0000] {logging_mixin.py:188} INFO -   Batch 4: Saved to /tmp/aviation/filtered_states | Current size: 0.131 GB
+[2025-12-24T11:04:51.221+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:04:51.222+0000] {logging_mixin.py:188} INFO - Processing batch 5/545 (5 files)
+[2025-12-24T11:04:51.222+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-10.csv.tar
+[2025-12-24T11:04:51.233+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-10.csv.tar
+[2025-12-24T11:04:51.882+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-11.csv.tar
+[2025-12-24T11:04:51.894+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-11.csv.tar
+[2025-12-24T11:04:52.633+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-12.csv.tar
+[2025-12-24T11:04:52.644+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T11:05:01.473+0000] {logging_mixin.py:188} INFO -   Batch 5: 10941 India-related records
+[2025-12-24T11:05:11.649+0000] {logging_mixin.py:188} INFO -   Batch 5: Saved to /tmp/aviation/filtered_states | Current size: 0.131 GB
+[2025-12-24T11:05:11.680+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:05:11.680+0000] {logging_mixin.py:188} INFO - Processing batch 6/545 (5 files)
+[2025-12-24T11:05:11.681+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-12.csv.tar
+[2025-12-24T11:05:12.453+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-13.csv.tar
+[2025-12-24T11:05:12.471+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-13.csv.tar
+[2025-12-24T11:05:13.289+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-14.csv.tar
+[2025-12-24T11:05:13.304+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-14.csv.tar
+[2025-12-24T11:05:14.135+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T11:05:23.824+0000] {logging_mixin.py:188} INFO -   Batch 6: 11390 India-related records
+[2025-12-24T11:05:38.733+0000] {logging_mixin.py:188} INFO -   Batch 6: Saved to /tmp/aviation/filtered_states | Current size: 0.132 GB
+[2025-12-24T11:05:38.773+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:05:38.774+0000] {logging_mixin.py:188} INFO - Processing batch 7/545 (5 files)
+[2025-12-24T11:05:38.774+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-15.csv.tar
+[2025-12-24T11:05:38.805+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-15.csv.tar
+[2025-12-24T11:05:39.662+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-16.csv.tar
+[2025-12-24T11:05:39.677+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-16.csv.tar
+[2025-12-24T11:05:40.536+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-17.csv.tar
+[2025-12-24T11:05:40.542+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T11:05:49.261+0000] {logging_mixin.py:188} INFO -   Batch 7: 11840 India-related records
+[2025-12-24T11:06:01.432+0000] {logging_mixin.py:188} INFO -   Batch 7: Saved to /tmp/aviation/filtered_states | Current size: 0.132 GB
+[2025-12-24T11:06:01.486+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:06:01.486+0000] {logging_mixin.py:188} INFO - Processing batch 8/545 (5 files)
+[2025-12-24T11:06:01.486+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-17.csv.tar
+[2025-12-24T11:06:02.321+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-18.csv.tar
+[2025-12-24T11:06:02.334+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-18.csv.tar
+[2025-12-24T11:06:03.138+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-19.csv.tar
+[2025-12-24T11:06:03.147+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-19.csv.tar
+[2025-12-24T11:06:03.935+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T11:06:14.525+0000] {logging_mixin.py:188} INFO -   Batch 8: 14892 India-related records
+[2025-12-24T11:06:27.489+0000] {logging_mixin.py:188} INFO -   Batch 8: Saved to /tmp/aviation/filtered_states | Current size: 0.133 GB
+[2025-12-24T11:06:27.574+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:06:27.575+0000] {logging_mixin.py:188} INFO - Processing batch 9/545 (5 files)
+[2025-12-24T11:06:27.575+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-20.csv.tar
+[2025-12-24T11:06:27.606+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-20.csv.tar
+[2025-12-24T11:06:28.345+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-21.csv.tar
+[2025-12-24T11:06:28.358+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-21.csv.tar
+[2025-12-24T11:06:29.020+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-22.csv.tar
+[2025-12-24T11:06:29.035+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T11:06:36.527+0000] {logging_mixin.py:188} INFO -   Batch 9: 13336 India-related records
+[2025-12-24T11:06:47.923+0000] {logging_mixin.py:188} INFO -   Batch 9: Saved to /tmp/aviation/filtered_states | Current size: 0.133 GB
+[2025-12-24T11:06:47.972+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:06:47.973+0000] {logging_mixin.py:188} INFO - Processing batch 10/545 (5 files)
+[2025-12-24T11:06:47.973+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-22.csv.tar
+[2025-12-24T11:06:48.567+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-23.csv.tar
+[2025-12-24T11:06:48.577+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-23.csv.tar
+[2025-12-24T11:06:49.135+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-00.csv.tar
+[2025-12-24T11:06:49.614+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-01.csv.tar
+[2025-12-24T11:06:50.086+0000] {logging_mixin.py:188} INFO -   Reading 4 CSV files with Spark...
+[2025-12-24T11:06:57.995+0000] {logging_mixin.py:188} INFO -   Batch 10: 14505 India-related records
+[2025-12-24T11:07:08.464+0000] {logging_mixin.py:188} INFO -   Batch 10: Saved to /tmp/aviation/filtered_states | Current size: 0.134 GB
+[2025-12-24T11:07:08.524+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:07:08.525+0000] {logging_mixin.py:188} INFO - Processing batch 11/545 (5 files)
+[2025-12-24T11:07:08.525+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-02.csv.tar
+[2025-12-24T11:07:08.984+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-03.csv.tar
+[2025-12-24T11:07:09.391+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-04.csv.tar
+[2025-12-24T11:07:09.793+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-05.csv.tar
+[2025-12-24T11:07:10.298+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-06.csv.tar
+[2025-12-24T11:07:10.848+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:07:17.833+0000] {logging_mixin.py:188} INFO -   Batch 11: 17718 India-related records
+[2025-12-24T11:07:28.194+0000] {logging_mixin.py:188} INFO -   Batch 11: Saved to /tmp/aviation/filtered_states | Current size: 0.135 GB
+[2025-12-24T11:07:28.237+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:07:28.237+0000] {logging_mixin.py:188} INFO - Processing batch 12/545 (5 files)
+[2025-12-24T11:07:28.238+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-07.csv.tar
+[2025-12-24T11:07:28.804+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-08.csv.tar
+[2025-12-24T11:07:29.387+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-09.csv.tar
+[2025-12-24T11:07:29.987+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-10.csv.tar
+[2025-12-24T11:07:30.667+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-11.csv.tar
+[2025-12-24T11:07:31.350+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:07:41.264+0000] {logging_mixin.py:188} INFO -   Batch 12: 20371 India-related records
+[2025-12-24T11:07:54.209+0000] {logging_mixin.py:188} INFO -   Batch 12: Saved to /tmp/aviation/filtered_states | Current size: 0.136 GB
+[2025-12-24T11:07:54.295+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:07:54.296+0000] {logging_mixin.py:188} INFO - Processing batch 13/545 (5 files)
+[2025-12-24T11:07:54.297+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-12.csv.tar
+[2025-12-24T11:07:54.989+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-13.csv.tar
+[2025-12-24T11:07:55.746+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-14.csv.tar
+[2025-12-24T11:07:56.562+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-15.csv.tar
+[2025-12-24T11:07:57.375+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-16.csv.tar
+[2025-12-24T11:07:58.178+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:08:10.198+0000] {logging_mixin.py:188} INFO -   Batch 13: 23968 India-related records
+[2025-12-24T11:08:26.472+0000] {logging_mixin.py:188} INFO -   Batch 13: Saved to /tmp/aviation/filtered_states | Current size: 0.137 GB
+[2025-12-24T11:08:26.528+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:08:26.529+0000] {logging_mixin.py:188} INFO - Processing batch 14/545 (5 files)
+[2025-12-24T11:08:26.529+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-17.csv.tar
+[2025-12-24T11:08:27.325+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-18.csv.tar
+[2025-12-24T11:08:28.104+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-19.csv.tar
+[2025-12-24T11:08:28.898+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-20.csv.tar
+[2025-12-24T11:08:29.635+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-21.csv.tar
+[2025-12-24T11:08:30.294+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:08:42.899+0000] {logging_mixin.py:188} INFO -   Batch 14: 31053 India-related records
+[2025-12-24T11:08:57.965+0000] {logging_mixin.py:188} INFO -   Batch 14: Saved to /tmp/aviation/filtered_states | Current size: 0.138 GB
+[2025-12-24T11:08:58.067+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:08:58.068+0000] {logging_mixin.py:188} INFO - Processing batch 15/545 (5 files)
+[2025-12-24T11:08:58.068+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-22.csv.tar
+[2025-12-24T11:08:58.629+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-23.csv.tar
+[2025-12-24T11:08:59.140+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-00.csv.tar
+[2025-12-24T11:08:59.687+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-01.csv.tar
+[2025-12-24T11:09:00.325+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-02.csv.tar
+[2025-12-24T11:09:00.847+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:09:09.947+0000] {logging_mixin.py:188} INFO -   Batch 15: 21625 India-related records
+[2025-12-24T11:09:21.480+0000] {logging_mixin.py:188} INFO -   Batch 15: Saved to /tmp/aviation/filtered_states | Current size: 0.139 GB
+[2025-12-24T11:09:21.561+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:09:21.562+0000] {logging_mixin.py:188} INFO - Processing batch 16/545 (5 files)
+[2025-12-24T11:09:21.562+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-03.csv.tar
+[2025-12-24T11:09:22.029+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-04.csv.tar
+[2025-12-24T11:09:22.489+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-05.csv.tar
+[2025-12-24T11:09:23.047+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-06.csv.tar
+[2025-12-24T11:09:23.583+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-07.csv.tar
+[2025-12-24T11:09:24.144+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:09:32.591+0000] {logging_mixin.py:188} INFO -   Batch 16: 19153 India-related records
+[2025-12-24T11:09:42.964+0000] {logging_mixin.py:188} INFO -   Batch 16: Saved to /tmp/aviation/filtered_states | Current size: 0.140 GB
+[2025-12-24T11:09:43.054+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:09:43.056+0000] {logging_mixin.py:188} INFO - Processing batch 17/545 (5 files)
+[2025-12-24T11:09:43.057+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-08.csv.tar
+[2025-12-24T11:09:43.636+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-09.csv.tar
+[2025-12-24T11:09:44.247+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-10.csv.tar
+[2025-12-24T11:09:44.898+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-11.csv.tar
+[2025-12-24T11:09:45.612+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-12.csv.tar
+[2025-12-24T11:09:46.403+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:09:57.701+0000] {logging_mixin.py:188} INFO -   Batch 17: 19414 India-related records
+[2025-12-24T11:10:12.767+0000] {logging_mixin.py:188} INFO -   Batch 17: Saved to /tmp/aviation/filtered_states | Current size: 0.141 GB
+[2025-12-24T11:10:12.844+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:10:12.845+0000] {logging_mixin.py:188} INFO - Processing batch 18/545 (5 files)
+[2025-12-24T11:10:12.846+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-13.csv.tar
+[2025-12-24T11:10:13.687+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-14.csv.tar
+[2025-12-24T11:10:14.551+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-15.csv.tar
+[2025-12-24T11:10:15.405+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-16.csv.tar
+[2025-12-24T11:10:16.282+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-17.csv.tar
+[2025-12-24T11:10:16.784+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:10:30.569+0000] {logging_mixin.py:188} INFO -   Batch 18: 21905 India-related records
+[2025-12-24T11:10:48.258+0000] {logging_mixin.py:188} INFO -   Batch 18: Saved to /tmp/aviation/filtered_states | Current size: 0.141 GB
+[2025-12-24T11:10:48.384+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:10:48.385+0000] {logging_mixin.py:188} INFO - Processing batch 19/545 (5 files)
+[2025-12-24T11:10:48.385+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-18.csv.tar
+[2025-12-24T11:10:49.237+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-19.csv.tar
+[2025-12-24T11:10:50.045+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-20.csv.tar
+[2025-12-24T11:10:50.865+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-21.csv.tar
+[2025-12-24T11:10:51.648+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-22.csv.tar
+[2025-12-24T11:10:52.314+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:11:07.433+0000] {logging_mixin.py:188} INFO -   Batch 19: 29661 India-related records
+[2025-12-24T11:11:26.783+0000] {logging_mixin.py:188} INFO -   Batch 19: Saved to /tmp/aviation/filtered_states | Current size: 0.143 GB
+[2025-12-24T11:11:26.898+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:11:26.899+0000] {logging_mixin.py:188} INFO - Processing batch 20/545 (5 files)
+[2025-12-24T11:11:26.899+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-23.csv.tar
+[2025-12-24T11:11:27.469+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-00.csv.tar
+[2025-12-24T11:11:28.044+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-01.csv.tar
+[2025-12-24T11:11:28.568+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-02.csv.tar
+[2025-12-24T11:11:29.039+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-03.csv.tar
+[2025-12-24T11:11:29.485+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:11:38.903+0000] {logging_mixin.py:188} INFO -   Batch 20: 22029 India-related records
+[2025-12-24T11:11:54.463+0000] {logging_mixin.py:188} INFO -   Batch 20: Saved to /tmp/aviation/filtered_states | Current size: 0.144 GB
+[2025-12-24T11:11:54.522+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:11:54.524+0000] {logging_mixin.py:188} INFO - Processing batch 21/545 (5 files)
+[2025-12-24T11:11:54.525+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-17-04.csv.tar
+[2025-12-24T11:11:54.973+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-05.csv.tar
+[2025-12-24T11:11:55.482+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-06.csv.tar
+[2025-12-24T11:11:56.015+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-07.csv.tar
+[2025-12-24T11:11:56.569+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-08.csv.tar
+[2025-12-24T11:11:57.152+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:12:08.501+0000] {logging_mixin.py:188} INFO -   Batch 21: 19529 India-related records
+[2025-12-24T11:12:22.237+0000] {logging_mixin.py:188} INFO -   Batch 21: Saved to /tmp/aviation/filtered_states | Current size: 0.145 GB
+[2025-12-24T11:12:22.300+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:12:22.301+0000] {logging_mixin.py:188} INFO - Processing batch 22/545 (5 files)
+[2025-12-24T11:12:22.302+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-17-09.csv.tar
+[2025-12-24T11:12:22.912+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-10.csv.tar
+[2025-12-24T11:12:23.548+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-11.csv.tar
+[2025-12-24T11:12:24.299+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-12.csv.tar
+[2025-12-24T11:12:25.046+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-13.csv.tar
+[2025-12-24T11:12:25.836+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T11:12:27.156+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to restarting. Terminating instance.
+[2025-12-24T11:12:27.198+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-12-24T11:12:27.227+0000] {process_utils.py:132} INFO - Sending 15 to group 8892. PIDs of all processes in the group: [8893, 8892]
+[2025-12-24T11:12:27.232+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 8892
+[2025-12-24T11:12:27.248+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T11:12:27.263+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T11:12:29.352+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    stats = pipeline.run_full_pipeline(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 212, in process_tar_files_to_parquet
+    .csv(extracted_files)
+        ^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T11:12:29.441+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T11:12:29.447+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    stats = pipeline.run_full_pipeline(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 212, in process_tar_files_to_parquet
+    .csv(extracted_files)
+        ^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T11:12:29.531+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T11:12:29.724+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T11:12:29.733+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T11:12:29.759+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    stats = pipeline.run_full_pipeline(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 212, in process_tar_files_to_parquet
+    .csv(extracted_files)
+        ^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 460, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 151, in run_batch_pipeline
+    pipeline.stop()
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 366, in stop
+    self.spark.stop()
+  File "/opt/spark/python/pyspark/sql/session.py", line 1799, in stop
+    self._jvm.SparkSession.clearDefaultSession()
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1712, in __getattr__
+    answer = self._gateway_client.send_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1036, in send_command
+    connection = self._get_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 284, in _get_connection
+    connection = self._create_new_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 291, in _create_new_connection
+    connection.connect_to_java_server()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 438, in connect_to_java_server
+    self.socket.connect((self.java_address, self.java_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[2025-12-24T11:12:30.036+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=aviation_batch_pipeline, task_id=run_batch_pipeline, execution_date=20251224T105528, start_date=20251224T110326, end_date=20251224T111230
+[2025-12-24T11:12:30.220+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 49 for task run_batch_pipeline ([Errno 111] Connection refused; 8892)
+[2025-12-24T11:12:30.263+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=8893, status='terminated', started='11:03:27') (8893) terminated with exit code None
+[2025-12-24T11:12:30.265+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=8892, status='terminated', exitcode=1, started='11:03:27') (8892) terminated with exit code 1

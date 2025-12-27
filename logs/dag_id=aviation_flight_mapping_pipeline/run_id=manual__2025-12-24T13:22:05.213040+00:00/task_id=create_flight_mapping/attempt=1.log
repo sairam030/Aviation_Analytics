@@ -1,0 +1,68 @@
+[2025-12-24T13:22:11.582+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T13:22:11.930+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T13:22:05.213040+00:00 [queued]>
+[2025-12-24T13:22:11.947+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T13:22:05.213040+00:00 [queued]>
+[2025-12-24T13:22:11.947+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2025-12-24T13:22:11.971+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): create_flight_mapping> on 2025-12-24 13:22:05.213040+00:00
+[2025-12-24T13:22:11.986+0000] {standard_task_runner.py:63} INFO - Started process 256 to run task
+[2025-12-24T13:22:11.991+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_flight_mapping_pipeline', 'create_flight_mapping', 'manual__2025-12-24T13:22:05.213040+00:00', '--job-id', '67', '--raw', '--subdir', 'DAGS_FOLDER/aviation_flight_mapping_pipeline.py', '--cfg-path', '/tmp/tmp66v3x0xs']
+[2025-12-24T13:22:11.994+0000] {standard_task_runner.py:91} INFO - Job 67: Subtask create_flight_mapping
+[2025-12-24T13:22:12.092+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T13:22:05.213040+00:00 [running]> on host 6c6ccfef5674
+[2025-12-24T13:22:12.275+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_flight_mapping_pipeline' AIRFLOW_CTX_TASK_ID='create_flight_mapping' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T13:22:05.213040+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T13:22:05.213040+00:00'
+[2025-12-24T13:22:12.276+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T13:22:12.515+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:22:12.515+0000] {logging_mixin.py:188} INFO - CREATING FLIGHT MAPPING TABLE
+[2025-12-24T13:22:12.515+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:22:22.188+0000] {logging_mixin.py:188} INFO - Found 30 CSV files to process
+[2025-12-24T13:22:22.189+0000] {logging_mixin.py:188} INFO - Reading FlightsV5 data...
+[2025-12-24T13:22:43.688+0000] {logging_mixin.py:188} INFO -   Total flight records: 3,198,513
+[2025-12-24T13:22:51.255+0000] {logging_mixin.py:188} INFO -   Valid records (with callsign & airports): 2,184,022
+[2025-12-24T13:22:51.302+0000] {logging_mixin.py:188} INFO - Creating callsign -> route mapping...
+[2025-12-24T13:22:52.767+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T13:22:52.780+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 460, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/aviation_flight_mapping_pipeline.py", line 184, in create_flight_mapping
+    df_mapping = df_valid.groupBy("callsign_clean").agg(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/group.py", line 186, in agg
+    jdf = self._jgd.agg(exprs[0]._jc, _to_seq(self.session._sc, [c._jc for c in exprs[1:]]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `typecode` cannot be resolved. Did you mean one of the following? [` typecode`, `model`, `icao24`, `lastseen`, `callsign`].;
+'Aggregate [callsign_clean#61], [callsign_clean#61, first(dep_airport#77, false) AS departure_airport#153, first(arr_airport#93, false) AS arrival_airport#155, first(model#27, false) AS aircraft_model#157, first('typecode, false) AS aircraft_type#159, count(1) AS flight_count#161L]
++- Filter (((isnotnull(callsign_clean#61) AND NOT (callsign_clean#61 = )) AND isnotnull(dep_airport#77)) AND isnotnull(arr_airport#93))
+   +- Project [icao24#17, firstseen#18, takeofftime#19, lastseen#20, landingtime#21, callsign#22, estdepartureairport#23, airportofdeparture#24, estarrivalairport#25, airportofdestination#26, model#27,  typecode#28,  registration#29, callsign_clean#61, dep_airport#77, coalesce(estarrivalairport#25, airportofdestination#26) AS arr_airport#93]
+      +- Project [icao24#17, firstseen#18, takeofftime#19, lastseen#20, landingtime#21, callsign#22, estdepartureairport#23, airportofdeparture#24, estarrivalairport#25, airportofdestination#26, model#27,  typecode#28,  registration#29, callsign_clean#61, coalesce(estdepartureairport#23, airportofdeparture#24) AS dep_airport#77]
+         +- Project [icao24#17, firstseen#18, takeofftime#19, lastseen#20, landingtime#21, callsign#22, estdepartureairport#23, airportofdeparture#24, estarrivalairport#25, airportofdestination#26, model#27,  typecode#28,  registration#29, trim(upper(callsign#22), None) AS callsign_clean#61]
+            +- Relation [icao24#17,firstseen#18,takeofftime#19,lastseen#20,landingtime#21,callsign#22,estdepartureairport#23,airportofdeparture#24,estarrivalairport#25,airportofdestination#26,model#27, typecode#28, registration#29] csv
+
+[2025-12-24T13:22:53.065+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=aviation_flight_mapping_pipeline, task_id=create_flight_mapping, execution_date=20251224T132205, start_date=20251224T132211, end_date=20251224T132253
+[2025-12-24T13:22:53.264+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 67 for task create_flight_mapping ([UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `typecode` cannot be resolved. Did you mean one of the following? [` typecode`, `model`, `icao24`, `lastseen`, `callsign`].;
+'Aggregate [callsign_clean#61], [callsign_clean#61, first(dep_airport#77, false) AS departure_airport#153, first(arr_airport#93, false) AS arrival_airport#155, first(model#27, false) AS aircraft_model#157, first('typecode, false) AS aircraft_type#159, count(1) AS flight_count#161L]
++- Filter (((isnotnull(callsign_clean#61) AND NOT (callsign_clean#61 = )) AND isnotnull(dep_airport#77)) AND isnotnull(arr_airport#93))
+   +- Project [icao24#17, firstseen#18, takeofftime#19, lastseen#20, landingtime#21, callsign#22, estdepartureairport#23, airportofdeparture#24, estarrivalairport#25, airportofdestination#26, model#27,  typecode#28,  registration#29, callsign_clean#61, dep_airport#77, coalesce(estarrivalairport#25, airportofdestination#26) AS arr_airport#93]
+      +- Project [icao24#17, firstseen#18, takeofftime#19, lastseen#20, landingtime#21, callsign#22, estdepartureairport#23, airportofdeparture#24, estarrivalairport#25, airportofdestination#26, model#27,  typecode#28,  registration#29, callsign_clean#61, coalesce(estdepartureairport#23, airportofdeparture#24) AS dep_airport#77]
+         +- Project [icao24#17, firstseen#18, takeofftime#19, lastseen#20, landingtime#21, callsign#22, estdepartureairport#23, airportofdeparture#24, estarrivalairport#25, airportofdestination#26, model#27,  typecode#28,  registration#29, trim(upper(callsign#22), None) AS callsign_clean#61]
+            +- Relation [icao24#17,firstseen#18,takeofftime#19,lastseen#20,landingtime#21,callsign#22,estdepartureairport#23,airportofdeparture#24,estarrivalairport#25,airportofdestination#26,model#27, typecode#28, registration#29] csv
+; 256)
+[2025-12-24T13:22:53.357+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2025-12-24T13:22:53.644+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T13:22:53.649+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

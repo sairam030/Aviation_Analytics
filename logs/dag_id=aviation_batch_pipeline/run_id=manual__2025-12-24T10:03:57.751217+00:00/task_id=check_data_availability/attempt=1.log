@@ -1,0 +1,20 @@
+[2025-12-24T10:04:09.824+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T10:04:10.211+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_batch_pipeline.check_data_availability manual__2025-12-24T10:03:57.751217+00:00 [queued]>
+[2025-12-24T10:04:10.223+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_batch_pipeline.check_data_availability manual__2025-12-24T10:03:57.751217+00:00 [queued]>
+[2025-12-24T10:04:10.223+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T10:04:10.241+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): check_data_availability> on 2025-12-24 10:03:57.751217+00:00
+[2025-12-24T10:04:10.251+0000] {standard_task_runner.py:63} INFO - Started process 959 to run task
+[2025-12-24T10:04:10.258+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_batch_pipeline', 'check_data_availability', 'manual__2025-12-24T10:03:57.751217+00:00', '--job-id', '31', '--raw', '--subdir', 'DAGS_FOLDER/aviation_batch_dag.py', '--cfg-path', '/tmp/tmpa_hqje9g']
+[2025-12-24T10:04:10.262+0000] {standard_task_runner.py:91} INFO - Job 31: Subtask check_data_availability
+[2025-12-24T10:04:10.367+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_batch_pipeline.check_data_availability manual__2025-12-24T10:03:57.751217+00:00 [running]> on host 849a36138e84
+[2025-12-24T10:04:10.532+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_batch_pipeline' AIRFLOW_CTX_TASK_ID='check_data_availability' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T10:03:57.751217+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T10:03:57.751217+00:00'
+[2025-12-24T10:04:10.533+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T10:04:11.375+0000] {logging_mixin.py:188} INFO - Data root: /data/aviation_data
+[2025-12-24T10:04:11.376+0000] {logging_mixin.py:188} INFO - States data: True, path: /data/aviation_data/states, directories: 2772
+[2025-12-24T10:04:11.377+0000] {logging_mixin.py:188} INFO - Flights data: True, path: /data/aviation_data/flightsV5, directories: 3
+[2025-12-24T10:04:11.433+0000] {python.py:237} INFO - Done. Returned value was: {'states_available': True, 'flights_available': True, 'states_path': '/data/aviation_data/states', 'flights_path': '/data/aviation_data/flightsV5'}
+[2025-12-24T10:04:11.434+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T10:04:11.472+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_batch_pipeline, task_id=check_data_availability, execution_date=20251224T100357, start_date=20251224T100410, end_date=20251224T100411
+[2025-12-24T10:04:11.550+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T10:04:11.604+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T10:04:11.605+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

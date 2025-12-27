@@ -1,0 +1,34 @@
+[2025-12-24T13:25:54.679+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T13:25:55.011+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T13:25:09.362863+00:00 [queued]>
+[2025-12-24T13:25:55.026+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T13:25:09.362863+00:00 [queued]>
+[2025-12-24T13:25:55.026+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2025-12-24T13:25:55.041+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): create_flight_mapping> on 2025-12-24 13:25:09.362863+00:00
+[2025-12-24T13:25:55.054+0000] {standard_task_runner.py:63} INFO - Started process 1205 to run task
+[2025-12-24T13:25:55.058+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_flight_mapping_pipeline', 'create_flight_mapping', 'manual__2025-12-24T13:25:09.362863+00:00', '--job-id', '70', '--raw', '--subdir', 'DAGS_FOLDER/aviation_flight_mapping_pipeline.py', '--cfg-path', '/tmp/tmp_h60homf']
+[2025-12-24T13:25:55.061+0000] {standard_task_runner.py:91} INFO - Job 70: Subtask create_flight_mapping
+[2025-12-24T13:25:55.151+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_flight_mapping_pipeline.create_flight_mapping manual__2025-12-24T13:25:09.362863+00:00 [running]> on host 6c6ccfef5674
+[2025-12-24T13:25:55.306+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_flight_mapping_pipeline' AIRFLOW_CTX_TASK_ID='create_flight_mapping' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T13:25:09.362863+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T13:25:09.362863+00:00'
+[2025-12-24T13:25:55.307+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T13:25:55.511+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:25:55.512+0000] {logging_mixin.py:188} INFO - CREATING FLIGHT MAPPING TABLE
+[2025-12-24T13:25:55.512+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T13:26:02.821+0000] {logging_mixin.py:188} INFO - Found 30 CSV files to process
+[2025-12-24T13:26:02.822+0000] {logging_mixin.py:188} INFO - Reading FlightsV5 data...
+[2025-12-24T13:26:16.640+0000] {logging_mixin.py:188} INFO -   Total flight records: 3,198,513
+[2025-12-24T13:26:19.844+0000] {logging_mixin.py:188} INFO -   Valid records (with callsign & airports): 2,184,022
+[2025-12-24T13:26:19.844+0000] {logging_mixin.py:188} INFO - Creating callsign -> route mapping...
+[2025-12-24T13:26:30.466+0000] {logging_mixin.py:188} INFO -   Total unique callsigns: 213,409
+[2025-12-24T13:26:30.467+0000] {logging_mixin.py:188} INFO -   India-related routes: 4,591
+[2025-12-24T13:26:30.468+0000] {logging_mixin.py:188} INFO - Saving mapping table to /tmp/aviation/mapping/flight_routes
+[2025-12-24T13:26:39.184+0000] {logging_mixin.py:188} INFO - 
+✅ MAPPING TABLE CREATED
+[2025-12-24T13:26:39.190+0000] {logging_mixin.py:188} INFO -    Unique callsigns: 213,409
+[2025-12-24T13:26:39.191+0000] {logging_mixin.py:188} INFO -    India routes: 4,591
+[2025-12-24T13:26:39.192+0000] {logging_mixin.py:188} INFO -    Size: 4.81 MB
+[2025-12-24T13:26:39.193+0000] {logging_mixin.py:188} INFO -    Path: /tmp/aviation/mapping/flight_routes
+[2025-12-24T13:26:39.706+0000] {python.py:237} INFO - Done. Returned value was: {'total_flight_records': 3198513, 'valid_records': 2184022, 'unique_callsigns': 213409, 'india_routes': 4591, 'output_path': '/tmp/aviation/mapping/flight_routes', 'size_mb': 4.81}
+[2025-12-24T13:26:39.707+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T13:26:39.766+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_flight_mapping_pipeline, task_id=create_flight_mapping, execution_date=20251224T132509, start_date=20251224T132555, end_date=20251224T132639
+[2025-12-24T13:26:39.835+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T13:26:39.878+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T13:26:39.880+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

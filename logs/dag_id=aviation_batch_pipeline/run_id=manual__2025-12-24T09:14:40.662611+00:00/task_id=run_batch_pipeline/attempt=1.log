@@ -1,0 +1,321 @@
+[2025-12-24T09:14:51.793+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T09:14:52.037+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T09:14:40.662611+00:00 [queued]>
+[2025-12-24T09:14:52.047+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T09:14:40.662611+00:00 [queued]>
+[2025-12-24T09:14:52.048+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T09:14:52.065+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): run_batch_pipeline> on 2025-12-24 09:14:40.662611+00:00
+[2025-12-24T09:14:52.075+0000] {standard_task_runner.py:63} INFO - Started process 258 to run task
+[2025-12-24T09:14:52.079+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_batch_pipeline', 'run_batch_pipeline', 'manual__2025-12-24T09:14:40.662611+00:00', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/aviation_batch_dag.py', '--cfg-path', '/tmp/tmp71u5c9cn']
+[2025-12-24T09:14:52.082+0000] {standard_task_runner.py:91} INFO - Job 15: Subtask run_batch_pipeline
+[2025-12-24T09:14:52.156+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_batch_pipeline.run_batch_pipeline manual__2025-12-24T09:14:40.662611+00:00 [running]> on host 44bcc4ec17a5
+[2025-12-24T09:14:52.318+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_batch_pipeline' AIRFLOW_CTX_TASK_ID='run_batch_pipeline' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T09:14:40.662611+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T09:14:40.662611+00:00'
+[2025-12-24T09:14:52.320+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T09:15:00.295+0000] {logging_mixin.py:188} INFO - 
+============================================================
+[2025-12-24T09:15:00.304+0000] {logging_mixin.py:188} INFO - STAGE 1: Processing States Data
+[2025-12-24T09:15:00.311+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T09:15:00.317+0000] {logging_mixin.py:188} INFO - Using states path: /data/aviation_data/states
+[2025-12-24T09:15:02.718+0000] {logging_mixin.py:188} INFO - Found 100 tar files to process
+[2025-12-24T09:15:02.719+0000] {logging_mixin.py:188} INFO - Processing 100 tar files...
+[2025-12-24T09:15:02.720+0000] {logging_mixin.py:188} INFO - Processing batch 1/5 (20 files)
+[2025-12-24T09:35:30.010+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses
+[2025-12-24T09:35:30.071+0000] {process_utils.py:132} INFO - Sending 15 to group 258. PIDs of all processes in the group: [259, 258]
+[2025-12-24T09:35:30.074+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 258
+[2025-12-24T09:35:30.076+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T09:35:31.900+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    create_mappings=True,
+        ^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 163, in process_tar_files_to_parquet
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2607, in signal_handler
+    self.log.error("Received SIGTERM. Terminating subprocesses.")
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1518, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1634, in _log
+    self.handle(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1644, in handle
+    self.callHandlers(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1706, in callHandlers
+    hdlr.handle(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 978, in handle
+    self.emit(record)
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/log/file_task_handler.py", line 248, in emit
+    self.handler.emit(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1230, in emit
+    StreamHandler.emit(self, record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 689, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/log/timezone_aware.py", line 42, in formatTime
+    dt = timezone.from_timestamp(record.created, tz="local")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/timezone.py", line 316, in from_timestamp
+    result = result.in_timezone(tz)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 357, in in_timezone
+    return tz.convert(dt)
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/tz/timezone.py", line 136, in convert
+    return cast(_DT, dt.astimezone(self))
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 1278, in astimezone
+    dt = super().astimezone(tz)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 1239, in __add__
+    def __add__(self, other: datetime.timedelta) -> Self:
+    
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T09:35:32.070+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T09:35:32.077+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    create_mappings=True,
+        ^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 163, in process_tar_files_to_parquet
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2607, in signal_handler
+    self.log.error("Received SIGTERM. Terminating subprocesses.")
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1518, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1634, in _log
+    self.handle(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1644, in handle
+    self.callHandlers(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1706, in callHandlers
+    hdlr.handle(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 978, in handle
+    self.emit(record)
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/log/file_task_handler.py", line 248, in emit
+    self.handler.emit(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1230, in emit
+    StreamHandler.emit(self, record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 689, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/log/timezone_aware.py", line 42, in formatTime
+    dt = timezone.from_timestamp(record.created, tz="local")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/timezone.py", line 316, in from_timestamp
+    result = result.in_timezone(tz)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 357, in in_timezone
+    return tz.convert(dt)
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/tz/timezone.py", line 136, in convert
+    return cast(_DT, dt.astimezone(self))
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 1278, in astimezone
+    dt = super().astimezone(tz)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 1239, in __add__
+    def __add__(self, other: datetime.timedelta) -> Self:
+    
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T09:35:32.170+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T09:35:32.423+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T09:35:32.432+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T09:35:32.459+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 138, in run_batch_pipeline
+    create_mappings=True,
+        ^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 118, in run_full_pipeline
+    stage_stats = self._process_states(limit=states_limit)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 169, in _process_states
+    process_tar_files_to_parquet(
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 163, in process_tar_files_to_parquet
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 1238, in count
+    return int(self._jdf.count())
+               ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2607, in signal_handler
+    self.log.error("Received SIGTERM. Terminating subprocesses.")
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1518, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1634, in _log
+    self.handle(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1644, in handle
+    self.callHandlers(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1706, in callHandlers
+    hdlr.handle(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 978, in handle
+    self.emit(record)
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/log/file_task_handler.py", line 248, in emit
+    self.handler.emit(record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1230, in emit
+    StreamHandler.emit(self, record)
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 1110, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 953, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/logging/__init__.py", line 689, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/log/timezone_aware.py", line 42, in formatTime
+    dt = timezone.from_timestamp(record.created, tz="local")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/utils/timezone.py", line 316, in from_timestamp
+    result = result.in_timezone(tz)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 357, in in_timezone
+    return tz.convert(dt)
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/tz/timezone.py", line 136, in convert
+    return cast(_DT, dt.astimezone(self))
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 1278, in astimezone
+    dt = super().astimezone(tz)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/pendulum/datetime.py", line 1239, in __add__
+    def __add__(self, other: datetime.timedelta) -> Self:
+    
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 460, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/aviation_batch_dag.py", line 151, in run_batch_pipeline
+  File "/opt/airflow/src/batch/batch_pipeline.py", line 365, in stop
+    self.spark.stop()
+  File "/opt/spark/python/pyspark/sql/session.py", line 1799, in stop
+    self._jvm.SparkSession.clearDefaultSession()
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1712, in __getattr__
+    answer = self._gateway_client.send_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1036, in send_command
+    connection = self._get_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 284, in _get_connection
+    connection = self._create_new_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 291, in _create_new_connection
+    connection.connect_to_java_server()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 438, in connect_to_java_server
+    self.socket.connect((self.java_address, self.java_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[2025-12-24T09:35:32.760+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=aviation_batch_pipeline, task_id=run_batch_pipeline, execution_date=20251224T091440, start_date=20251224T091452, end_date=20251224T093532
+[2025-12-24T09:35:33.024+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 15 for task run_batch_pipeline ([Errno 111] Connection refused; 258)
+[2025-12-24T09:35:33.256+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=259, status='terminated', started='09:14:52') (259) terminated with exit code None
+[2025-12-24T09:35:33.513+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=258, status='terminated', exitcode=1, started='09:14:51') (258) terminated with exit code 1
+[2025-12-24T09:35:33.518+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 143
+[2025-12-24T09:35:33.791+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T09:35:33.835+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

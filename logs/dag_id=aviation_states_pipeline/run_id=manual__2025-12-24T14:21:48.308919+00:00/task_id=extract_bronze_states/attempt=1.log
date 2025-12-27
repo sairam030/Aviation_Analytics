@@ -1,0 +1,758 @@
+[2025-12-24T14:21:53.073+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T14:21:53.159+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_states_pipeline.extract_bronze_states manual__2025-12-24T14:21:48.308919+00:00 [queued]>
+[2025-12-24T14:21:53.196+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_states_pipeline.extract_bronze_states manual__2025-12-24T14:21:48.308919+00:00 [queued]>
+[2025-12-24T14:21:53.197+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2025-12-24T14:21:53.240+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): extract_bronze_states> on 2025-12-24 14:21:48.308919+00:00
+[2025-12-24T14:21:53.266+0000] {standard_task_runner.py:63} INFO - Started process 4141 to run task
+[2025-12-24T14:21:53.274+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_states_pipeline', 'extract_bronze_states', 'manual__2025-12-24T14:21:48.308919+00:00', '--job-id', '86', '--raw', '--subdir', 'DAGS_FOLDER/aviation_states_pipeline.py', '--cfg-path', '/tmp/tmptjqih0fm']
+[2025-12-24T14:21:53.279+0000] {standard_task_runner.py:91} INFO - Job 86: Subtask extract_bronze_states
+[2025-12-24T14:21:53.465+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_states_pipeline.extract_bronze_states manual__2025-12-24T14:21:48.308919+00:00 [running]> on host 6c6ccfef5674
+[2025-12-24T14:21:53.785+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='aviation_states_pipeline' AIRFLOW_CTX_TASK_ID='extract_bronze_states' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T14:21:48.308919+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T14:21:48.308919+00:00'
+[2025-12-24T14:21:53.787+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T14:21:53.823+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T14:21:53.823+0000] {logging_mixin.py:188} INFO - BRONZE LAYER: Extracting India Flight States
+[2025-12-24T14:21:53.824+0000] {logging_mixin.py:188} INFO - Output: s3a://aviation-bronze/states
+[2025-12-24T14:21:53.825+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T14:21:56.930+0000] {logging_mixin.py:188} INFO - Found 2722 tar files
+[2025-12-24T14:22:08.854+0000] {logging_mixin.py:188} INFO -   Ensured output directory exists: s3a://aviation-bronze/states
+[2025-12-24T14:22:08.860+0000] {logging_mixin.py:188} INFO - Processing 2722 tar files... (Target: 0.01 GB)
+[2025-12-24T14:22:08.862+0000] {logging_mixin.py:188} INFO - Processing batch 1/545 (5 files)
+[2025-12-24T14:22:08.869+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-00.csv.tar
+[2025-12-24T14:22:08.975+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-00.csv.tar
+[2025-12-24T14:22:09.739+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-01.csv.tar
+[2025-12-24T14:22:09.748+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-01.csv.tar
+[2025-12-24T14:22:10.250+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-02.csv.tar
+[2025-12-24T14:22:10.267+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T14:22:41.666+0000] {logging_mixin.py:188} INFO -   Batch 1: 27656 India-related records
+[2025-12-24T14:23:04.960+0000] {logging_mixin.py:188} INFO -   Batch 1: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:23:04.979+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:23:04.998+0000] {logging_mixin.py:188} INFO - Processing batch 2/545 (5 files)
+[2025-12-24T14:23:05.000+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-02.csv.tar
+[2025-12-24T14:23:05.502+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-03.csv.tar
+[2025-12-24T14:23:05.515+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-03.csv.tar
+[2025-12-24T14:23:05.948+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-04.csv.tar
+[2025-12-24T14:23:05.962+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-04.csv.tar
+[2025-12-24T14:23:06.412+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T14:23:11.941+0000] {logging_mixin.py:188} INFO -   Batch 2: 51050 India-related records
+[2025-12-24T14:23:21.236+0000] {logging_mixin.py:188} INFO -   Batch 2: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:23:21.291+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:23:21.292+0000] {logging_mixin.py:188} INFO - Processing batch 3/545 (5 files)
+[2025-12-24T14:23:21.292+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-05.csv.tar
+[2025-12-24T14:23:21.311+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-05.csv.tar
+[2025-12-24T14:23:21.822+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-06.csv.tar
+[2025-12-24T14:23:21.829+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-06.csv.tar
+[2025-12-24T14:23:22.346+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-07.csv.tar
+[2025-12-24T14:23:22.362+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T14:23:28.120+0000] {logging_mixin.py:188} INFO -   Batch 3: 35153 India-related records
+[2025-12-24T14:23:38.111+0000] {logging_mixin.py:188} INFO -   Batch 3: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:23:38.161+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:23:38.162+0000] {logging_mixin.py:188} INFO - Processing batch 4/545 (5 files)
+[2025-12-24T14:23:38.163+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-07.csv.tar
+[2025-12-24T14:23:38.707+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-08.csv.tar
+[2025-12-24T14:23:38.713+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-08.csv.tar
+[2025-12-24T14:23:39.273+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-09.csv.tar
+[2025-12-24T14:23:39.280+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-09.csv.tar
+[2025-12-24T14:23:39.868+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T14:23:46.851+0000] {logging_mixin.py:188} INFO -   Batch 4: 34425 India-related records
+[2025-12-24T14:23:56.716+0000] {logging_mixin.py:188} INFO -   Batch 4: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:23:56.768+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:23:56.769+0000] {logging_mixin.py:188} INFO - Processing batch 5/545 (5 files)
+[2025-12-24T14:23:56.769+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-10.csv.tar
+[2025-12-24T14:23:56.786+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-10.csv.tar
+[2025-12-24T14:23:57.435+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-11.csv.tar
+[2025-12-24T14:23:57.447+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-11.csv.tar
+[2025-12-24T14:23:58.186+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-12.csv.tar
+[2025-12-24T14:23:58.197+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T14:24:05.789+0000] {logging_mixin.py:188} INFO -   Batch 5: 15668 India-related records
+[2025-12-24T14:24:15.799+0000] {logging_mixin.py:188} INFO -   Batch 5: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:24:15.851+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:24:15.851+0000] {logging_mixin.py:188} INFO - Processing batch 6/545 (5 files)
+[2025-12-24T14:24:15.852+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-12.csv.tar
+[2025-12-24T14:24:16.611+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-13.csv.tar
+[2025-12-24T14:24:16.626+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-13.csv.tar
+[2025-12-24T14:24:17.467+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-14.csv.tar
+[2025-12-24T14:24:17.482+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-14.csv.tar
+[2025-12-24T14:24:18.313+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T14:24:27.334+0000] {logging_mixin.py:188} INFO -   Batch 6: 24622 India-related records
+[2025-12-24T14:24:40.614+0000] {logging_mixin.py:188} INFO -   Batch 6: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:24:40.673+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:24:40.674+0000] {logging_mixin.py:188} INFO - Processing batch 7/545 (5 files)
+[2025-12-24T14:24:40.674+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-15.csv.tar
+[2025-12-24T14:24:40.701+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-15.csv.tar
+[2025-12-24T14:24:41.557+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-16.csv.tar
+[2025-12-24T14:24:41.574+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-16.csv.tar
+[2025-12-24T14:24:42.431+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-17.csv.tar
+[2025-12-24T14:24:42.449+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T14:24:51.167+0000] {logging_mixin.py:188} INFO -   Batch 7: 21015 India-related records
+[2025-12-24T14:25:02.003+0000] {logging_mixin.py:188} INFO -   Batch 7: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:25:02.053+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:25:02.054+0000] {logging_mixin.py:188} INFO - Processing batch 8/545 (5 files)
+[2025-12-24T14:25:02.055+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-17.csv.tar
+[2025-12-24T14:25:02.886+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-18.csv.tar
+[2025-12-24T14:25:02.900+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-18.csv.tar
+[2025-12-24T14:25:03.704+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_.2017-06-05-19.csv.tar
+[2025-12-24T14:25:03.723+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-06-05-19.csv.tar
+[2025-12-24T14:25:04.511+0000] {logging_mixin.py:188} INFO -   Reading 3 CSV files with Spark...
+[2025-12-24T14:25:13.171+0000] {logging_mixin.py:188} INFO -   Batch 8: 30106 India-related records
+[2025-12-24T14:25:24.703+0000] {logging_mixin.py:188} INFO -   Batch 8: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:25:24.739+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:25:24.741+0000] {logging_mixin.py:188} INFO - Processing batch 9/545 (5 files)
+[2025-12-24T14:25:24.741+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_.2017-06-05-20.csv.tar
+[2025-12-24T14:25:24.756+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-06-05-20.csv.tar
+[2025-12-24T14:25:25.498+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_.2017-06-05-21.csv.tar
+[2025-12-24T14:25:25.511+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-06-05-21.csv.tar
+[2025-12-24T14:25:26.176+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_.2017-06-05-22.csv.tar
+[2025-12-24T14:25:26.189+0000] {logging_mixin.py:188} INFO -   Reading 2 CSV files with Spark...
+[2025-12-24T14:25:33.159+0000] {logging_mixin.py:188} INFO -   Batch 9: 23654 India-related records
+[2025-12-24T14:25:42.724+0000] {logging_mixin.py:188} INFO -   Batch 9: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:25:42.755+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:25:42.757+0000] {logging_mixin.py:188} INFO - Processing batch 10/545 (5 files)
+[2025-12-24T14:25:42.757+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-06-05-22.csv.tar
+[2025-12-24T14:25:43.358+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_.2017-06-05-23.csv.tar
+[2025-12-24T14:25:43.368+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-06-05-23.csv.tar
+[2025-12-24T14:25:43.923+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-00.csv.tar
+[2025-12-24T14:25:44.411+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-01.csv.tar
+[2025-12-24T14:25:45.388+0000] {logging_mixin.py:188} INFO -   Reading 4 CSV files with Spark...
+[2025-12-24T14:25:51.298+0000] {logging_mixin.py:188} INFO -   Batch 10: 29597 India-related records
+[2025-12-24T14:26:01.261+0000] {logging_mixin.py:188} INFO -   Batch 10: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:26:01.318+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:26:01.320+0000] {logging_mixin.py:188} INFO - Processing batch 11/545 (5 files)
+[2025-12-24T14:26:01.320+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-02.csv.tar
+[2025-12-24T14:26:01.766+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-03.csv.tar
+[2025-12-24T14:26:02.163+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-04.csv.tar
+[2025-12-24T14:26:02.564+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-05.csv.tar
+[2025-12-24T14:26:03.067+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-06.csv.tar
+[2025-12-24T14:26:03.606+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:26:09.879+0000] {logging_mixin.py:188} INFO -   Batch 11: 36401 India-related records
+[2025-12-24T14:26:20.172+0000] {logging_mixin.py:188} INFO -   Batch 11: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:26:20.192+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:26:20.195+0000] {logging_mixin.py:188} INFO - Processing batch 12/545 (5 files)
+[2025-12-24T14:26:20.198+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-07.csv.tar
+[2025-12-24T14:26:20.766+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-08.csv.tar
+[2025-12-24T14:26:21.326+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-09.csv.tar
+[2025-12-24T14:26:21.925+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-10.csv.tar
+[2025-12-24T14:26:22.536+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-11.csv.tar
+[2025-12-24T14:26:23.231+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:26:35.609+0000] {logging_mixin.py:188} INFO -   Batch 12: 39346 India-related records
+[2025-12-24T14:26:49.922+0000] {logging_mixin.py:188} INFO -   Batch 12: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:26:49.969+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:26:49.971+0000] {logging_mixin.py:188} INFO - Processing batch 13/545 (5 files)
+[2025-12-24T14:26:49.971+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-12.csv.tar
+[2025-12-24T14:26:50.689+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-13.csv.tar
+[2025-12-24T14:26:51.457+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-14.csv.tar
+[2025-12-24T14:26:52.294+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-15.csv.tar
+[2025-12-24T14:26:54.333+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-16.csv.tar
+[2025-12-24T14:26:55.206+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:27:07.614+0000] {logging_mixin.py:188} INFO -   Batch 13: 54540 India-related records
+[2025-12-24T14:27:26.192+0000] {logging_mixin.py:188} INFO -   Batch 13: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:27:26.270+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:27:26.272+0000] {logging_mixin.py:188} INFO - Processing batch 14/545 (5 files)
+[2025-12-24T14:27:26.273+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-17.csv.tar
+[2025-12-24T14:27:27.084+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-18.csv.tar
+[2025-12-24T14:27:27.874+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-03-19.csv.tar
+[2025-12-24T14:27:28.668+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-03-20.csv.tar
+[2025-12-24T14:27:29.405+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-03-21.csv.tar
+[2025-12-24T14:27:32.543+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:27:46.814+0000] {logging_mixin.py:188} INFO -   Batch 14: 51687 India-related records
+[2025-12-24T14:28:05.875+0000] {logging_mixin.py:188} INFO -   Batch 14: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:28:05.920+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:28:05.921+0000] {logging_mixin.py:188} INFO - Processing batch 15/545 (5 files)
+[2025-12-24T14:28:05.922+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-03-22.csv.tar
+[2025-12-24T14:28:06.505+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-03-23.csv.tar
+[2025-12-24T14:28:07.014+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-00.csv.tar
+[2025-12-24T14:28:07.573+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-01.csv.tar
+[2025-12-24T14:28:08.080+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-02.csv.tar
+[2025-12-24T14:28:08.561+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:28:16.222+0000] {logging_mixin.py:188} INFO -   Batch 15: 40908 India-related records
+[2025-12-24T14:28:27.684+0000] {logging_mixin.py:188} INFO -   Batch 15: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:28:27.741+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:28:27.742+0000] {logging_mixin.py:188} INFO - Processing batch 16/545 (5 files)
+[2025-12-24T14:28:27.742+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-03.csv.tar
+[2025-12-24T14:28:28.215+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-04.csv.tar
+[2025-12-24T14:28:28.676+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-05.csv.tar
+[2025-12-24T14:28:29.222+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-06.csv.tar
+[2025-12-24T14:28:29.780+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-07.csv.tar
+[2025-12-24T14:28:30.364+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:28:39.623+0000] {logging_mixin.py:188} INFO -   Batch 16: 39109 India-related records
+[2025-12-24T14:28:50.439+0000] {logging_mixin.py:188} INFO -   Batch 16: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:28:50.497+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:28:50.498+0000] {logging_mixin.py:188} INFO - Processing batch 17/545 (5 files)
+[2025-12-24T14:28:50.498+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-08.csv.tar
+[2025-12-24T14:28:51.086+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-09.csv.tar
+[2025-12-24T14:28:51.722+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-10.csv.tar
+[2025-12-24T14:28:53.641+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-11.csv.tar
+[2025-12-24T14:28:54.376+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-12.csv.tar
+[2025-12-24T14:28:55.168+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:29:07.369+0000] {logging_mixin.py:188} INFO -   Batch 17: 40269 India-related records
+[2025-12-24T14:29:23.339+0000] {logging_mixin.py:188} INFO -   Batch 17: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:29:23.403+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:29:23.404+0000] {logging_mixin.py:188} INFO - Processing batch 18/545 (5 files)
+[2025-12-24T14:29:23.406+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-13.csv.tar
+[2025-12-24T14:29:24.268+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-14.csv.tar
+[2025-12-24T14:29:25.135+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-15.csv.tar
+[2025-12-24T14:29:26.092+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-16.csv.tar
+[2025-12-24T14:29:26.970+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-17.csv.tar
+[2025-12-24T14:29:27.475+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:29:39.592+0000] {logging_mixin.py:188} INFO -   Batch 18: 46479 India-related records
+[2025-12-24T14:29:56.432+0000] {logging_mixin.py:188} INFO -   Batch 18: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:29:56.517+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:29:56.519+0000] {logging_mixin.py:188} INFO - Processing batch 19/545 (5 files)
+[2025-12-24T14:29:56.519+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-18.csv.tar
+[2025-12-24T14:29:57.377+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-10-19.csv.tar
+[2025-12-24T14:29:58.176+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-10-20.csv.tar
+[2025-12-24T14:29:58.997+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-10-21.csv.tar
+[2025-12-24T14:29:59.736+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-10-22.csv.tar
+[2025-12-24T14:30:00.368+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:30:11.510+0000] {logging_mixin.py:188} INFO -   Batch 19: 51876 India-related records
+[2025-12-24T14:30:27.632+0000] {logging_mixin.py:188} INFO -   Batch 19: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:30:27.679+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:30:27.680+0000] {logging_mixin.py:188} INFO - Processing batch 20/545 (5 files)
+[2025-12-24T14:30:27.681+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-10-23.csv.tar
+[2025-12-24T14:30:28.262+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-00.csv.tar
+[2025-12-24T14:30:28.839+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-01.csv.tar
+[2025-12-24T14:30:29.362+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-02.csv.tar
+[2025-12-24T14:30:29.843+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-03.csv.tar
+[2025-12-24T14:30:30.269+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:30:38.689+0000] {logging_mixin.py:188} INFO -   Batch 20: 49083 India-related records
+[2025-12-24T14:30:50.353+0000] {logging_mixin.py:188} INFO -   Batch 20: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:30:50.446+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:30:50.446+0000] {logging_mixin.py:188} INFO - Processing batch 21/545 (5 files)
+[2025-12-24T14:30:50.447+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-17-04.csv.tar
+[2025-12-24T14:30:50.893+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-05.csv.tar
+[2025-12-24T14:30:51.392+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-06.csv.tar
+[2025-12-24T14:30:51.925+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-07.csv.tar
+[2025-12-24T14:30:52.500+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-08.csv.tar
+[2025-12-24T14:30:53.073+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:31:01.416+0000] {logging_mixin.py:188} INFO -   Batch 21: 52514 India-related records
+[2025-12-24T14:31:13.717+0000] {logging_mixin.py:188} INFO -   Batch 21: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:31:13.784+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:31:13.785+0000] {logging_mixin.py:188} INFO - Processing batch 22/545 (5 files)
+[2025-12-24T14:31:13.785+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-17-09.csv.tar
+[2025-12-24T14:31:14.410+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-10.csv.tar
+[2025-12-24T14:31:15.035+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-11.csv.tar
+[2025-12-24T14:31:15.774+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-12.csv.tar
+[2025-12-24T14:31:16.533+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-13.csv.tar
+[2025-12-24T14:31:19.736+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:31:31.273+0000] {logging_mixin.py:188} INFO -   Batch 22: 62945 India-related records
+[2025-12-24T14:31:47.251+0000] {logging_mixin.py:188} INFO -   Batch 22: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:31:47.301+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:31:47.302+0000] {logging_mixin.py:188} INFO - Processing batch 23/545 (5 files)
+[2025-12-24T14:31:47.302+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-17-14.csv.tar
+[2025-12-24T14:31:48.135+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-15.csv.tar
+[2025-12-24T14:31:48.959+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-16.csv.tar
+[2025-12-24T14:31:49.837+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-17.csv.tar
+[2025-12-24T14:31:50.641+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-18.csv.tar
+[2025-12-24T14:31:51.424+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:32:04.077+0000] {logging_mixin.py:188} INFO -   Batch 23: 56820 India-related records
+[2025-12-24T14:32:20.811+0000] {logging_mixin.py:188} INFO -   Batch 23: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:32:20.902+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:32:20.903+0000] {logging_mixin.py:188} INFO - Processing batch 24/545 (5 files)
+[2025-12-24T14:32:20.904+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-17-19.csv.tar
+[2025-12-24T14:32:21.698+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-17-20.csv.tar
+[2025-12-24T14:32:22.458+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-17-21.csv.tar
+[2025-12-24T14:32:23.152+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-17-22.csv.tar
+[2025-12-24T14:32:23.785+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-17-23.csv.tar
+[2025-12-24T14:32:24.334+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:32:35.070+0000] {logging_mixin.py:188} INFO -   Batch 24: 56221 India-related records
+[2025-12-24T14:32:50.093+0000] {logging_mixin.py:188} INFO -   Batch 24: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:32:50.180+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:32:50.183+0000] {logging_mixin.py:188} INFO - Processing batch 25/545 (5 files)
+[2025-12-24T14:32:50.184+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-24-00.csv.tar
+[2025-12-24T14:32:50.763+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-24-01.csv.tar
+[2025-12-24T14:32:51.355+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-24-02.csv.tar
+[2025-12-24T14:32:51.942+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-24-03.csv.tar
+[2025-12-24T14:32:52.472+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-24-04.csv.tar
+[2025-12-24T14:32:53.069+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:33:01.751+0000] {logging_mixin.py:188} INFO -   Batch 25: 57264 India-related records
+[2025-12-24T14:33:13.017+0000] {logging_mixin.py:188} INFO -   Batch 25: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:33:13.052+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:33:13.053+0000] {logging_mixin.py:188} INFO - Processing batch 26/545 (5 files)
+[2025-12-24T14:33:13.053+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-24-05.csv.tar
+[2025-12-24T14:33:13.675+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-24-06.csv.tar
+[2025-12-24T14:33:14.299+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-24-07.csv.tar
+[2025-12-24T14:33:14.952+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-24-08.csv.tar
+[2025-12-24T14:33:15.584+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-24-09.csv.tar
+[2025-12-24T14:33:16.232+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:33:25.414+0000] {logging_mixin.py:188} INFO -   Batch 26: 48652 India-related records
+[2025-12-24T14:33:37.663+0000] {logging_mixin.py:188} INFO -   Batch 26: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:33:37.771+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:33:37.771+0000] {logging_mixin.py:188} INFO - Processing batch 27/545 (5 files)
+[2025-12-24T14:33:37.772+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-24-10.csv.tar
+[2025-12-24T14:33:38.480+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-24-11.csv.tar
+[2025-12-24T14:33:39.319+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-24-12.csv.tar
+[2025-12-24T14:33:40.232+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-24-13.csv.tar
+[2025-12-24T14:33:41.100+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-24-14.csv.tar
+[2025-12-24T14:33:42.030+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:33:53.654+0000] {logging_mixin.py:188} INFO -   Batch 27: 50591 India-related records
+[2025-12-24T14:34:09.676+0000] {logging_mixin.py:188} INFO -   Batch 27: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:34:09.771+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:34:09.771+0000] {logging_mixin.py:188} INFO - Processing batch 28/545 (5 files)
+[2025-12-24T14:34:09.772+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-24-15.csv.tar
+[2025-12-24T14:34:10.675+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-24-16.csv.tar
+[2025-12-24T14:34:11.563+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-24-17.csv.tar
+[2025-12-24T14:34:12.457+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-24-18.csv.tar
+[2025-12-24T14:34:13.314+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-24-19.csv.tar
+[2025-12-24T14:34:14.188+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:34:26.199+0000] {logging_mixin.py:188} INFO -   Batch 28: 57130 India-related records
+[2025-12-24T14:34:43.407+0000] {logging_mixin.py:188} INFO -   Batch 28: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:34:43.529+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:34:43.529+0000] {logging_mixin.py:188} INFO - Processing batch 29/545 (5 files)
+[2025-12-24T14:34:43.530+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-24-20.csv.tar
+[2025-12-24T14:34:44.361+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-24-21.csv.tar
+[2025-12-24T14:34:45.104+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-24-22.csv.tar
+[2025-12-24T14:34:45.777+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-24-23.csv.tar
+[2025-12-24T14:34:46.373+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-31-00.csv.tar
+[2025-12-24T14:34:46.962+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:34:57.505+0000] {logging_mixin.py:188} INFO -   Batch 29: 56996 India-related records
+[2025-12-24T14:35:11.898+0000] {logging_mixin.py:188} INFO -   Batch 29: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:35:11.973+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:35:11.974+0000] {logging_mixin.py:188} INFO - Processing batch 30/545 (5 files)
+[2025-12-24T14:35:11.974+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-31-01.csv.tar
+[2025-12-24T14:35:12.490+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-31-02.csv.tar
+[2025-12-24T14:35:12.989+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-31-03.csv.tar
+[2025-12-24T14:35:13.436+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-31-04.csv.tar
+[2025-12-24T14:35:13.907+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-31-05.csv.tar
+[2025-12-24T14:35:14.459+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:35:22.721+0000] {logging_mixin.py:188} INFO -   Batch 30: 55602 India-related records
+[2025-12-24T14:35:36.301+0000] {logging_mixin.py:188} INFO -   Batch 30: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:35:36.356+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:35:36.357+0000] {logging_mixin.py:188} INFO - Processing batch 31/545 (5 files)
+[2025-12-24T14:35:36.358+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-31-06.csv.tar
+[2025-12-24T14:35:36.921+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-31-07.csv.tar
+[2025-12-24T14:35:37.501+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-31-08.csv.tar
+[2025-12-24T14:35:38.120+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-31-09.csv.tar
+[2025-12-24T14:35:38.747+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-31-10.csv.tar
+[2025-12-24T14:35:39.429+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:35:50.633+0000] {logging_mixin.py:188} INFO -   Batch 31: 47712 India-related records
+[2025-12-24T14:36:06.148+0000] {logging_mixin.py:188} INFO -   Batch 31: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:36:06.170+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:36:06.170+0000] {logging_mixin.py:188} INFO - Processing batch 32/545 (5 files)
+[2025-12-24T14:36:06.172+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-31-11.csv.tar
+[2025-12-24T14:36:06.936+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-31-12.csv.tar
+[2025-12-24T14:36:07.726+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-31-13.csv.tar
+[2025-12-24T14:36:08.574+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-31-14.csv.tar
+[2025-12-24T14:36:09.461+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-31-15.csv.tar
+[2025-12-24T14:36:10.366+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:36:25.780+0000] {logging_mixin.py:188} INFO -   Batch 32: 65764 India-related records
+[2025-12-24T14:36:46.940+0000] {logging_mixin.py:188} INFO -   Batch 32: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:36:46.980+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:36:46.981+0000] {logging_mixin.py:188} INFO - Processing batch 33/545 (5 files)
+[2025-12-24T14:36:46.981+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-31-16.csv.tar
+[2025-12-24T14:36:47.897+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-31-17.csv.tar
+[2025-12-24T14:36:48.792+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-31-18.csv.tar
+[2025-12-24T14:36:49.773+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-07-31-19.csv.tar
+[2025-12-24T14:36:50.588+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-07-31-20.csv.tar
+[2025-12-24T14:36:51.374+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:37:04.112+0000] {logging_mixin.py:188} INFO -   Batch 33: 56120 India-related records
+[2025-12-24T14:37:23.203+0000] {logging_mixin.py:188} INFO -   Batch 33: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:37:23.284+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:37:23.285+0000] {logging_mixin.py:188} INFO - Processing batch 34/545 (5 files)
+[2025-12-24T14:37:23.287+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-07-31-21.csv.tar
+[2025-12-24T14:37:24.111+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-07-31-22.csv.tar
+[2025-12-24T14:37:24.789+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-07-31-23.csv.tar
+[2025-12-24T14:37:25.538+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-08-07-00.csv.tar
+[2025-12-24T14:37:26.208+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-08-07-01.csv.tar
+[2025-12-24T14:37:26.747+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:37:37.021+0000] {logging_mixin.py:188} INFO -   Batch 34: 53858 India-related records
+[2025-12-24T14:37:54.489+0000] {logging_mixin.py:188} INFO -   Batch 34: Saved to s3a://aviation-bronze/states | Current size: 0.000 GB
+[2025-12-24T14:37:54.536+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:37:54.536+0000] {logging_mixin.py:188} INFO - Processing batch 35/545 (5 files)
+[2025-12-24T14:37:54.537+0000] {logging_mixin.py:188} INFO -   Extracting file 1/5: states_2017-08-07-02.csv.tar
+[2025-12-24T14:37:55.030+0000] {logging_mixin.py:188} INFO -   Extracting file 2/5: states_2017-08-07-03.csv.tar
+[2025-12-24T14:37:55.525+0000] {logging_mixin.py:188} INFO -   Extracting file 3/5: states_2017-08-07-04.csv.tar
+[2025-12-24T14:37:56.002+0000] {logging_mixin.py:188} INFO -   Extracting file 4/5: states_2017-08-07-05.csv.tar
+[2025-12-24T14:37:56.553+0000] {logging_mixin.py:188} INFO -   Extracting file 5/5: states_2017-08-07-06.csv.tar
+[2025-12-24T14:37:57.179+0000] {logging_mixin.py:188} INFO -   Reading 5 CSV files with Spark...
+[2025-12-24T14:38:06.362+0000] {logging_mixin.py:188} INFO -   Batch 35: 58662 India-related records
+[2025-12-24T14:38:13.654+0000] {local_task_job_runner.py:310} WARNING - State of this instance has been externally set to restarting. Terminating instance.
+[2025-12-24T14:38:13.695+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-12-24T14:38:13.737+0000] {process_utils.py:132} INFO - Sending 15 to group 4141. PIDs of all processes in the group: [4169, 4141]
+[2025-12-24T14:38:13.744+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 4141
+[2025-12-24T14:38:13.756+0000] {taskinstance.py:2607} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-12-24T14:38:13.762+0000] {logging_mixin.py:188} INFO -   Cleaned up temp directory
+[2025-12-24T14:38:15.966+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/airflow/src/batch/bronze.py", line 24, in extract_states
+    try:
+        
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 195, in process_tar_files_to_parquet
+    # Save to parquet (append mode)
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1721, in parquet
+    self._jwrite.parquet(path)
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+[2025-12-24T14:38:16.311+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:16.333+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/airflow/src/batch/bronze.py", line 24, in extract_states
+    try:
+        
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 195, in process_tar_files_to_parquet
+    # Save to parquet (append mode)
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1721, in parquet
+    self._jwrite.parquet(path)
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T14:38:16.618+0000] {logging_mixin.py:188} WARNING - /opt/spark/python/pyspark/context.py:657 RuntimeWarning: Unable to cleanly shutdown Spark JVM process. It is possible that the process has crashed, been killed or may also be in a zombie state.
+[2025-12-24T14:38:16.972+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:16.981+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T14:38:17.033+0000] {clientserver.py:538} INFO - Error while receiving.
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+[2025-12-24T14:38:17.057+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.058+0000] {java_gateway.py:1055} ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 516, in send_command
+    raise Py4JNetworkError("Answer from Java side is empty")
+py4j.protocol.Py4JNetworkError: Answer from Java side is empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[2025-12-24T14:38:17.068+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.087+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.087+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.088+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.088+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.098+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.098+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.099+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.099+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.099+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.100+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.102+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.102+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.103+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.104+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.104+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.105+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.106+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.106+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.107+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.108+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.109+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.109+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.101+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/src/batch/bronze.py", line 24, in extract_states
+    try:
+        
+  File "/opt/airflow/src/batch/extract_india_flights.py", line 195, in process_tar_files_to_parquet
+    # Save to parquet (append mode)
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/readwriter.py", line 1721, in parquet
+    self._jwrite.parquet(path)
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1321, in __call__
+    answer = self.gateway_client.send_command(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2609, in signal_handler
+    raise AirflowTaskTerminated("Task received SIGTERM signal")
+airflow.exceptions.AirflowTaskTerminated: Task received SIGTERM signal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 460, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/batch/bronze.py", line 38, in extract_states
+    finally:
+        ^^^^^
+  File "/opt/spark/python/pyspark/sql/session.py", line 1799, in stop
+    self._jvm.SparkSession.clearDefaultSession()
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1712, in __getattr__
+    answer = self._gateway_client.send_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1036, in send_command
+    connection = self._get_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 284, in _get_connection
+    connection = self._create_new_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 291, in _create_new_connection
+    connection.connect_to_java_server()
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/clientserver.py", line 438, in connect_to_java_server
+    self.socket.connect((self.java_address, self.java_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[2025-12-24T14:38:17.117+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.225+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.257+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.285+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.315+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.319+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.319+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.320+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.320+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.321+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.321+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.321+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.322+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.322+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.322+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.323+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.323+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.324+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.325+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.325+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.325+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.326+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.326+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.327+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.327+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.327+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.327+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.328+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.328+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.328+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.328+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.328+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.328+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.329+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.329+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.329+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.329+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.329+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.330+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.330+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.331+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.331+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.331+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.331+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.331+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.332+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.332+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.332+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.333+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.333+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.333+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.333+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.333+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.333+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.334+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.334+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.334+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.334+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.334+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.334+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.335+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.335+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.335+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.335+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.335+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.335+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.336+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.336+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.336+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.336+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.337+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.337+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.337+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.338+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.338+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.338+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.338+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.339+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.339+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.339+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.339+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.339+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.339+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.340+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.340+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.340+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.340+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.340+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.340+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.341+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.341+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.341+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.341+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.341+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.341+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.342+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.342+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.342+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.342+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.342+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.342+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.343+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.348+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.365+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.388+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.391+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.391+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.391+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.391+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.392+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.392+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.392+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.392+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.392+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.392+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.393+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.393+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.393+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.393+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.394+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.394+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.394+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.395+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.395+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.396+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.396+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.396+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.396+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.397+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.397+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.397+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.397+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.397+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.398+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.399+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.399+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.399+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.399+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.399+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.400+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.400+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.400+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.400+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.401+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.401+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.401+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.401+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.401+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.402+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.402+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.402+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.403+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.403+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.403+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.404+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.404+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.404+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.404+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.405+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.405+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.405+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.405+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.405+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.406+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.406+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.406+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.406+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.407+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.413+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.441+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.468+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=aviation_states_pipeline, task_id=extract_bronze_states, execution_date=20251224T142148, start_date=20251224T142153, end_date=20251224T143817
+[2025-12-24T14:38:17.464+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.496+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.497+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.497+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.498+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.499+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.499+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.500+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.501+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.501+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.502+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.502+0000] {clientserver.py:543} INFO - Closing down clientserver connection
+[2025-12-24T14:38:17.672+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 86 for task extract_bronze_states ([Errno 111] Connection refused; 4141)
+[2025-12-24T14:38:17.705+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=4141, status='terminated', exitcode=1, started='14:21:52') (4141) terminated with exit code 1
+[2025-12-24T14:38:17.710+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=4169, status='terminated', started='14:21:56') (4169) terminated with exit code None

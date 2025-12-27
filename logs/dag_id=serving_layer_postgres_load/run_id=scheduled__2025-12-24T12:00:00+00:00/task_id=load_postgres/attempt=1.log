@@ -1,0 +1,66 @@
+[2025-12-24T18:21:40.314+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T18:21:40.394+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres scheduled__2025-12-24T12:00:00+00:00 [queued]>
+[2025-12-24T18:21:40.415+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres scheduled__2025-12-24T12:00:00+00:00 [queued]>
+[2025-12-24T18:21:40.416+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T18:21:40.451+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): load_postgres> on 2025-12-24 12:00:00+00:00
+[2025-12-24T18:21:40.476+0000] {standard_task_runner.py:63} INFO - Started process 1649 to run task
+[2025-12-24T18:21:40.486+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'serving_layer_postgres_load', 'load_postgres', 'scheduled__2025-12-24T12:00:00+00:00', '--job-id', '124', '--raw', '--subdir', 'DAGS_FOLDER/serving_layer_postgres_load.py', '--cfg-path', '/tmp/tmpf4k_fma1']
+[2025-12-24T18:21:40.492+0000] {standard_task_runner.py:91} INFO - Job 124: Subtask load_postgres
+[2025-12-24T18:21:40.934+0000] {task_command.py:426} INFO - Running <TaskInstance: serving_layer_postgres_load.load_postgres scheduled__2025-12-24T12:00:00+00:00 [running]> on host 2f0396c9313f
+[2025-12-24T18:21:41.439+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='serving_layer_postgres_load' AIRFLOW_CTX_TASK_ID='load_postgres' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T12:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-24T12:00:00+00:00'
+[2025-12-24T18:21:41.441+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T18:21:41.466+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.467+0000] {logging_mixin.py:188} INFO - RUNNING INCREMENTAL LOAD (only new files)
+[2025-12-24T18:21:41.467+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.467+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.467+0000] {logging_mixin.py:188} INFO - AVIATION SERVING LAYER - INCREMENTAL LOAD
+[2025-12-24T18:21:41.467+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:21:41.479+0000] {logging_mixin.py:188} INFO - ✓ Database exists: aviation_db
+[2025-12-24T18:21:41.500+0000] {logging_mixin.py:188} INFO - ✓ Tracking table ready: processed_files
+[2025-12-24T18:21:41.516+0000] {logging_mixin.py:188} INFO -   Already processed: 0 files
+[2025-12-24T18:22:05.585+0000] {logging_mixin.py:188} INFO - 
+1. Checking for new data in Silver layer...
+[2025-12-24T18:22:05.587+0000] {logging_mixin.py:188} INFO -   Reading batch data from: s3a://aviation-silver/enriched_states
+[2025-12-24T18:22:08.678+0000] {logging_mixin.py:188} INFO -   Found 18 new files (out of 18 total)
+[2025-12-24T18:22:16.621+0000] {logging_mixin.py:188} INFO -   Reading speed data from: s3a://aviation-silver/speed_layer/enriched_flight_states
+[2025-12-24T18:22:17.364+0000] {logging_mixin.py:188} INFO -   Found 4 new files (out of 4 total)
+[2025-12-24T18:22:18.296+0000] {logging_mixin.py:188} INFO - 
+2. Merging new data...
+[2025-12-24T18:22:18.298+0000] {logging_mixin.py:188} INFO -   Merging batch and speed layer data...
+[2025-12-24T18:22:28.040+0000] {logging_mixin.py:188} INFO -   New records: 2,077,883
+[2025-12-24T18:22:28.046+0000] {logging_mixin.py:188} INFO - 
+3. Appending to flight_states...
+[2025-12-24T18:22:30.337+0000] {logging_mixin.py:188} INFO -   Loading to PostgreSQL table: flight_states (mode: append)
+[2025-12-24T18:23:34.327+0000] {logging_mixin.py:188} INFO -   ✓ Loaded 2,077,883 records to flight_states
+[2025-12-24T18:23:34.381+0000] {logging_mixin.py:188} INFO - 
+4. Rebuilding aggregation tables...
+[2025-12-24T18:23:38.409+0000] {logging_mixin.py:188} INFO -   Total records in PostgreSQL: 3,227,643
+[2025-12-24T18:23:38.415+0000] {logging_mixin.py:188} INFO - 
+5. Rebuilding flight_summary...
+[2025-12-24T18:23:42.391+0000] {logging_mixin.py:188} INFO -   Loading to PostgreSQL table: flight_summary (mode: overwrite)
+[2025-12-24T18:23:52.623+0000] {logging_mixin.py:188} INFO -   ✓ Loaded 10,557 records to flight_summary
+[2025-12-24T18:23:52.625+0000] {logging_mixin.py:188} INFO - 
+6. Rebuilding airline_stats...
+[2025-12-24T18:23:52.628+0000] {logging_mixin.py:188} INFO - 
+7. Rebuilding airport_stats...
+[2025-12-24T18:23:52.629+0000] {logging_mixin.py:188} INFO - 
+8. Rebuilding hourly_stats...
+[2025-12-24T18:23:52.635+0000] {logging_mixin.py:188} INFO - 
+9. Marking new files as processed...
+[2025-12-24T18:23:52.691+0000] {logging_mixin.py:188} INFO -   ✓ Marked 18 files as processed
+[2025-12-24T18:23:52.714+0000] {logging_mixin.py:188} INFO -   ✓ Marked 4 files as processed
+[2025-12-24T18:23:52.715+0000] {logging_mixin.py:188} INFO - 
+============================================================
+[2025-12-24T18:23:52.716+0000] {logging_mixin.py:188} INFO - INCREMENTAL LOAD COMPLETE
+[2025-12-24T18:23:52.716+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:23:52.716+0000] {logging_mixin.py:188} INFO -   New Records Added: 2,077,883
+[2025-12-24T18:23:52.716+0000] {logging_mixin.py:188} INFO -   New Batch Files: 18
+[2025-12-24T18:23:52.716+0000] {logging_mixin.py:188} INFO -   New Speed Files: 4
+[2025-12-24T18:23:52.716+0000] {logging_mixin.py:188} INFO - ============================================================
+[2025-12-24T18:23:53.183+0000] {logging_mixin.py:188} INFO - Serving layer load complete
+[2025-12-24T18:23:53.193+0000] {python.py:237} INFO - Done. Returned value was: None
+[2025-12-24T18:23:53.247+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T18:23:53.528+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=serving_layer_postgres_load, task_id=load_postgres, execution_date=20251224T120000, start_date=20251224T182140, end_date=20251224T182353
+[2025-12-24T18:23:53.792+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T18:23:53.992+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T18:23:53.997+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

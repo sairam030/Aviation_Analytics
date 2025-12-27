@@ -1,0 +1,19 @@
+[2025-12-24T11:17:21.139+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-12-24T11:17:21.202+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_enrichment_pipeline.upload_enriched_to_minio manual__2025-12-24T11:15:59.808641+00:00 [queued]>
+[2025-12-24T11:17:21.216+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_enrichment_pipeline.upload_enriched_to_minio manual__2025-12-24T11:15:59.808641+00:00 [queued]>
+[2025-12-24T11:17:21.217+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2025-12-24T11:17:21.477+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): upload_enriched_to_minio> on 2025-12-24 11:15:59.808641+00:00
+[2025-12-24T11:17:21.488+0000] {standard_task_runner.py:63} INFO - Started process 12440 to run task
+[2025-12-24T11:17:21.492+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_enrichment_pipeline', 'upload_enriched_to_minio', 'manual__2025-12-24T11:15:59.808641+00:00', '--job-id', '57', '--raw', '--subdir', 'DAGS_FOLDER/aviation_enrichment_dag.py', '--cfg-path', '/tmp/tmpxt6jjolk']
+[2025-12-24T11:17:21.494+0000] {standard_task_runner.py:91} INFO - Job 57: Subtask upload_enriched_to_minio
+[2025-12-24T11:17:21.572+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_enrichment_pipeline.upload_enriched_to_minio manual__2025-12-24T11:15:59.808641+00:00 [running]> on host 849a36138e84
+[2025-12-24T11:17:21.726+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation_team' AIRFLOW_CTX_DAG_ID='aviation_enrichment_pipeline' AIRFLOW_CTX_TASK_ID='upload_enriched_to_minio' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T11:15:59.808641+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-24T11:15:59.808641+00:00'
+[2025-12-24T11:17:21.727+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-12-24T11:17:21.992+0000] {logging_mixin.py:188} INFO - Created bucket: aviation-enriched-data
+[2025-12-24T11:17:23.246+0000] {logging_mixin.py:188} INFO - Uploaded 60 enriched files to aviation-enriched-data
+[2025-12-24T11:17:23.247+0000] {python.py:237} INFO - Done. Returned value was: {'bucket': 'aviation-enriched-data', 'files': 60}
+[2025-12-24T11:17:23.247+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-12-24T11:17:23.294+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_enrichment_pipeline, task_id=upload_enriched_to_minio, execution_date=20251224T111559, start_date=20251224T111721, end_date=20251224T111723
+[2025-12-24T11:17:23.349+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-12-24T11:17:23.394+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-24T11:17:23.397+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
