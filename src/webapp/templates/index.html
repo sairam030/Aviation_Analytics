@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Flight Tracker - Real-time</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.connected {
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+        }
+        
+        .status-dot.disconnected {
+            background: #ef4444;
+            box-shadow: 0 0 10px #ef4444;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #60a5fa;
+        }
+        
+        .status-label {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        
+        /* Map Container */
+        #map {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        /* Stats Panel */
+        .stats-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+        
+        .stats-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #1e293b;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-name {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            font-size: 16px;
+            color: #f8fafc;
+        }
+        
+        .stat-value.highlight {
+            color: #60a5fa;
+        }
+        
+        /* Flight Info Popup */
+        .flight-popup {
+            font-family: 'Inter', sans-serif;
+            min-width: 200px;
+        }
+        
+        .flight-popup h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .flight-popup .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+        }
+        
+        .flight-popup .info-label {
+            color: #64748b;
+        }
+        
+        .flight-popup .info-value {
+            color: #1e293b;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 12px;
+            }
+            
+            .logo-text {
+                font-size: 16px;
+            }
+            
+            .status-bar {
+                gap: 10px;
+            }
+            
+            .status-item {
+                padding: 6px 10px;
+            }
+            
+            .status-value {
+                font-size: 14px;
+            }
+            
+            .stats-panel {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                min-width: auto;
+            }
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.5s;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #334155;
+            border-top-color: #60a5fa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Connecting to flight data...</div>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">✈️</span>
+            <span class="logo-text">India Flight Tracker</span>
+        </div>
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-dot disconnected" id="connectionDot"></span>
+                <span id="connectionStatus">Connecting...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-value" id="flightCount">0</span>
+                <span class="status-label">Flights</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Map -->
+    <div id="map"></div>
+    
+    <!-- Stats Panel -->
+    <div class="stats-panel">
+        <div class="stats-title">📊 Live Statistics</div>
+        <div class="stat-row">
+            <span class="stat-name">In Air</span>
+            <span class="stat-value highlight" id="inAirCount">0</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-name">On Ground</span>
+            <span class="stat-value" id="onGroundCount">0</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-name">Last Update</span>
+            <span class="stat-value" id="lastUpdate">--:--:--</span>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Initialize map centered on India
+        const map = L.map('map', {
+            center: [20.5937, 78.9629],
+            zoom: 5,
+            zoomControl: true,
+            attributionControl: true
+        });
+        
+        // Dark tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Flight markers storage
+        const flightMarkers = {};
+        
+        // Custom airplane icon
+        function createPlaneIcon(heading, onGround) {
+            const color = onGround ? '#f59e0b' : '#60a5fa';
+            const rotation = heading || 0;
+            
+            return L.divIcon({
+                className: 'plane-icon',
+                html: `<div style="
+                    transform: rotate(${rotation}deg);
+                    font-size: 20px;
+                    filter: drop-shadow(0 0 3px ${color});
+                ">✈️</div>`,
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
+            });
+        }
+        
+        // Update or create flight marker
+        function updateFlight(flight) {
+            const icao24 = flight.icao24;
+            const lat = flight.latitude;
+            const lon = flight.longitude;
+            
+            if (!lat || !lon) return;
+            
+            const callsign = (flight.callsign || '').trim() || icao24;
+            const altitude = Math.round(flight.baro_altitude || 0);
+            const velocity = Math.round((flight.velocity || 0) * 3.6); // m/s to km/h
+            const heading = flight.true_track || 0;
+            const onGround = flight.on_ground || false;
+            const country = flight.origin_country || 'Unknown';
+            
+            // Enriched data (from route mapping)
+            const airlineName = flight.airline_name || '';
+            const originCity = flight.origin_city || '';
+            const destCity = flight.destination_city || '';
+            const originCode = flight.origin_code || '';
+            const destCode = flight.destination_code || '';
+            const flightNumber = flight.flight_number || '';
+            
+            // Build route string
+            let routeStr = '';
+            if (originCode && destCode && originCode !== 'UNK') {
+                routeStr = `${originCity} (${originCode}) → ${destCity} (${destCode})`;
+            }
+            
+            const popupContent = `
+                <div class="flight-popup">
+                    <h3>✈️ ${callsign}</h3>
+                    ${airlineName ? `
+                    <div class="info-row">
+                        <span class="info-label">Airline</span>
+                        <span class="info-value" style="color: #3b82f6; font-weight: 600;">${airlineName}</span>
+                    </div>` : ''}
+                    ${routeStr ? `
+                    <div class="info-row">
+                        <span class="info-label">Route</span>
+                        <span class="info-value" style="color: #10b981;">${routeStr}</span>
+                    </div>` : ''}
+                    <div class="info-row">
+                        <span class="info-label">ICAO24</span>
+                        <span class="info-value">${icao24}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Country</span>
+                        <span class="info-value">${country}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Altitude</span>
+                        <span class="info-value">${altitude} m</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Speed</span>
+                        <span class="info-value">${velocity} km/h</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Heading</span>
+                        <span class="info-value">${Math.round(heading)}°</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Status</span>
+                        <span class="info-value">${onGround ? '🛬 On Ground' : '🛫 In Air'}</span>
+                    </div>
+                </div>
+            `;
+            
+            if (flightMarkers[icao24]) {
+                // Update existing marker
+                flightMarkers[icao24].setLatLng([lat, lon]);
+                flightMarkers[icao24].setIcon(createPlaneIcon(heading, onGround));
+                flightMarkers[icao24].setPopupContent(popupContent);
+            } else {
+                // Create new marker
+                const marker = L.marker([lat, lon], {
+                    icon: createPlaneIcon(heading, onGround),
+                    title: callsign
+                }).addTo(map).bindPopup(popupContent);
+                
+                flightMarkers[icao24] = marker;
+            }
+        }
+        
+        // Update statistics
+        function updateStats(flights) {
+            const total = flights.length;
+            const inAir = flights.filter(f => !f.on_ground).length;
+            const onGround = total - inAir;
+            
+            document.getElementById('flightCount').textContent = total;
+            document.getElementById('inAirCount').textContent = inAir;
+            document.getElementById('onGroundCount').textContent = onGround;
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+        
+        // Remove stale flights (not updated in 60 seconds)
+        function cleanupStaleFlights() {
+            const now = Date.now();
+            for (const [icao24, marker] of Object.entries(flightMarkers)) {
+                if (marker._lastUpdate && (now - marker._lastUpdate) > 60000) {
+                    map.removeLayer(marker);
+                    delete flightMarkers[icao24];
+                }
+            }
+        }
+        
+        // WebSocket connection
+        let ws;
+        let reconnectAttempts = 0;
+        
+        function connect() {
+            const wsUrl = `ws://${window.location.host}/ws`;
+            console.log('Connecting to:', wsUrl);
+            
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+                reconnectAttempts = 0;
+                
+                document.getElementById('connectionDot').classList.remove('disconnected');
+                document.getElementById('connectionDot').classList.add('connected');
+                document.getElementById('connectionStatus').textContent = 'Live';
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            };
+            
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                
+                if (message.type === 'initial_data') {
+                    // Load all current flights
+                    console.log(`Received ${message.count} initial flights`);
+                    message.data.forEach(flight => {
+                        updateFlight(flight);
+                        if (flightMarkers[flight.icao24]) {
+                            flightMarkers[flight.icao24]._lastUpdate = Date.now();
+                        }
+                    });
+                    updateStats(message.data);
+                    
+                } else if (message.type === 'flight_update') {
+                    // Update single flight
+                    updateFlight(message.data);
+                    if (flightMarkers[message.data.icao24]) {
+                        flightMarkers[message.data.icao24]._lastUpdate = Date.now();
+                    }
+                    
+                    // Update stats periodically
+                    const allFlights = Object.keys(flightMarkers).map(k => flightMarkers[k]);
+                    document.getElementById('flightCount').textContent = allFlights.length;
+                    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+                    
+                } else if (message.type === 'ping') {
+                    // Respond to ping
+                    ws.send(JSON.stringify({type: 'pong'}));
+                }
+            };
+            
+            ws.onclose = () => {
+                console.log('WebSocket disconnected');
+                
+                document.getElementById('connectionDot').classList.remove('connected');
+                document.getElementById('connectionDot').classList.add('disconnected');
+                document.getElementById('connectionStatus').textContent = 'Reconnecting...';
+                
+                // Reconnect with backoff
+                reconnectAttempts++;
+                const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
+                console.log(`Reconnecting in ${delay}ms...`);
+                setTimeout(connect, delay);
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+        }
+        
+        // Start connection
+        connect();
+        
+        // Cleanup stale flights periodically
+        setInterval(cleanupStaleFlights, 30000);
+    </script>
+</body>
+</html>
