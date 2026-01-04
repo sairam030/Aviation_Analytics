@@ -41,7 +41,10 @@ RUN curl -fsSL https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4
     curl -fsSL https://repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.11.1/commons-pool2-2.11.1.jar \
     -o ${SPARK_HOME}/jars/commons-pool2-2.11.1.jar && \
     curl -fsSL https://repo1.maven.org/maven2/org/apache/spark/spark-token-provider-kafka-0-10_2.12/3.5.1/spark-token-provider-kafka-0-10_2.12-3.5.1.jar \
-    -o ${SPARK_HOME}/jars/spark-token-provider-kafka-0-10_2.12-3.5.1.jar
+    -o ${SPARK_HOME}/jars/spark-token-provider-kafka-0-10_2.12-3.5.1.jar && \
+    # PostgreSQL JDBC driver for Spark
+    curl -fsSL https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.1/postgresql-42.7.1.jar \
+    -o ${SPARK_HOME}/jars/postgresql-42.7.1.jar
 
 # Create necessary directories
 RUN mkdir -p /opt/airflow/dags /opt/airflow/logs /opt/airflow/plugins && \
