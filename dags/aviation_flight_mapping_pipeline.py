@@ -13,6 +13,9 @@ from src.batch.mapping import check_flights_data, create_mapping, upload_india_c
 from src.batch.minio_utils import create_bucket
 import src.batch.config as config
 
+# Import metrics utilities
+from src.utils.metrics_utils import show_pipeline_metrics
+
 
 default_args = {
     'owner': 'aviation-team',
@@ -77,20 +80,33 @@ with DAG(
         """
     )
 
-    # Task 5: Summary
-    def print_summary(**context):
-        print("\n" + "="*60)
-        print("✅ FLIGHT MAPPING PIPELINE COMPLETE")
-        print("="*60)
-        print(f"📦 Mapping: {config.MAPPING_PATH}")
-        print("→ Next: Run 'aviation_states_pipeline'")
+    # Task 5: Comprehensive Metrics
+    def print_comprehensive_metrics(**context):
+        """Show comprehensive pipeline metrics"""
+        return show_pipeline_metrics(
+            pipeline_name="AVIATION FLIGHT MAPPING PIPELINE",
+            task_ids=[
+                'check_flights_data',
+                'create_minio_bucket',
+                'create_flight_mapping',
+                'upload_india_csv'
+            ],
+            s3_buckets=[
+                ("🗺️  Flight Mapping Data", "aviation-mapping"),
+            ],
+            **context
+        )
 
     summary = PythonOperator(
-        task_id='print_summary',
-        python_callable=print_summary,
+        task_id='show_pipeline_metrics',
+        python_callable=print_comprehensive_metrics,
+        trigger_rule='all_done',
         doc_md="""
-        ### Pipeline Summary
-        - Mapping data in MinIO via S3A
+        ### Pipeline Metrics & Summary
+        - Shows comprehensive execution metrics
+        - Mapping data statistics
+        - Performance summary
+        - Next steps: Run aviation_states_pipeline
         """
     )
 

@@ -13,6 +13,9 @@ from src.batch.bronze import extract_states
 from src.batch.silver import check_mapping_exists, enrich_states
 from src.batch.minio_utils import create_all_buckets
 
+# Import metrics utilities
+from src.utils.metrics_utils import show_pipeline_metrics
+
 
 default_args = {
     'owner': 'aviation-team',
@@ -94,20 +97,34 @@ with DAG(
     # SUMMARY
     # ==========================================================================
 
-    def print_summary():
-        print("\n" + "="*60)
-        print("✅ AVIATION STATES PIPELINE COMPLETE")
-        print("="*60)
-        print("📦 BRONZE: s3a://aviation-bronze/states")
-        print("🥈 SILVER: s3a://aviation-silver/enriched_states")
+    def print_comprehensive_metrics(**context):
+        """Show comprehensive pipeline metrics"""
+        return show_pipeline_metrics(
+            pipeline_name="AVIATION STATES PIPELINE",
+            task_ids=[
+                'create_minio_buckets',
+                'extract_bronze_states',
+                'check_mapping_exists',
+                'enrich_silver_states'
+            ],
+            s3_buckets=[
+                ("🥉 Bronze Layer (Raw States)", "aviation-bronze"),
+                ("🥈 Silver Layer (Enriched States)", "aviation-silver"),
+                ("🗺️  Flight Mapping", "aviation-mapping"),
+            ],
+            **context
+        )
 
     summary = PythonOperator(
-        task_id='print_summary',
-        python_callable=print_summary,
+        task_id='show_pipeline_metrics',
+        python_callable=print_comprehensive_metrics,
         trigger_rule='all_done',
         doc_md="""
-        ### Pipeline Summary
-        - Data written directly to MinIO via S3A
+        ### Pipeline Metrics & Summary
+        - Shows comprehensive execution metrics
+        - Data layer statistics
+        - Performance summary
+        - System health checks
         """
     )
 
