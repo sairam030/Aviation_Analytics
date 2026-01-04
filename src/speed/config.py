@@ -2,12 +2,17 @@
 Speed Layer Configuration
 Kafka and OpenSky API settings
 """
+import os
 
 # =============================================================================
 # OPENSKY API
 # =============================================================================
 
 OPENSKY_API_URL = "https://opensky-network.org/api/states/all"
+
+# Use mock data instead of real API (useful for testing)
+# Set to True if OpenSky API is unavailable or for development
+USE_MOCK_DATA = os.environ.get("USE_MOCK_DATA", "true").lower() == "true"
 
 # India bounding box
 INDIA_BBOX = {
@@ -17,26 +22,20 @@ INDIA_BBOX = {
     "lomax": 98.0,   # Longitude max
 }
 
-# API credentials (OAuth2 - higher rate limits with auth)
-OPENSKY_CLIENT_ID = "voidmain-api-client"
-OPENSKY_CLIENT_SECRET = "xjzyvZylyH0iFSxCGcssekIavYIF0zf2"
-
-# Legacy basic auth (kept for backward compatibility)
-OPENSKY_USERNAME = None
-OPENSKY_PASSWORD = None
-
 # Fetch interval in seconds 
-# Without auth: OpenSky allows ~1 request per 10 seconds (anonymous)
-# With OAuth2 auth: ~1 request per 5 seconds (authenticated users)
-FETCH_INTERVAL = 5  # 5 seconds with OAuth2 authentication
+# Anonymous access: OpenSky allows ~1 request per 10 seconds
+# Rate limit: 400 API credits per day (anonymous users)
+FETCH_INTERVAL = 15  # 15 seconds for anonymous access with safety margin
 
 # =============================================================================
 # KAFKA CONFIGURATION
 # =============================================================================
 
 KAFKA_BOOTSTRAP_SERVERS = "kafka:9092"
-KAFKA_TOPIC_RAW = "aviation-raw-states"
-KAFKA_TOPIC_INDIA = "aviation-india-states"
+
+# Topics
+KAFKA_TOPIC_RAW = "aviation-india-states"           # Raw data from producer
+KAFKA_TOPIC_ENRICHED = "aviation-enriched-states"   # Enriched data from Spark
 
 # Consumer group
 KAFKA_CONSUMER_GROUP = "aviation-consumer-group"

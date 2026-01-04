@@ -36,6 +36,7 @@ MAPPING_BUCKET = "aviation-mapping"
 # S3A paths for direct MinIO access
 BRONZE_PATH = f"s3a://{BRONZE_BUCKET}/states"
 SILVER_PATH = f"s3a://{SILVER_BUCKET}/enriched_states"
+SILVER_SPEED_PATH = f"s3a://{SILVER_BUCKET}/speed_enriched"  # Speed layer enriched data
 GOLD_PATH = f"s3a://{GOLD_BUCKET}/analytics"
 MAPPING_PATH = f"s3a://{MAPPING_BUCKET}/flight_routes"
 
@@ -58,6 +59,9 @@ INDIA_LON_MAX = 98.0
 
 # Max batches to process (None = process all, set to limit for testing)
 MAX_BATCHES = 10  # ~100 tar files, ~500k-1M records
+
+# Batch size for processing tar files
+BATCH_SIZE = 5  # Number of tar files to process per batch
 
 # Indian airline callsign prefixes
 INDIAN_AIRLINE_PREFIXES = [

@@ -12,55 +12,13 @@ from kafka.errors import KafkaError, TopicAlreadyExistsError
 from src.speed.config import (
     OPENSKY_API_URL,
     INDIA_BBOX,
-    OPENSKY_CLIENT_ID,
-    OPENSKY_CLIENT_SECRET,
-    OPENSKY_USERNAME,
-    OPENSKY_PASSWORD,
+    USE_MOCK_DATA,
     FETCH_INTERVAL,
     KAFKA_BOOTSTRAP_SERVERS,
-    KAFKA_TOPIC_INDIA,
+    KAFKA_TOPIC_RAW,
     OPENSKY_FIELDS,
 )
-
-# OAuth2 token cache
-_access_token = None
-_token_expiry = 0
-
-
-def get_oauth2_token() -> str:
-    """Get OAuth2 access token from OpenSky auth server."""
-    global _access_token, _token_expiry
-    
-    # Return cached token if still valid (with 1 minute buffer)
-    if _access_token and time.time() < (_token_expiry - 60):
-        return _access_token
-    
-    print("  Requesting new OAuth2 access token...")
-    
-    try:
-        response = requests.post(
-            "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token",
-            data={
-                "grant_type": "client_credentials",
-                "client_id": OPENSKY_CLIENT_ID,
-                "client_secret": OPENSKY_CLIENT_SECRET,
-            },
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-            timeout=10
-        )
-        response.raise_for_status()
-        
-        token_data = response.json()
-        _access_token = token_data["access_token"]
-        # Token expires in 1800 seconds (30 minutes)
-        _token_expiry = time.time() + token_data.get("expires_in", 1800)
-        
-        print(f"  ✓ OAuth2 token obtained (expires in {token_data.get('expires_in', 1800)}s)")
-        return _access_token
-        
-    except Exception as e:
-        print(f"  ❌ Failed to get OAuth2 token: {e}")
-        return None
+from src.speed.mock_data_generator import generate_mock_data
 
 
 def create_topic():
@@ -68,14 +26,14 @@ def create_topic():
     try:
         admin = KafkaAdminClient(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
         topic = NewTopic(
-            name=KAFKA_TOPIC_INDIA,
+            name=KAFKA_TOPIC_RAW,
             num_partitions=3,
             replication_factor=1
         )
         admin.create_topics([topic])
-        print(f"✓ Created topic: {KAFKA_TOPIC_INDIA}")
+        print(f"✓ Created topic: {KAFKA_TOPIC_RAW}")
     except TopicAlreadyExistsError:
-        print(f"✓ Topic exists: {KAFKA_TOPIC_INDIA}")
+        print(f"✓ Topic exists: {KAFKA_TOPIC_RAW}")
     except Exception as e:
         print(f"⚠️ Topic creation: {e}")
 
@@ -92,55 +50,40 @@ def create_producer() -> KafkaProducer:
 
 
 def fetch_opensky_data() -> dict:
-    """Fetch flight states from OpenSky API for India region."""
+    """Fetch flight states from OpenSky API or mock data."""
+    
+    # Use mock data if enabled
+    if USE_MOCK_DATA:
+        print("  Using MOCK data (OpenSky API unavailable)")
+        try:
+            return generate_mock_data(num_flights=25)
+        except Exception as e:
+            print(f"  ⚠️ Mock data generation failed: {e}")
+            return None
+    
+    # Try real OpenSky API
     params = INDIA_BBOX.copy()
-    
-    headers = {}
-    auth = None
-    
-    # Try OAuth2 first (for new accounts)
-    if OPENSKY_CLIENT_ID and OPENSKY_CLIENT_SECRET:
-        token = get_oauth2_token()
-        if token:
-            headers["Authorization"] = f"Bearer {token}"
-            print(f"  Using OAuth2 authentication")
-        else:
-            print("  ⚠️ OAuth2 failed, falling back to anonymous")
-    # Fallback to basic auth (legacy accounts)
-    elif OPENSKY_USERNAME and OPENSKY_PASSWORD:
-        auth = (OPENSKY_USERNAME, OPENSKY_PASSWORD)
-        print(f"  Using basic auth (legacy)")
-    else:
-        print("  Using anonymous access (rate limited)")
     
     try:
         response = requests.get(
             OPENSKY_API_URL,
             params=params,
-            auth=auth,
-            headers=headers,
             timeout=30
         )
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as e:
-        if e.response.status_code == 401:
-            print(f"  ❌ Authentication failed (401 Unauthorized)")
-            if hasattr(e.response, 'text'):
-                print(f"  Response: {e.response.text[:200]}")
-            # Clear cached token if OAuth2 failed
-            global _access_token, _token_expiry
-            _access_token = None
-            _token_expiry = 0
-        elif e.response.status_code == 429:
+        if e.response.status_code == 429:
             print(f"  ⚠️ Rate limit exceeded (429)")
             if 'X-Rate-Limit-Retry-After-Seconds' in e.response.headers:
                 retry_after = e.response.headers['X-Rate-Limit-Retry-After-Seconds']
                 print(f"  Retry after {retry_after} seconds")
-        print(f"Error fetching OpenSky data: {e}")
+        else:
+            print(f"  ⚠️ HTTP Error {e.response.status_code}: {e}")
         return None
     except requests.exceptions.RequestException as e:
         print(f"Error fetching OpenSky data: {e}")
+        print("  💡 Tip: Set USE_MOCK_DATA=true to use simulated data")
         return None
 
 
@@ -166,7 +109,7 @@ def run_producer():
     print(f"API: {OPENSKY_API_URL}")
     print(f"Region: India ({INDIA_BBOX})")
     print(f"Kafka: {KAFKA_BOOTSTRAP_SERVERS}")
-    print(f"Topic: {KAFKA_TOPIC_INDIA}")
+    print(f"Topic: {KAFKA_TOPIC_RAW} (raw data)")
     print(f"Interval: {FETCH_INTERVAL}s")
     print("="*60)
     
@@ -193,7 +136,6 @@ def run_producer():
                 continue
             
             states = data['states']
-            timestamp = data.get('time', int(time.time()))
             
             print(f"  Received {len(states)} flights")
             
@@ -208,7 +150,7 @@ def run_producer():
                 key = state.get('icao24', '')
                 
                 try:
-                    future = producer.send(KAFKA_TOPIC_INDIA, key=key, value=state)
+                    future = producer.send(KAFKA_TOPIC_RAW, key=key, value=state)
                     # Don't block on every message, but track
                     sent += 1
                 except KafkaError as e:

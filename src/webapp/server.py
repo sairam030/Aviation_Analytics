@@ -1,10 +1,9 @@
 """
-Flight Tracker Server - Unified Real-time + Stateful Accumulator
-- Consumes from Kafka
-- Enriches with route mapping (origin/destination)
+Flight Tracker Server - Stateful Accumulator + WebSocket Streaming
+- Receives enriched data from kafka_consumer
 - Maintains stateful accumulator (update existing, add new)
-- Streams to WebSocket
-- Exposes API for Airflow DAG to trigger hourly Bronze persistence
+- Streams to WebSocket for real-time map
+- Exposes API for Airflow DAG to fetch/clear accumulated data
 """
 import json
 import asyncio
@@ -16,17 +15,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
-from kafka import KafkaConsumer
-from kafka.errors import KafkaError
 
 import threading
 import queue
 
-from src.speed.config import (
-    KAFKA_BOOTSTRAP_SERVERS,
-    KAFKA_TOPIC_INDIA,
-)
-from src.speed.route_mapping import enrich_flight_data
+from src.speed.consumer_thread import start_consumer_thread
 
 
 # =============================================================================
@@ -57,16 +50,13 @@ class FlightAccumulator:
             "new_flights": 0,
         }
     
-    def update(self, flight: dict) -> dict:
-        """Update flight state - add new or update existing."""
-        icao24 = flight.get('icao24')
+    def update(self, enriched_flight: dict) -> dict:
+        """Update accumulator with enriched flight state (already enriched by Spark)."""
+        icao24 = enriched_flight.get('icao24')
         if not icao24:
             return None
         
         now = datetime.utcnow().isoformat()
-        
-        # Enrich with route data (airline, origin, destination)
-        enriched = enrich_flight_data(flight.copy())
         
         with self.lock:
             self.stats['total_messages'] += 1
@@ -74,20 +64,20 @@ class FlightAccumulator:
             if icao24 in self.flights:
                 # Update existing - keep first_seen
                 existing = self.flights[icao24]
-                enriched['first_seen'] = existing.get('first_seen', now)
-                enriched['last_seen'] = now
-                enriched['position_count'] = existing.get('position_count', 0) + 1
+                enriched_flight['first_seen'] = existing.get('first_seen', now)
+                enriched_flight['last_seen'] = now
+                enriched_flight['position_count'] = existing.get('position_count', 0) + 1
                 self.stats['updates'] += 1
             else:
-                # New flight
-                enriched['first_seen'] = now
-                enriched['last_seen'] = now
-                enriched['position_count'] = 1
+                # New flight - set tracking fields
+                enriched_flight['first_seen'] = now
+                enriched_flight['last_seen'] = now
+                enriched_flight['position_count'] = 1
                 self.stats['new_flights'] += 1
             
-            self.flights[icao24] = enriched
+            self.flights[icao24] = enriched_flight
         
-        return enriched
+        return enriched_flight
     
     def get_all(self) -> list:
         """Get all current flights."""
@@ -118,43 +108,24 @@ message_queue = queue.Queue(maxsize=1000)
 active_connections: Set[WebSocket] = set()
 
 
-def kafka_consumer_thread():
-    """Background thread - consume from Kafka, enrich, accumulate."""
-    print("Starting Kafka consumer thread...")
+def process_enriched_flights():
+    """Background thread - receives enriched flights from kafka_consumer."""
+    print("Starting consumer thread for enriched flights...")
     
-    try:
-        consumer = KafkaConsumer(
-            KAFKA_TOPIC_INDIA,
-            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-            group_id='flight-tracker-consumer',  # Required for Kafka UI visibility
-            auto_offset_reset='latest',
-            enable_auto_commit=True,
-            value_deserializer=lambda m: json.loads(m.decode('utf-8')),
-            consumer_timeout_ms=1000,
-        )
-        print(f"✓ Connected to Kafka: {KAFKA_TOPIC_INDIA}")
-        print(f"✓ Consumer group: flight-tracker-consumer")
-        print("✓ Route enrichment: Active")
-        print("✓ Stateful accumulator: Active")
+    def message_callback(enriched_flight: dict):
+        """Callback when enriched flight received from Kafka."""
+        # Update accumulator (tracks state)
+        tracked = accumulator.update(enriched_flight)
         
-        while True:
-            for message in consumer:
-                flight = message.value
-                
-                # Update accumulator (enriches + tracks state)
-                enriched = accumulator.update(flight)
-                
-                if enriched:
-                    # Queue for WebSocket broadcast
-                    try:
-                        message_queue.put_nowait(enriched)
-                    except queue.Full:
-                        pass
-                        
-    except Exception as e:
-        print(f"Kafka consumer error: {e}")
-        import traceback
-        traceback.print_exc()
+        if tracked:
+            # Queue for WebSocket broadcast
+            try:
+                message_queue.put_nowait(tracked)
+            except queue.Full:
+                pass
+    
+    # Start consumer thread with callback
+    start_consumer_thread(callback=message_callback)
 
 
 async def broadcast_messages():
@@ -196,7 +167,7 @@ async def broadcast_messages():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events."""
-    consumer_thread = threading.Thread(target=kafka_consumer_thread, daemon=True)
+    consumer_thread = threading.Thread(target=process_enriched_flights, daemon=True)
     consumer_thread.start()
     
     broadcast_task = asyncio.create_task(broadcast_messages())
@@ -204,7 +175,7 @@ async def lifespan(app: FastAPI):
     print("="*60)
     print("✈️  FLIGHT TRACKER SERVER STARTED")
     print("="*60)
-    print("  ✓ Kafka consumer with route enrichment")
+    print("  ✓ Consuming enriched flights from Kafka")
     print("  ✓ Stateful accumulator (update/add flights)")
     print("  ✓ WebSocket real-time streaming")
     print("  ✓ REST API for Airflow DAG persistence")
@@ -363,11 +334,6 @@ async def health():
         "flights": len(accumulator.flights),
         "connections": len(active_connections),
     }
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8050)
 
 
 if __name__ == "__main__":

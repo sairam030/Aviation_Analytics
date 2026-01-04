@@ -26,7 +26,7 @@ def extract_states() -> dict:
             spark=spark,
             tar_files=tar_files,
             output_path=config.BRONZE_PATH,
-            batch_size=5,
+            batch_size=config.BATCH_SIZE,
             max_batches=config.MAX_BATCHES
         )
         

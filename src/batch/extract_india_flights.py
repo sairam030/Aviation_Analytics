@@ -72,24 +72,7 @@ def find_all_tar_files(base_path: str) -> List[str]:
     return sorted(tar_files)
 
 
-def extract_csv_from_tar(tar_path: str) -> str:
-    """
-    Extract CSV content from a tar file containing gzipped CSV.
-    Returns the CSV content as a string.
-    """
-    try:
-        with tarfile.open(tar_path, 'r') as tar:
-            # Find the .csv.gz file
-            for member in tar.getmembers():
-                if member.name.endswith('.csv.gz'):
-                    f = tar.extractfile(member)
-                    if f:
-                        with gzip.open(f, 'rt') as gz:
-                            return gz.read()
-    except Exception as e:
-        print(f"Error extracting {tar_path}: {e}")
-        return None
-    return None
+# Removed: extract_csv_from_tar() - not used anywhere
 
 
 def extract_tar_to_temp(tar_path: str, temp_dir: str) -> str:
@@ -203,9 +186,6 @@ def process_tar_files_to_parquet(
             if os.path.exists(temp_dir):
                 shutil.rmtree(temp_dir)
                 print(f"  Cleaned up temp directory")
-        
-        # Clear cache
-        spark.catalog.clearCache()
     
     print(f"\n✅ ALL FILES PROCESSED: {total_files} files in {total_batches} batches")
     print(f"   Total records: {total_records:,}")
@@ -300,53 +280,4 @@ def sample_data_to_target_size(
         .parquet(output_path)
 
 
-def main():
-    """Main entry point for batch processing."""
-    # Configuration
-    paths = DataPaths()
-    filter_config = FilterConfig()
-    
-    # Create Spark session
-    spark = create_spark_session(
-        app_name="ExtractIndiaFlights",
-        master_url="local[*]"  # Use local mode for initial testing
-    )
-    
-    try:
-        # Find all tar files
-        tar_files = find_all_tar_files(paths.STATES_PATH)
-        print(f"Found {len(tar_files)} tar files to process")
-        
-        # Output paths
-        filtered_output = f"s3a://{paths.PROCESSED_BUCKET}/india_states_filtered"
-        sampled_output = f"s3a://{paths.ANALYTICS_BUCKET}/india_states_sampled"
-        
-        # For local testing, use local paths
-        filtered_output_local = "/tmp/aviation/india_states_filtered"
-        sampled_output_local = "/tmp/aviation/india_states_sampled"
-        
-        # Process tar files
-        process_tar_files_to_parquet(
-            spark=spark,
-            tar_files=tar_files[:10],  # Start with first 10 for testing
-            output_path=filtered_output_local,
-            filter_config=filter_config,
-            batch_size=5
-        )
-        
-        # Sample to target size
-        sample_data_to_target_size(
-            spark=spark,
-            input_path=filtered_output_local,
-            output_path=sampled_output_local,
-            target_size_gb=filter_config.TARGET_SAMPLE_SIZE_GB
-        )
-        
-        print("Batch processing complete!")
-        
-    finally:
-        spark.stop()
-
-
-if __name__ == "__main__":
-    main()
+# Removed: main() function - not used, DAGs call functions directly
