@@ -1,0 +1,98 @@
+[2026-01-04T17:34:32.645+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T17:34:32.698+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_states_pipeline.show_pipeline_metrics manual__2026-01-04T17:23:04.872329+00:00 [queued]>
+[2026-01-04T17:34:32.711+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_states_pipeline.show_pipeline_metrics manual__2026-01-04T17:23:04.872329+00:00 [queued]>
+[2026-01-04T17:34:32.711+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2026-01-04T17:34:32.729+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): show_pipeline_metrics> on 2026-01-04 17:23:04.872329+00:00
+[2026-01-04T17:34:32.742+0000] {standard_task_runner.py:63} INFO - Started process 4519 to run task
+[2026-01-04T17:34:32.747+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_states_pipeline', 'show_pipeline_metrics', 'manual__2026-01-04T17:23:04.872329+00:00', '--job-id', '482', '--raw', '--subdir', 'DAGS_FOLDER/aviation_states_pipeline.py', '--cfg-path', '/tmp/tmpfij26pfe']
+[2026-01-04T17:34:32.751+0000] {standard_task_runner.py:91} INFO - Job 482: Subtask show_pipeline_metrics
+[2026-01-04T17:34:32.848+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_states_pipeline.show_pipeline_metrics manual__2026-01-04T17:23:04.872329+00:00 [running]> on host 0f35c4bc447d
+[2026-01-04T17:34:33.039+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='aviation_states_pipeline' AIRFLOW_CTX_TASK_ID='show_pipeline_metrics' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T17:23:04.872329+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-01-04T17:23:04.872329+00:00'
+[2026-01-04T17:34:33.041+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T17:34:33.073+0000] {logging_mixin.py:188} INFO - 
+================================================================================
+[2026-01-04T17:34:33.074+0000] {logging_mixin.py:188} INFO - 📊 AVIATION STATES PIPELINE - COMPREHENSIVE METRICS REPORT
+[2026-01-04T17:34:33.074+0000] {logging_mixin.py:188} INFO - ================================================================================
+[2026-01-04T17:34:33.074+0000] {logging_mixin.py:188} INFO - 
+🔄 DAG RUN INFORMATION
+[2026-01-04T17:34:33.074+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:34:33.075+0000] {logging_mixin.py:188} INFO -   DAG ID:           aviation_states_pipeline
+[2026-01-04T17:34:33.075+0000] {logging_mixin.py:188} INFO -   Run ID:           manual__2026-01-04T17:23:04.872329+00:00
+[2026-01-04T17:34:33.075+0000] {logging_mixin.py:188} INFO -   Execution Date:   2026-01-04 17:23:04.872329+00:00
+[2026-01-04T17:34:33.075+0000] {logging_mixin.py:188} INFO -   Start Date:       2026-01-04 17:23:05.947298+00:00
+[2026-01-04T17:34:33.075+0000] {logging_mixin.py:188} INFO -   State:            running
+[2026-01-04T17:34:33.076+0000] {logging_mixin.py:188} INFO -   Duration So Far:  687.13s (11.45m)
+[2026-01-04T17:34:33.076+0000] {logging_mixin.py:188} INFO - 
+📋 TASK EXECUTION METRICS
+[2026-01-04T17:34:33.076+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:34:33.099+0000] {logging_mixin.py:188} INFO -   ✓ create_minio_buckets                |    0.76s | success
+[2026-01-04T17:34:33.119+0000] {logging_mixin.py:188} INFO -   ✓ extract_bronze_states               |  610.24s | success
+[2026-01-04T17:34:33.140+0000] {logging_mixin.py:188} INFO -   ✓ check_mapping_exists                |   15.34s | success
+[2026-01-04T17:34:33.163+0000] {logging_mixin.py:188} INFO -   ✓ enrich_silver_states                |   46.03s | success
+[2026-01-04T17:34:33.163+0000] {logging_mixin.py:188} INFO - 
+  Total Task Time:     672.37s (11.21m)
+[2026-01-04T17:34:33.164+0000] {logging_mixin.py:188} INFO -   Successful Tasks:    4/4
+[2026-01-04T17:34:33.164+0000] {logging_mixin.py:188} INFO - 
+💾 DATA LAYER STATISTICS
+[2026-01-04T17:34:33.164+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:34:33.567+0000] {logging_mixin.py:188} INFO - 
+  🥉 Bronze Layer (Raw States): aviation-bronze
+[2026-01-04T17:34:33.568+0000] {logging_mixin.py:188} INFO -     Files:       261
+[2026-01-04T17:34:33.568+0000] {logging_mixin.py:188} INFO -     Total Size:  100.82 MB
+[2026-01-04T17:34:33.569+0000] {logging_mixin.py:188} INFO -     Paths:
+[2026-01-04T17:34:33.569+0000] {logging_mixin.py:188} INFO -       • realtime: 1 files
+[2026-01-04T17:34:33.569+0000] {logging_mixin.py:188} INFO -       • realtime/year=2025/month=12/day=24/hour=16: 3 files
+[2026-01-04T17:34:33.569+0000] {logging_mixin.py:188} INFO -       • realtime/year=2025/month=12/day=24/hour=17: 3 files
+[2026-01-04T17:34:33.570+0000] {logging_mixin.py:188} INFO -       • states: 1 files
+[2026-01-04T17:34:33.570+0000] {logging_mixin.py:188} INFO -       • states/year=2017/month=6: 125 files
+[2026-01-04T17:34:33.570+0000] {logging_mixin.py:188} INFO -       ... and 2 more paths
+[2026-01-04T17:34:33.608+0000] {logging_mixin.py:188} INFO - 
+  🥈 Silver Layer (Enriched States): aviation-silver
+[2026-01-04T17:34:33.608+0000] {logging_mixin.py:188} INFO -     Files:       74
+[2026-01-04T17:34:33.609+0000] {logging_mixin.py:188} INFO -     Total Size:  80.25 MB
+[2026-01-04T17:34:33.609+0000] {logging_mixin.py:188} INFO -     Paths:
+[2026-01-04T17:34:33.609+0000] {logging_mixin.py:188} INFO -       • enriched_states: 1 files
+[2026-01-04T17:34:33.609+0000] {logging_mixin.py:188} INFO -       • enriched_states/year=2017/month=6: 9 files
+[2026-01-04T17:34:33.610+0000] {logging_mixin.py:188} INFO -       • enriched_states/year=2017/month=7: 9 files
+[2026-01-04T17:34:33.610+0000] {logging_mixin.py:188} INFO -       • enriched_states/year=2017/month=8: 2 files
+[2026-01-04T17:34:33.610+0000] {logging_mixin.py:188} INFO -       • speed_layer/year=2026/month=01/day=04/hour=12: 9 files
+[2026-01-04T17:34:33.610+0000] {logging_mixin.py:188} INFO -       ... and 4 more paths
+[2026-01-04T17:34:33.623+0000] {logging_mixin.py:188} INFO - 
+  🗺️  Flight Mapping: aviation-mapping
+[2026-01-04T17:34:33.623+0000] {logging_mixin.py:188} INFO -     Files:       11
+[2026-01-04T17:34:33.623+0000] {logging_mixin.py:188} INFO -     Total Size:  4.97 MB
+[2026-01-04T17:34:33.624+0000] {logging_mixin.py:188} INFO -     Paths:
+[2026-01-04T17:34:33.624+0000] {logging_mixin.py:188} INFO -       • flight_routes: 10 files
+[2026-01-04T17:34:33.624+0000] {logging_mixin.py:188} INFO -       • root: 1 files
+[2026-01-04T17:34:33.624+0000] {logging_mixin.py:188} INFO - 
+📈 DATA PROCESSING METRICS
+[2026-01-04T17:34:33.624+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:34:33.674+0000] {logging_mixin.py:188} INFO - 
+  Task: extract_bronze_states
+[2026-01-04T17:34:33.675+0000] {logging_mixin.py:188} INFO -     • records                       : 2,663,253
+[2026-01-04T17:34:33.720+0000] {logging_mixin.py:188} INFO - 
+  Task: enrich_silver_states
+[2026-01-04T17:34:33.720+0000] {logging_mixin.py:188} INFO -     • records                       : 2,663,253
+[2026-01-04T17:34:33.720+0000] {logging_mixin.py:188} INFO -     • matched                       : 651,317
+[2026-01-04T17:34:33.720+0000] {logging_mixin.py:188} INFO -     • match_rate                    : 24.50
+[2026-01-04T17:34:33.721+0000] {logging_mixin.py:188} INFO - 
+⚡ PERFORMANCE SUMMARY
+[2026-01-04T17:34:33.721+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:34:33.721+0000] {logging_mixin.py:188} INFO -   Pipeline Efficiency:  97.9% (task time / wall clock time)
+[2026-01-04T17:34:33.721+0000] {logging_mixin.py:188} INFO -   Avg Task Duration:    168.09s
+[2026-01-04T17:34:33.721+0000] {logging_mixin.py:188} INFO - 
+🏥 SYSTEM HEALTH CHECK
+[2026-01-04T17:34:33.722+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:34:33.722+0000] {logging_mixin.py:188} INFO -   MinIO Storage:    ❌ Unavailable - name 'create_s3_client' is not defined
+[2026-01-04T17:34:33.856+0000] {logging_mixin.py:188} INFO -   Spark Cluster:    ✅ Healthy
+[2026-01-04T17:34:33.927+0000] {logging_mixin.py:188} INFO -   PostgreSQL:       ✅ Healthy
+[2026-01-04T17:34:33.927+0000] {logging_mixin.py:188} INFO - 
+================================================================================
+[2026-01-04T17:34:33.927+0000] {logging_mixin.py:188} INFO - ✅ AVIATION STATES PIPELINE EXECUTION COMPLETE
+[2026-01-04T17:34:33.927+0000] {logging_mixin.py:188} INFO - ================================================================================
+[2026-01-04T17:34:33.929+0000] {python.py:237} INFO - Done. Returned value was: {'status': 'SUCCESS', 'total_duration': 687.128724, 'total_task_time': 672.3709799999999, 'successful_tasks': 4, 'failed_tasks': 0, 'timestamp': '2026-01-04T17:34:33.928079'}
+[2026-01-04T17:34:33.929+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T17:34:33.986+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_states_pipeline, task_id=show_pipeline_metrics, execution_date=20260104T172304, start_date=20260104T173432, end_date=20260104T173433
+[2026-01-04T17:34:34.043+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T17:34:34.081+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T17:34:34.083+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

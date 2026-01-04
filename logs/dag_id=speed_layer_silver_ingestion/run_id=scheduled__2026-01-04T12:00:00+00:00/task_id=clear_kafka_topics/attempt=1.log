@@ -1,0 +1,38 @@
+[2026-01-04T13:00:38.256+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T13:00:38.319+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.clear_kafka_topics scheduled__2026-01-04T12:00:00+00:00 [queued]>
+[2026-01-04T13:00:38.340+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.clear_kafka_topics scheduled__2026-01-04T12:00:00+00:00 [queued]>
+[2026-01-04T13:00:38.340+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2026-01-04T13:00:38.371+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): clear_kafka_topics> on 2026-01-04 12:00:00+00:00
+[2026-01-04T13:00:38.395+0000] {standard_task_runner.py:63} INFO - Started process 2013 to run task
+[2026-01-04T13:00:38.406+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'clear_kafka_topics', 'scheduled__2026-01-04T12:00:00+00:00', '--job-id', '372', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmp56wcvgw7']
+[2026-01-04T13:00:38.413+0000] {standard_task_runner.py:91} INFO - Job 372: Subtask clear_kafka_topics
+[2026-01-04T13:00:38.582+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.clear_kafka_topics scheduled__2026-01-04T12:00:00+00:00 [running]> on host 04a37d338906
+[2026-01-04T13:00:38.807+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='clear_kafka_topics' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T12:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-04T12:00:00+00:00'
+[2026-01-04T13:00:38.808+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T13:00:38.822+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T13:00:38.823+0000] {logging_mixin.py:188} INFO - CLEARING KAFKA TOPICS
+[2026-01-04T13:00:38.823+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T13:00:38.850+0000] {conn.py:362} INFO - <BrokerConnection node_id=bootstrap-0 host=kafka:9092 <connecting> [IPv4 ('172.18.0.6', 9092)]>: connecting to kafka:9092 [('172.18.0.6', 9092) IPv4]
+[2026-01-04T13:00:38.850+0000] {conn.py:957} INFO - Probing node bootstrap-0 broker version
+[2026-01-04T13:00:38.851+0000] {conn.py:393} INFO - <BrokerConnection node_id=bootstrap-0 host=kafka:9092 <connecting> [IPv4 ('172.18.0.6', 9092)]>: Connection complete.
+[2026-01-04T13:00:38.956+0000] {conn.py:1019} INFO - Broker version identified as 2.6.0
+[2026-01-04T13:00:38.957+0000] {conn.py:1020} INFO - Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+[2026-01-04T13:00:38.958+0000] {conn.py:957} INFO - Probing node bootstrap-0 broker version
+[2026-01-04T13:00:39.061+0000] {conn.py:1019} INFO - Broker version identified as 2.6.0
+[2026-01-04T13:00:39.061+0000] {conn.py:1020} INFO - Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+[2026-01-04T13:00:39.067+0000] {conn.py:362} INFO - <BrokerConnection node_id=1 host=kafka:9092 <connecting> [IPv4 ('172.18.0.6', 9092)]>: connecting to kafka:9092 [('172.18.0.6', 9092) IPv4]
+[2026-01-04T13:00:39.068+0000] {conn.py:957} INFO - Probing node 1 broker version
+[2026-01-04T13:00:39.070+0000] {conn.py:393} INFO - <BrokerConnection node_id=1 host=kafka:9092 <connecting> [IPv4 ('172.18.0.6', 9092)]>: Connection complete.
+[2026-01-04T13:00:39.070+0000] {conn.py:673} INFO - <BrokerConnection node_id=bootstrap-0 host=kafka:9092 <connected> [IPv4 ('172.18.0.6', 9092)]>: Closing connection. 
+[2026-01-04T13:00:39.176+0000] {conn.py:1019} INFO - Broker version identified as 2.6.0
+[2026-01-04T13:00:39.176+0000] {conn.py:1020} INFO - Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+[2026-01-04T13:00:39.177+0000] {logging_mixin.py:188} INFO - Deleting topics: ['aviation-india-states', 'aviation-enriched-states']
+[2026-01-04T13:00:39.495+0000] {logging_mixin.py:188} INFO - ✓ Deleted topics: aviation-india-states, aviation-enriched-states
+[2026-01-04T13:00:41.572+0000] {logging_mixin.py:188} INFO - ⚠️ Failed to clear Kafka topics: [Error 36] TopicAlreadyExistsError: Request 'CreateTopicsRequest_v3(create_topic_requests=[(topic='aviation-india-states', num_partitions=3, replication_factor=1, replica_assignment=[], configs=[]), (topic='aviation-enriched-states', num_partitions=3, replication_factor=1, replica_assignment=[], configs=[])], timeout=30000, validate_only=False)' failed with response 'CreateTopicsResponse_v3(throttle_time_ms=0, topic_errors=[(topic='aviation-india-states', error_code=0, error_message=None), (topic='aviation-enriched-states', error_code=36, error_message="Topic 'aviation-enriched-states' already exists.")])'.
+[2026-01-04T13:00:41.572+0000] {logging_mixin.py:188} INFO -   Continuing anyway - not critical for pipeline
+[2026-01-04T13:00:41.573+0000] {python.py:237} INFO - Done. Returned value was: {'status': 'error', 'message': '[Error 36] TopicAlreadyExistsError: Request \'CreateTopicsRequest_v3(create_topic_requests=[(topic=\'aviation-india-states\', num_partitions=3, replication_factor=1, replica_assignment=[], configs=[]), (topic=\'aviation-enriched-states\', num_partitions=3, replication_factor=1, replica_assignment=[], configs=[])], timeout=30000, validate_only=False)\' failed with response \'CreateTopicsResponse_v3(throttle_time_ms=0, topic_errors=[(topic=\'aviation-india-states\', error_code=0, error_message=None), (topic=\'aviation-enriched-states\', error_code=36, error_message="Topic \'aviation-enriched-states\' already exists.")])\'.'}
+[2026-01-04T13:00:41.573+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T13:00:41.631+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=clear_kafka_topics, execution_date=20260104T120000, start_date=20260104T130038, end_date=20260104T130041
+[2026-01-04T13:00:41.683+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T13:00:41.735+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T13:00:41.736+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

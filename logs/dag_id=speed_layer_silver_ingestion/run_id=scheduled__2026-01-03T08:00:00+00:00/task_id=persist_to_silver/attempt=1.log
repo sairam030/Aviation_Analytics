@@ -1,0 +1,40 @@
+[2026-01-03T09:00:05.784+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-03T09:00:05.839+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-03T08:00:00+00:00 [queued]>
+[2026-01-03T09:00:05.864+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-03T08:00:00+00:00 [queued]>
+[2026-01-03T09:00:05.865+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2026-01-03T09:00:05.888+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): persist_to_silver> on 2026-01-03 08:00:00+00:00
+[2026-01-03T09:00:05.903+0000] {standard_task_runner.py:63} INFO - Started process 3034 to run task
+[2026-01-03T09:00:05.909+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'persist_to_silver', 'scheduled__2026-01-03T08:00:00+00:00', '--job-id', '169', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmprstp2kbg']
+[2026-01-03T09:00:05.912+0000] {standard_task_runner.py:91} INFO - Job 169: Subtask persist_to_silver
+[2026-01-03T09:00:06.026+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-03T08:00:00+00:00 [running]> on host 197385afb3c6
+[2026-01-03T09:00:06.231+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='persist_to_silver' AIRFLOW_CTX_EXECUTION_DATE='2026-01-03T08:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-03T08:00:00+00:00'
+[2026-01-03T09:00:06.232+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-03T09:00:27.706+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:320 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2026-01-03T09:00:48.339+0000] {logging_mixin.py:188} INFO - ✓ Persisted 30 enriched flights to Silver: s3a://aviation-silver/speed_layer/enriched_flight_states/year=2026/month=01/day=03/hour=08
+[2026-01-03T09:00:49.603+0000] {python.py:237} INFO - Done. Returned value was: 30
+[2026-01-03T09:00:49.657+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-03T09:00:49.818+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=persist_to_silver, execution_date=20260103T080000, start_date=20260103T090005, end_date=20260103T090049
+[2026-01-03T09:00:50.034+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-03T09:00:50.247+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-01-03T09:00:50.250+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2026-01-03T09:36:10.341+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-03T09:36:10.448+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-03T08:00:00+00:00 [queued]>
+[2026-01-03T09:36:10.473+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-03T08:00:00+00:00 [queued]>
+[2026-01-03T09:36:10.475+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2026-01-03T09:36:10.522+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): persist_to_silver> on 2026-01-03 08:00:00+00:00
+[2026-01-03T09:36:10.545+0000] {standard_task_runner.py:63} INFO - Started process 204 to run task
+[2026-01-03T09:36:10.551+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'persist_to_silver', 'scheduled__2026-01-03T08:00:00+00:00', '--job-id', '193', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmpv39pvlq2']
+[2026-01-03T09:36:10.556+0000] {standard_task_runner.py:91} INFO - Job 193: Subtask persist_to_silver
+[2026-01-03T09:36:10.719+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-03T08:00:00+00:00 [running]> on host 197385afb3c6
+[2026-01-03T09:36:11.019+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='persist_to_silver' AIRFLOW_CTX_EXECUTION_DATE='2026-01-03T08:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-03T08:00:00+00:00'
+[2026-01-03T09:36:11.021+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-03T09:36:47.500+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:320 AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+[2026-01-03T09:37:16.163+0000] {logging_mixin.py:188} INFO - ✓ Persisted 30 enriched flights to Silver
+[2026-01-03T09:37:16.166+0000] {logging_mixin.py:188} INFO -   - Path: s3a://aviation-silver/speed_layer/enriched_flight_states/year=2026/month=01/day=03/hour=08
+[2026-01-03T09:37:16.170+0000] {logging_mixin.py:188} INFO -   - Columns: 36
+[2026-01-03T09:37:17.225+0000] {python.py:237} INFO - Done. Returned value was: 30
+[2026-01-03T09:37:17.252+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-03T09:37:17.397+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=persist_to_silver, execution_date=20260103T080000, start_date=20260103T093610, end_date=20260103T093717
+[2026-01-03T09:37:17.593+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-03T09:37:17.863+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-03T09:37:17.871+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

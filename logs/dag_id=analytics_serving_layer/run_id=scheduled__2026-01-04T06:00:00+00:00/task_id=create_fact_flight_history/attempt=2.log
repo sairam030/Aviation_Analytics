@@ -1,0 +1,61 @@
+[2026-01-04T14:26:08.482+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T14:26:08.533+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: analytics_serving_layer.create_fact_flight_history scheduled__2026-01-04T06:00:00+00:00 [queued]>
+[2026-01-04T14:26:08.545+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: analytics_serving_layer.create_fact_flight_history scheduled__2026-01-04T06:00:00+00:00 [queued]>
+[2026-01-04T14:26:08.545+0000] {taskinstance.py:2303} INFO - Starting attempt 2 of 3
+[2026-01-04T14:26:08.565+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): create_fact_flight_history> on 2026-01-04 06:00:00+00:00
+[2026-01-04T14:26:08.577+0000] {standard_task_runner.py:63} INFO - Started process 1331 to run task
+[2026-01-04T14:26:08.580+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'analytics_serving_layer', 'create_fact_flight_history', 'scheduled__2026-01-04T06:00:00+00:00', '--job-id', '394', '--raw', '--subdir', 'DAGS_FOLDER/analytics_serving_layer.py', '--cfg-path', '/tmp/tmpuof2jl9o']
+[2026-01-04T14:26:08.583+0000] {standard_task_runner.py:91} INFO - Job 394: Subtask create_fact_flight_history
+[2026-01-04T14:26:08.669+0000] {task_command.py:426} INFO - Running <TaskInstance: analytics_serving_layer.create_fact_flight_history scheduled__2026-01-04T06:00:00+00:00 [running]> on host 968fed69c878
+[2026-01-04T14:26:08.831+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='analytics_serving_layer' AIRFLOW_CTX_TASK_ID='create_fact_flight_history' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-04T06:00:00+00:00'
+[2026-01-04T14:26:08.832+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T14:26:08.846+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T14:26:08.847+0000] {logging_mixin.py:188} INFO - CREATING FACT_FLIGHT_HISTORY
+[2026-01-04T14:26:08.847+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T14:26:21.881+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T14:26:21.883+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 460, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/serving/analytics_loader.py", line 163, in create_fact_flight_history
+    ).agg(
+      ^^^^
+  File "/opt/spark/python/pyspark/sql/group.py", line 186, in agg
+    jdf = self._jgd.agg(exprs[0]._jc, _to_seq(self.session._sc, [c._jc for c in exprs[1:]]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `airline_name` cannot be resolved. Did you mean one of the following? [`flight_date`, `aircraft_type`, `alert`, `callsign`, `flight_id`].;
+'Aggregate [flight_id#102, flight_date#48, callsign_clean#75, 'airline_name, 'origin_city, 'destination_city, departure_airport#17, arrival_airport#18], [flight_id#102, flight_date#48, callsign_clean#75, 'airline_name, 'origin_city, 'destination_city, departure_airport#17, arrival_airport#18, min(time#0L) AS departure_time#158L, max(time#0L) AS arrival_time#160L, max(velocity#4) AS max_velocity#162, avg(CASE WHEN (abs(vertrate#6) < cast(1 as double)) THEN baroaltitude#12 END) AS avg_cruise_altitude#164, avg(velocity#4) AS avg_velocity#166, max(baroaltitude#12) AS max_altitude#168, count(1) AS data_points#170L]
++- Project [time#0L, icao24#1, lat#2, lon#3, velocity#4, heading#5, vertrate#6, callsign#7, onground#8, alert#9, spi#10, squawk#11, baroaltitude#12, geoaltitude#13, lastposupdate#14, lastcontact#15, day#16, departure_airport#17, arrival_airport#18, route#19, aircraft_model#20, aircraft_type#21, year#22, month#23, ... 3 more fields]
+   +- Project [time#0L, icao24#1, lat#2, lon#3, velocity#4, heading#5, vertrate#6, callsign#7, onground#8, alert#9, spi#10, squawk#11, baroaltitude#12, geoaltitude#13, lastposupdate#14, lastcontact#15, day#16, departure_airport#17, arrival_airport#18, route#19, aircraft_model#20, aircraft_type#21, year#22, month#23, ... 2 more fields]
+      +- Project [time#0L, icao24#1, lat#2, lon#3, velocity#4, heading#5, vertrate#6, callsign#7, onground#8, alert#9, spi#10, squawk#11, baroaltitude#12, geoaltitude#13, lastposupdate#14, lastcontact#15, day#16, departure_airport#17, arrival_airport#18, route#19, aircraft_model#20, aircraft_type#21, year#22, month#23, to_date(cast(time#0L as timestamp), None, Some(Etc/UTC), false) AS flight_date#48]
+         +- Relation [time#0L,icao24#1,lat#2,lon#3,velocity#4,heading#5,vertrate#6,callsign#7,onground#8,alert#9,spi#10,squawk#11,baroaltitude#12,geoaltitude#13,lastposupdate#14,lastcontact#15,day#16,departure_airport#17,arrival_airport#18,route#19,aircraft_model#20,aircraft_type#21,year#22,month#23] parquet
+
+[2026-01-04T14:26:21.951+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=analytics_serving_layer, task_id=create_fact_flight_history, execution_date=20260104T060000, start_date=20260104T142608, end_date=20260104T142621
+[2026-01-04T14:26:21.975+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 394 for task create_fact_flight_history ([UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `airline_name` cannot be resolved. Did you mean one of the following? [`flight_date`, `aircraft_type`, `alert`, `callsign`, `flight_id`].;
+'Aggregate [flight_id#102, flight_date#48, callsign_clean#75, 'airline_name, 'origin_city, 'destination_city, departure_airport#17, arrival_airport#18], [flight_id#102, flight_date#48, callsign_clean#75, 'airline_name, 'origin_city, 'destination_city, departure_airport#17, arrival_airport#18, min(time#0L) AS departure_time#158L, max(time#0L) AS arrival_time#160L, max(velocity#4) AS max_velocity#162, avg(CASE WHEN (abs(vertrate#6) < cast(1 as double)) THEN baroaltitude#12 END) AS avg_cruise_altitude#164, avg(velocity#4) AS avg_velocity#166, max(baroaltitude#12) AS max_altitude#168, count(1) AS data_points#170L]
++- Project [time#0L, icao24#1, lat#2, lon#3, velocity#4, heading#5, vertrate#6, callsign#7, onground#8, alert#9, spi#10, squawk#11, baroaltitude#12, geoaltitude#13, lastposupdate#14, lastcontact#15, day#16, departure_airport#17, arrival_airport#18, route#19, aircraft_model#20, aircraft_type#21, year#22, month#23, ... 3 more fields]
+   +- Project [time#0L, icao24#1, lat#2, lon#3, velocity#4, heading#5, vertrate#6, callsign#7, onground#8, alert#9, spi#10, squawk#11, baroaltitude#12, geoaltitude#13, lastposupdate#14, lastcontact#15, day#16, departure_airport#17, arrival_airport#18, route#19, aircraft_model#20, aircraft_type#21, year#22, month#23, ... 2 more fields]
+      +- Project [time#0L, icao24#1, lat#2, lon#3, velocity#4, heading#5, vertrate#6, callsign#7, onground#8, alert#9, spi#10, squawk#11, baroaltitude#12, geoaltitude#13, lastposupdate#14, lastcontact#15, day#16, departure_airport#17, arrival_airport#18, route#19, aircraft_model#20, aircraft_type#21, year#22, month#23, to_date(cast(time#0L as timestamp), None, Some(Etc/UTC), false) AS flight_date#48]
+         +- Relation [time#0L,icao24#1,lat#2,lon#3,velocity#4,heading#5,vertrate#6,callsign#7,onground#8,alert#9,spi#10,squawk#11,baroaltitude#12,geoaltitude#13,lastposupdate#14,lastcontact#15,day#16,departure_airport#17,arrival_airport#18,route#19,aircraft_model#20,aircraft_type#21,year#22,month#23] parquet
+; 1331)
+[2026-01-04T14:26:22.009+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-01-04T14:26:22.048+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T14:26:22.049+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

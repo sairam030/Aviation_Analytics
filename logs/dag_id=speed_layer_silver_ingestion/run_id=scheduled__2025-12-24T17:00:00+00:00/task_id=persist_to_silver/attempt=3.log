@@ -1,0 +1,41 @@
+[2026-01-03T07:18:33.200+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-03T07:18:33.259+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2025-12-24T17:00:00+00:00 [queued]>
+[2026-01-03T07:18:33.283+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2025-12-24T17:00:00+00:00 [queued]>
+[2026-01-03T07:18:33.284+0000] {taskinstance.py:2303} INFO - Starting attempt 3 of 3
+[2026-01-03T07:18:33.319+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): persist_to_silver> on 2025-12-24 17:00:00+00:00
+[2026-01-03T07:18:33.335+0000] {standard_task_runner.py:63} INFO - Started process 302 to run task
+[2026-01-03T07:18:33.341+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'persist_to_silver', 'scheduled__2025-12-24T17:00:00+00:00', '--job-id', '136', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmp249gyqyz']
+[2026-01-03T07:18:33.345+0000] {standard_task_runner.py:91} INFO - Job 136: Subtask persist_to_silver
+[2026-01-03T07:18:33.485+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2025-12-24T17:00:00+00:00 [running]> on host 963177684d5b
+[2026-01-03T07:18:33.857+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='persist_to_silver' AIRFLOW_CTX_EXECUTION_DATE='2025-12-24T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-12-24T17:00:00+00:00'
+[2026-01-03T07:18:33.858+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-03T07:18:33.888+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-03T07:18:33.889+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/speed_layer_silver_ingestion.py", line 109, in persist_silver_task
+    logger = get_dag_logger(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/speed_layer_silver_ingestion.py", line 45, in get_dag_logger
+    _dag_loggers[run_id] = DAGLogger(
+                           ^^^^^^^^^^
+TypeError: DAGLogger.__init__() got an unexpected keyword argument 'log_to_console'
+[2026-01-03T07:18:33.916+0000] {taskinstance.py:1205} INFO - Marking task as FAILED. dag_id=speed_layer_silver_ingestion, task_id=persist_to_silver, execution_date=20251224T170000, start_date=20260103T071833, end_date=20260103T071833
+[2026-01-03T07:18:33.944+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 136 for task persist_to_silver (DAGLogger.__init__() got an unexpected keyword argument 'log_to_console'; 302)
+[2026-01-03T07:18:33.999+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-01-03T07:18:34.052+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-03T07:18:34.057+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

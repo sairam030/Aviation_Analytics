@@ -1,0 +1,81 @@
+[2026-01-04T06:05:18.791+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T06:05:18.853+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres scheduled__2026-01-04T00:00:00+00:00 [queued]>
+[2026-01-04T06:05:18.863+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: serving_layer_postgres_load.load_postgres scheduled__2026-01-04T00:00:00+00:00 [queued]>
+[2026-01-04T06:05:18.864+0000] {taskinstance.py:2303} INFO - Starting attempt 2 of 3
+[2026-01-04T06:05:18.879+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): load_postgres> on 2026-01-04 00:00:00+00:00
+[2026-01-04T06:05:18.888+0000] {standard_task_runner.py:63} INFO - Started process 63263 to run task
+[2026-01-04T06:05:18.894+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'serving_layer_postgres_load', 'load_postgres', 'scheduled__2026-01-04T00:00:00+00:00', '--job-id', '323', '--raw', '--subdir', 'DAGS_FOLDER/serving_layer_postgres_load.py', '--cfg-path', '/tmp/tmphk478rpr']
+[2026-01-04T06:05:18.898+0000] {standard_task_runner.py:91} INFO - Job 323: Subtask load_postgres
+[2026-01-04T06:05:19.038+0000] {task_command.py:426} INFO - Running <TaskInstance: serving_layer_postgres_load.load_postgres scheduled__2026-01-04T00:00:00+00:00 [running]> on host 897f49cfcd10
+[2026-01-04T06:05:19.265+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation' AIRFLOW_CTX_DAG_ID='serving_layer_postgres_load' AIRFLOW_CTX_TASK_ID='load_postgres' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-04T00:00:00+00:00'
+[2026-01-04T06:05:19.266+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T06:05:19.277+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T06:05:19.277+0000] {logging_mixin.py:188} INFO - RUNNING INCREMENTAL LOAD (only new files)
+[2026-01-04T06:05:19.278+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T06:05:19.278+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T06:05:19.278+0000] {logging_mixin.py:188} INFO - AVIATION SERVING LAYER - INCREMENTAL LOAD
+[2026-01-04T06:05:19.278+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T06:05:19.290+0000] {logging_mixin.py:188} INFO - ✓ Database exists: aviation_db
+[2026-01-04T06:05:19.305+0000] {logging_mixin.py:188} INFO - ✓ Tracking table ready: processed_files
+[2026-01-04T06:05:19.306+0000] {logging_mixin.py:188} INFO - ✓ Flight states table ready: flight_states
+[2026-01-04T06:05:19.314+0000] {logging_mixin.py:188} INFO -   Already processed: 22 files
+[2026-01-04T06:05:26.737+0000] {logging_mixin.py:188} INFO - 
+1. Checking for new data in Silver layer...
+[2026-01-04T06:05:26.738+0000] {logging_mixin.py:188} INFO -   Reading batch data from: s3a://aviation-silver/enriched_states
+[2026-01-04T06:05:27.885+0000] {logging_mixin.py:188} INFO -   No new files to process in batch
+[2026-01-04T06:05:27.886+0000] {logging_mixin.py:188} INFO -   Reading speed data from: s3a://aviation-silver/speed_layer/enriched_flight_states
+[2026-01-04T06:05:28.067+0000] {logging_mixin.py:188} INFO -   Found 4 new files (out of 8 total)
+[2026-01-04T06:05:31.588+0000] {logging_mixin.py:188} INFO - 
+2. Merging new data...
+[2026-01-04T06:05:31.589+0000] {logging_mixin.py:188} INFO -   Normalizing speed layer data...
+[2026-01-04T06:05:32.066+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T06:05:32.067+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/serving_layer_postgres_load.py", line 65, in load_postgres_task
+    incremental_load()
+  File "/opt/airflow/src/serving/postgres_loader.py", line 795, in incremental_load
+    merged_df = merge_dataframes(batch_df, speed_df)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/serving/postgres_loader.py", line 512, in merge_dataframes
+    normalized_speed = normalize_speed_data(speed_df)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/src/serving/postgres_loader.py", line 441, in normalize_speed_data
+    return df.select(
+           ^^^^^^^^^^
+  File "/opt/spark/python/pyspark/sql/dataframe.py", line 3227, in select
+    jdf = self._jdf.select(self._jcols(*cols))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/pyspark/errors/exceptions/captured.py", line 185, in deco
+    raise converted from None
+pyspark.errors.exceptions.captured.AnalysisException: [UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `year` cannot be resolved. Did you mean one of the following? [`spi`, `icao24`, `sensors`, `squawk`, `callsign`].;
+'Project [icao24#0, callsign#1, speed AS data_source#111, time_position#3L AS timestamp#112L, last_contact#4L, time_position#3L, latitude#7, longitude#6, baro_altitude#8, geo_altitude#9, on_ground#10, velocity#11, true_track#12, vertical_rate#13, squawk#14, spi#15, position_source#16, origin_code#23, origin_city#24, destination_code#28, destination_city#29, cast(null as string) AS route#113, cast(null as string) AS aircraft_model#114, cast(null as string) AS aircraft_type#115, ... 11 more fields]
++- Project [icao24#0, callsign#1, origin_country#2, time_position#3L, last_contact#4L, ingestion_time#5, longitude#6, latitude#7, baro_altitude#8, geo_altitude#9, on_ground#10, velocity#11, true_track#12, vertical_rate#13, squawk#14, spi#15, position_source#16, sensors#17, airline_prefix#18, airline_name#19, airline_iata#20, airline_icao#21, flight_number#22, origin_code#23, ... 13 more fields]
+   +- Relation [icao24#0,callsign#1,origin_country#2,time_position#3L,last_contact#4L,ingestion_time#5,longitude#6,latitude#7,baro_altitude#8,geo_altitude#9,on_ground#10,velocity#11,true_track#12,vertical_rate#13,squawk#14,spi#15,position_source#16,sensors#17,airline_prefix#18,airline_name#19,airline_iata#20,airline_icao#21,flight_number#22,origin_code#23,... 12 more fields] parquet
+
+[2026-01-04T06:05:32.112+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=serving_layer_postgres_load, task_id=load_postgres, execution_date=20260104T000000, start_date=20260104T060518, end_date=20260104T060532
+[2026-01-04T06:05:32.132+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 323 for task load_postgres ([UNRESOLVED_COLUMN.WITH_SUGGESTION] A column or function parameter with name `year` cannot be resolved. Did you mean one of the following? [`spi`, `icao24`, `sensors`, `squawk`, `callsign`].;
+'Project [icao24#0, callsign#1, speed AS data_source#111, time_position#3L AS timestamp#112L, last_contact#4L, time_position#3L, latitude#7, longitude#6, baro_altitude#8, geo_altitude#9, on_ground#10, velocity#11, true_track#12, vertical_rate#13, squawk#14, spi#15, position_source#16, origin_code#23, origin_city#24, destination_code#28, destination_city#29, cast(null as string) AS route#113, cast(null as string) AS aircraft_model#114, cast(null as string) AS aircraft_type#115, ... 11 more fields]
++- Project [icao24#0, callsign#1, origin_country#2, time_position#3L, last_contact#4L, ingestion_time#5, longitude#6, latitude#7, baro_altitude#8, geo_altitude#9, on_ground#10, velocity#11, true_track#12, vertical_rate#13, squawk#14, spi#15, position_source#16, sensors#17, airline_prefix#18, airline_name#19, airline_iata#20, airline_icao#21, flight_number#22, origin_code#23, ... 13 more fields]
+   +- Relation [icao24#0,callsign#1,origin_country#2,time_position#3L,last_contact#4L,ingestion_time#5,longitude#6,latitude#7,baro_altitude#8,geo_altitude#9,on_ground#10,velocity#11,true_track#12,vertical_rate#13,squawk#14,spi#15,position_source#16,sensors#17,airline_prefix#18,airline_name#19,airline_iata#20,airline_icao#21,flight_number#22,origin_code#23,... 12 more fields] parquet
+; 63263)
+[2026-01-04T06:05:32.186+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-01-04T06:05:32.220+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T06:05:32.222+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

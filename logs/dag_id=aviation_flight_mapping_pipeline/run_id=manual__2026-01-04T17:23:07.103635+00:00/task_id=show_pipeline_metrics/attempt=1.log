@@ -1,0 +1,75 @@
+[2026-01-04T17:26:26.412+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T17:26:26.517+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.show_pipeline_metrics manual__2026-01-04T17:23:07.103635+00:00 [queued]>
+[2026-01-04T17:26:26.545+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: aviation_flight_mapping_pipeline.show_pipeline_metrics manual__2026-01-04T17:23:07.103635+00:00 [queued]>
+[2026-01-04T17:26:26.548+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2026-01-04T17:26:26.589+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): show_pipeline_metrics> on 2026-01-04 17:23:07.103635+00:00
+[2026-01-04T17:26:26.622+0000] {standard_task_runner.py:63} INFO - Started process 2087 to run task
+[2026-01-04T17:26:26.631+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'aviation_flight_mapping_pipeline', 'show_pipeline_metrics', 'manual__2026-01-04T17:23:07.103635+00:00', '--job-id', '474', '--raw', '--subdir', 'DAGS_FOLDER/aviation_flight_mapping_pipeline.py', '--cfg-path', '/tmp/tmpce3u15jc']
+[2026-01-04T17:26:26.642+0000] {standard_task_runner.py:91} INFO - Job 474: Subtask show_pipeline_metrics
+[2026-01-04T17:26:26.824+0000] {task_command.py:426} INFO - Running <TaskInstance: aviation_flight_mapping_pipeline.show_pipeline_metrics manual__2026-01-04T17:23:07.103635+00:00 [running]> on host 0f35c4bc447d
+[2026-01-04T17:26:27.142+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='aviation_flight_mapping_pipeline' AIRFLOW_CTX_TASK_ID='show_pipeline_metrics' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T17:23:07.103635+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-01-04T17:23:07.103635+00:00'
+[2026-01-04T17:26:27.144+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T17:26:27.172+0000] {logging_mixin.py:188} INFO - 
+================================================================================
+[2026-01-04T17:26:27.173+0000] {logging_mixin.py:188} INFO - 📊 AVIATION FLIGHT MAPPING PIPELINE - COMPREHENSIVE METRICS REPORT
+[2026-01-04T17:26:27.173+0000] {logging_mixin.py:188} INFO - ================================================================================
+[2026-01-04T17:26:27.174+0000] {logging_mixin.py:188} INFO - 
+🔄 DAG RUN INFORMATION
+[2026-01-04T17:26:27.174+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:26:27.175+0000] {logging_mixin.py:188} INFO -   DAG ID:           aviation_flight_mapping_pipeline
+[2026-01-04T17:26:27.175+0000] {logging_mixin.py:188} INFO -   Run ID:           manual__2026-01-04T17:23:07.103635+00:00
+[2026-01-04T17:26:27.175+0000] {logging_mixin.py:188} INFO -   Execution Date:   2026-01-04 17:23:07.103635+00:00
+[2026-01-04T17:26:27.176+0000] {logging_mixin.py:188} INFO -   Start Date:       2026-01-04 17:23:07.235981+00:00
+[2026-01-04T17:26:27.176+0000] {logging_mixin.py:188} INFO -   State:            running
+[2026-01-04T17:26:27.177+0000] {logging_mixin.py:188} INFO -   Duration So Far:  199.94s (3.33m)
+[2026-01-04T17:26:27.177+0000] {logging_mixin.py:188} INFO - 
+📋 TASK EXECUTION METRICS
+[2026-01-04T17:26:27.178+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:26:27.210+0000] {logging_mixin.py:188} INFO -   ✓ check_flights_data                  |    0.59s | success
+[2026-01-04T17:26:27.243+0000] {logging_mixin.py:188} INFO -   ✓ create_minio_bucket                 |    0.43s | success
+[2026-01-04T17:26:27.279+0000] {logging_mixin.py:188} INFO -   ✓ create_flight_mapping               |  179.16s | success
+[2026-01-04T17:26:27.312+0000] {logging_mixin.py:188} INFO -   ✓ upload_india_csv                    |    1.31s | success
+[2026-01-04T17:26:27.313+0000] {logging_mixin.py:188} INFO - 
+  Total Task Time:     181.49s (3.02m)
+[2026-01-04T17:26:27.314+0000] {logging_mixin.py:188} INFO -   Successful Tasks:    4/4
+[2026-01-04T17:26:27.315+0000] {logging_mixin.py:188} INFO - 
+💾 DATA LAYER STATISTICS
+[2026-01-04T17:26:27.315+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:26:27.957+0000] {logging_mixin.py:188} INFO - 
+  🗺️  Flight Mapping Data: aviation-mapping
+[2026-01-04T17:26:27.957+0000] {logging_mixin.py:188} INFO -     Files:       11
+[2026-01-04T17:26:27.958+0000] {logging_mixin.py:188} INFO -     Total Size:  4.97 MB
+[2026-01-04T17:26:27.958+0000] {logging_mixin.py:188} INFO -     Paths:
+[2026-01-04T17:26:27.959+0000] {logging_mixin.py:188} INFO -       • flight_routes: 10 files
+[2026-01-04T17:26:27.959+0000] {logging_mixin.py:188} INFO -       • root: 1 files
+[2026-01-04T17:26:27.960+0000] {logging_mixin.py:188} INFO - 
+📈 DATA PROCESSING METRICS
+[2026-01-04T17:26:27.960+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:26:27.999+0000] {logging_mixin.py:188} INFO - 
+  Task: check_flights_data
+[2026-01-04T17:26:28.001+0000] {logging_mixin.py:188} INFO -     • file_count                    : 30
+[2026-01-04T17:26:28.076+0000] {logging_mixin.py:188} INFO - 
+  Task: create_flight_mapping
+[2026-01-04T17:26:28.078+0000] {logging_mixin.py:188} INFO -     • total_records                 : 3,198,513
+[2026-01-04T17:26:28.078+0000] {logging_mixin.py:188} INFO -     • unique_callsigns              : 213,409
+[2026-01-04T17:26:28.080+0000] {logging_mixin.py:188} INFO -     • india_routes                  : 4,591
+[2026-01-04T17:26:28.134+0000] {logging_mixin.py:188} INFO - 
+⚡ PERFORMANCE SUMMARY
+[2026-01-04T17:26:28.136+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:26:28.139+0000] {logging_mixin.py:188} INFO -   Pipeline Efficiency:  90.8% (task time / wall clock time)
+[2026-01-04T17:26:28.140+0000] {logging_mixin.py:188} INFO -   Avg Task Duration:    45.37s
+[2026-01-04T17:26:28.141+0000] {logging_mixin.py:188} INFO - 
+🏥 SYSTEM HEALTH CHECK
+[2026-01-04T17:26:28.142+0000] {logging_mixin.py:188} INFO - --------------------------------------------------------------------------------
+[2026-01-04T17:26:28.143+0000] {logging_mixin.py:188} INFO -   MinIO Storage:    ❌ Unavailable - name 'create_s3_client' is not defined
+[2026-01-04T17:26:28.255+0000] {logging_mixin.py:188} INFO -   PostgreSQL:       ✅ Healthy
+[2026-01-04T17:26:28.256+0000] {logging_mixin.py:188} INFO - 
+================================================================================
+[2026-01-04T17:26:28.256+0000] {logging_mixin.py:188} INFO - ✅ AVIATION FLIGHT MAPPING PIPELINE EXECUTION COMPLETE
+[2026-01-04T17:26:28.259+0000] {logging_mixin.py:188} INFO - ================================================================================
+[2026-01-04T17:26:28.261+0000] {python.py:237} INFO - Done. Returned value was: {'status': 'SUCCESS', 'total_duration': 199.941314, 'total_task_time': 181.493659, 'successful_tasks': 4, 'failed_tasks': 0, 'timestamp': '2026-01-04T17:26:28.260556'}
+[2026-01-04T17:26:28.262+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T17:26:28.383+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=aviation_flight_mapping_pipeline, task_id=show_pipeline_metrics, execution_date=20260104T172307, start_date=20260104T172626, end_date=20260104T172628
+[2026-01-04T17:26:28.471+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T17:26:28.532+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T17:26:28.537+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

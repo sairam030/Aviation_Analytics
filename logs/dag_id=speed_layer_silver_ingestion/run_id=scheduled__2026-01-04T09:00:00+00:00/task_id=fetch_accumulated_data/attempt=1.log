@@ -1,0 +1,20 @@
+[2026-01-04T10:00:03.898+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T10:00:03.959+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.fetch_accumulated_data scheduled__2026-01-04T09:00:00+00:00 [queued]>
+[2026-01-04T10:00:03.968+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.fetch_accumulated_data scheduled__2026-01-04T09:00:00+00:00 [queued]>
+[2026-01-04T10:00:03.969+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2026-01-04T10:00:03.983+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): fetch_accumulated_data> on 2026-01-04 09:00:00+00:00
+[2026-01-04T10:00:03.994+0000] {standard_task_runner.py:63} INFO - Started process 75902 to run task
+[2026-01-04T10:00:04.001+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'fetch_accumulated_data', 'scheduled__2026-01-04T09:00:00+00:00', '--job-id', '341', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmpneo67b2s']
+[2026-01-04T10:00:04.006+0000] {standard_task_runner.py:91} INFO - Job 341: Subtask fetch_accumulated_data
+[2026-01-04T10:00:04.082+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.fetch_accumulated_data scheduled__2026-01-04T09:00:00+00:00 [running]> on host 897f49cfcd10
+[2026-01-04T10:00:04.285+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='fetch_accumulated_data' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T09:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-04T09:00:00+00:00'
+[2026-01-04T10:00:04.287+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T10:00:04.320+0000] {logging_mixin.py:188} INFO - ✓ Fetched 0 flights from accumulator
+[2026-01-04T10:00:04.320+0000] {logging_mixin.py:188} INFO -   - Total messages: 0
+[2026-01-04T10:00:04.320+0000] {logging_mixin.py:188} INFO -   - Unique flights: 0
+[2026-01-04T10:00:04.359+0000] {python.py:237} INFO - Done. Returned value was: 0
+[2026-01-04T10:00:04.359+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T10:00:04.397+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=fetch_accumulated_data, execution_date=20260104T090000, start_date=20260104T100003, end_date=20260104T100004
+[2026-01-04T10:00:04.451+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T10:00:04.520+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T10:00:04.523+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,30 @@
+[2026-01-04T17:00:45.405+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T17:00:45.563+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: analytics_serving_layer.print_summary manual__2026-01-04T16:42:34+00:00 [queued]>
+[2026-01-04T17:00:45.620+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: analytics_serving_layer.print_summary manual__2026-01-04T16:42:34+00:00 [queued]>
+[2026-01-04T17:00:45.624+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2026-01-04T17:00:45.680+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): print_summary> on 2026-01-04 16:42:34+00:00
+[2026-01-04T17:00:45.702+0000] {standard_task_runner.py:63} INFO - Started process 1648 to run task
+[2026-01-04T17:00:45.728+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'analytics_serving_layer', 'print_summary', 'manual__2026-01-04T16:42:34+00:00', '--job-id', '453', '--raw', '--subdir', 'DAGS_FOLDER/analytics_serving_layer.py', '--cfg-path', '/tmp/tmp3qgbnrbq']
+[2026-01-04T17:00:45.743+0000] {standard_task_runner.py:91} INFO - Job 453: Subtask print_summary
+[2026-01-04T17:00:45.965+0000] {task_command.py:426} INFO - Running <TaskInstance: analytics_serving_layer.print_summary manual__2026-01-04T16:42:34+00:00 [running]> on host 0f35c4bc447d
+[2026-01-04T17:00:46.550+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='analytics_serving_layer' AIRFLOW_CTX_TASK_ID='print_summary' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T16:42:34+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-01-04T16:42:34+00:00'
+[2026-01-04T17:00:46.552+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T17:00:46.584+0000] {logging_mixin.py:188} INFO - 
+============================================================
+[2026-01-04T17:00:46.584+0000] {logging_mixin.py:188} INFO - ✅ ANALYTICS SERVING LAYER COMPLETE
+[2026-01-04T17:00:46.585+0000] {logging_mixin.py:188} INFO -    Mode: FULL LOAD (Batch + Speed)
+[2026-01-04T17:00:46.585+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T17:00:46.585+0000] {logging_mixin.py:188} INFO - 📊 Tables created in 'analytics' database:
+[2026-01-04T17:00:46.586+0000] {logging_mixin.py:188} INFO -    1. raw_telemetry (Sampled raw data points)
+[2026-01-04T17:00:46.586+0000] {logging_mixin.py:188} INFO -    2. fact_flight_history (Flight master table)
+[2026-01-04T17:00:46.586+0000] {logging_mixin.py:188} INFO -    3. dim_route_analytics (Route performance)
+[2026-01-04T17:00:46.586+0000] {logging_mixin.py:188} INFO -    4. dim_aircraft_utilization (Aircraft tracking)
+[2026-01-04T17:00:46.587+0000] {logging_mixin.py:188} INFO -    5. dim_airspace_heatmap (Spatial analysis)
+[2026-01-04T17:00:46.587+0000] {logging_mixin.py:188} INFO - 
+💾 Full raw data in: s3a://aviation-gold/master_flights
+[2026-01-04T17:00:46.587+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-01-04T17:00:46.588+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T17:00:46.615+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=analytics_serving_layer, task_id=print_summary, execution_date=20260104T164234, start_date=20260104T170045, end_date=20260104T170046
+[2026-01-04T17:00:46.664+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T17:00:46.717+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T17:00:46.719+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

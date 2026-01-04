@@ -1,0 +1,18 @@
+[2026-01-04T09:00:07.719+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T09:00:07.759+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.clear_accumulator scheduled__2026-01-04T08:00:00+00:00 [queued]>
+[2026-01-04T09:00:07.768+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.clear_accumulator scheduled__2026-01-04T08:00:00+00:00 [queued]>
+[2026-01-04T09:00:07.768+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2026-01-04T09:00:07.780+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): clear_accumulator> on 2026-01-04 08:00:00+00:00
+[2026-01-04T09:00:07.789+0000] {standard_task_runner.py:63} INFO - Started process 72781 to run task
+[2026-01-04T09:00:07.795+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'clear_accumulator', 'scheduled__2026-01-04T08:00:00+00:00', '--job-id', '338', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmpbtgi71xj']
+[2026-01-04T09:00:07.799+0000] {standard_task_runner.py:91} INFO - Job 338: Subtask clear_accumulator
+[2026-01-04T09:00:07.881+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.clear_accumulator scheduled__2026-01-04T08:00:00+00:00 [running]> on host 897f49cfcd10
+[2026-01-04T09:00:08.065+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='clear_accumulator' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T08:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-04T08:00:00+00:00'
+[2026-01-04T09:00:08.066+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T09:00:08.095+0000] {logging_mixin.py:188} INFO - ⚠️ No flights were persisted, skipping clear
+[2026-01-04T09:00:08.096+0000] {python.py:237} INFO - Done. Returned value was: 0
+[2026-01-04T09:00:08.096+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T09:00:08.157+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=clear_accumulator, execution_date=20260104T080000, start_date=20260104T090007, end_date=20260104T090008
+[2026-01-04T09:00:08.205+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T09:00:08.265+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T09:00:08.266+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

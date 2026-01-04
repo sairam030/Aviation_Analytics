@@ -1,0 +1,21 @@
+[2026-01-04T14:56:32.154+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T14:56:32.214+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: analytics_serving_layer.create_dim_airspace_heatmap manual__2026-01-04T14:54:08+00:00 [queued]>
+[2026-01-04T14:56:32.232+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: analytics_serving_layer.create_dim_airspace_heatmap manual__2026-01-04T14:54:08+00:00 [queued]>
+[2026-01-04T14:56:32.233+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2026-01-04T14:56:32.263+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): create_dim_airspace_heatmap> on 2026-01-04 14:54:08+00:00
+[2026-01-04T14:56:32.285+0000] {standard_task_runner.py:63} INFO - Started process 6487 to run task
+[2026-01-04T14:56:32.292+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'analytics_serving_layer', 'create_dim_airspace_heatmap', 'manual__2026-01-04T14:54:08+00:00', '--job-id', '416', '--raw', '--subdir', 'DAGS_FOLDER/analytics_serving_layer.py', '--cfg-path', '/tmp/tmpv1ihj4b3']
+[2026-01-04T14:56:32.296+0000] {standard_task_runner.py:91} INFO - Job 416: Subtask create_dim_airspace_heatmap
+[2026-01-04T14:56:32.418+0000] {task_command.py:426} INFO - Running <TaskInstance: analytics_serving_layer.create_dim_airspace_heatmap manual__2026-01-04T14:54:08+00:00 [running]> on host 968fed69c878
+[2026-01-04T14:56:32.592+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='analytics_serving_layer' AIRFLOW_CTX_TASK_ID='create_dim_airspace_heatmap' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T14:54:08+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-01-04T14:54:08+00:00'
+[2026-01-04T14:56:32.593+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T14:56:32.610+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T14:56:32.610+0000] {logging_mixin.py:188} INFO - CREATING DIM_AIRSPACE_HEATMAP
+[2026-01-04T14:56:32.610+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T14:57:39.473+0000] {logging_mixin.py:188} INFO - ✅ DIM_AIRSPACE_HEATMAP: 22,553 records
+[2026-01-04T14:57:39.906+0000] {python.py:237} INFO - Done. Returned value was: {'table': 'dim_airspace_heatmap', 'records': 22553}
+[2026-01-04T14:57:39.915+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T14:57:40.262+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=analytics_serving_layer, task_id=create_dim_airspace_heatmap, execution_date=20260104T145408, start_date=20260104T145632, end_date=20260104T145740
+[2026-01-04T14:57:40.412+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T14:57:40.602+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T14:57:40.603+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,25 @@
+[2026-01-04T12:00:08.516+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-01-04T12:00:08.569+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-04T11:00:00+00:00 [queued]>
+[2026-01-04T12:00:08.587+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-04T11:00:00+00:00 [queued]>
+[2026-01-04T12:00:08.587+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 3
+[2026-01-04T12:00:08.607+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): persist_to_silver> on 2026-01-04 11:00:00+00:00
+[2026-01-04T12:00:08.621+0000] {standard_task_runner.py:63} INFO - Started process 467 to run task
+[2026-01-04T12:00:08.626+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'speed_layer_silver_ingestion', 'persist_to_silver', 'scheduled__2026-01-04T11:00:00+00:00', '--job-id', '359', '--raw', '--subdir', 'DAGS_FOLDER/speed_layer_silver_ingestion.py', '--cfg-path', '/tmp/tmpzxsv7cpa']
+[2026-01-04T12:00:08.630+0000] {standard_task_runner.py:91} INFO - Job 359: Subtask persist_to_silver
+[2026-01-04T12:00:08.724+0000] {task_command.py:426} INFO - Running <TaskInstance: speed_layer_silver_ingestion.persist_to_silver scheduled__2026-01-04T11:00:00+00:00 [running]> on host 4d831e97098c
+[2026-01-04T12:00:08.870+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='aviation-team' AIRFLOW_CTX_DAG_ID='speed_layer_silver_ingestion' AIRFLOW_CTX_TASK_ID='persist_to_silver' AIRFLOW_CTX_EXECUTION_DATE='2026-01-04T11:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-04T11:00:00+00:00'
+[2026-01-04T12:00:08.870+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-01-04T12:00:08.883+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T12:00:08.884+0000] {logging_mixin.py:188} INFO - PERSISTING TO SILVER LAYER
+[2026-01-04T12:00:08.884+0000] {logging_mixin.py:188} INFO - ============================================================
+[2026-01-04T12:00:08.910+0000] {logging_mixin.py:188} INFO - Processing 30 flights...
+[2026-01-04T12:00:17.972+0000] {logging_mixin.py:188} INFO - Writing to: s3a://aviation-silver/speed_layer/year=2026/month=01/day=04/hour=12
+[2026-01-04T12:00:27.057+0000] {logging_mixin.py:188} INFO - ✓ Persisted 30 flights to Silver layer
+[2026-01-04T12:00:27.058+0000] {logging_mixin.py:188} INFO -   Path: s3a://aviation-silver/speed_layer/year=2026/month=01/day=04/hour=12
+[2026-01-04T12:00:27.058+0000] {logging_mixin.py:188} INFO -   Timestamp: 2026-01-04T12:00:17.972183
+[2026-01-04T12:00:28.086+0000] {python.py:237} INFO - Done. Returned value was: {'status': 'success', 'count': 30, 'path': 's3a://aviation-silver/speed_layer/year=2026/month=01/day=04/hour=12', 'timestamp': '2026-01-04T12:00:17.972183'}
+[2026-01-04T12:00:28.087+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-01-04T12:00:28.152+0000] {taskinstance.py:1205} INFO - Marking task as SUCCESS. dag_id=speed_layer_silver_ingestion, task_id=persist_to_silver, execution_date=20260104T110000, start_date=20260104T120008, end_date=20260104T120028
+[2026-01-04T12:00:28.227+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-01-04T12:00:28.303+0000] {taskinstance.py:3482} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-01-04T12:00:28.304+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
