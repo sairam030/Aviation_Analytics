@@ -32,6 +32,65 @@ AIRLINES = {
 # Flight state tracking for continuity
 _flight_states = {}
 
+# ─── Route data loaded from CSV ──────────────────────────────────────────────
+# Maps ICAO prefix -> list of (numeric_flight_number, origin, destination)
+_ROUTE_DATA = {}
+_ROUTE_BY_CALLSIGN = {}  # callsign -> (origin, destination)
+
+def _load_routes():
+    """Load actual flight numbers from routes CSV (called once at import)."""
+    global _ROUTE_DATA, _ROUTE_BY_CALLSIGN
+    import csv, re, os
+    
+    csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'routes.csv')
+    if not os.path.exists(csv_path):
+        # Try container path
+        csv_path = '/opt/airflow/data/routes.csv'
+    if not os.path.exists(csv_path):
+        print("⚠️ routes.csv not found, using fallback flight numbers")
+        return
+    
+    iata_to_icao = {
+        '6E': 'IGO', 'AI': 'AIC', 'SG': 'SEJ', 'QP': 'AKJ',
+        'UK': 'VTI', 'IX': 'IAD', 'G8': 'GOW', '9I': 'LLR',
+    }
+    
+    with open(csv_path, 'r') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            fn = row.get('FlightNo', '')
+            origin = row.get('Origin', '')
+            dest = row.get('Destination', '')
+            if not fn or not origin or not dest or origin == dest:
+                continue
+            
+            num_match = re.search(r'(\d+)$', fn)
+            if not num_match:
+                continue
+            
+            iata = fn[:2]
+            icao = iata_to_icao.get(iata)
+            if not icao or icao not in AIRLINES:
+                continue
+            
+            flight_num = num_match.group(1)
+            callsign = f"{icao}{flight_num}"
+            
+            if icao not in _ROUTE_DATA:
+                _ROUTE_DATA[icao] = []
+            _ROUTE_DATA[icao].append((flight_num, origin, dest))
+            _ROUTE_BY_CALLSIGN[callsign] = (origin, dest)
+    
+    for prefix, routes in _ROUTE_DATA.items():
+        # Deduplicate
+        _ROUTE_DATA[prefix] = list({r[0]: r for r in routes}.values())
+    
+    total = sum(len(v) for v in _ROUTE_DATA.values())
+    print(f"✓ Loaded {total} routes for mock data ({', '.join(f'{k}:{len(v)}' for k,v in _ROUTE_DATA.items())})")
+
+# Load routes at module import
+_load_routes()
+
 
 def generate_icao24():
     """Generate a realistic ICAO24 transponder address."""
@@ -43,28 +102,21 @@ def generate_icao24():
 
 
 def generate_callsign():
-    """Generate airline callsign that matches route mapping patterns."""
-    airline_code = random.choice(list(AIRLINES.keys()))
+    """Generate airline callsign using actual flight numbers from routes CSV.
     
-    # Flight number ranges that match route_mapping.py ROUTE_PATTERNS
-    # IGO: 100-1599, 2000-2999, 5000-6999
-    # AIC: 100-999
-    # VTI: 800-999
-    # SEJ: 100-999
-    # AKJ: 100-499
+    Callsign format: {ICAO_PREFIX}{NUMERIC_FLIGHT_NUMBER}
+    E.g., CSV has '6E102' → Spark extracts '102' → callsign 'IGO102'
+    """
+    # Pick from airlines that have routes loaded
+    available = [k for k in AIRLINES if k in _ROUTE_DATA and _ROUTE_DATA[k]]
+    if not available:
+        # Fallback if CSV not loaded
+        airline_code = random.choice(list(AIRLINES.keys()))
+        return f"{airline_code}{random.randint(100, 999)}"
     
-    flight_ranges = {
-        "IGO": [(100, 1599), (2000, 2999), (5000, 6999)],
-        "AIC": [(100, 199), (200, 299), (300, 399), (400, 499), (500, 599), (600, 699), (800, 999)],
-        "VTI": [(800, 899), (900, 999)],
-        "SEJ": [(100, 199), (200, 299), (300, 399), (400, 599)],
-        "AKJ": [(100, 199), (200, 299), (300, 399), (400, 499)],
-    }
-    
-    # Pick a range for this airline and generate a matching flight number
-    ranges = flight_ranges.get(airline_code, [(100, 999)])
-    chosen_range = random.choice(ranges)
-    flight_num = random.randint(chosen_range[0], chosen_range[1])
+    airline_code = random.choice(available)
+    route = random.choice(_ROUTE_DATA[airline_code])
+    flight_num = route[0]  # numeric part
     
     return f"{airline_code}{flight_num}"
 

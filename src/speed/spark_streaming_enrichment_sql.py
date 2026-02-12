@@ -6,7 +6,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
     from_json, col, expr, lit,
     struct, to_json, current_timestamp,
-    regexp_extract, when
+    regexp_extract, when, concat
 )
 from pyspark.sql.types import (
     StructType, StructField, StringType, DoubleType,
@@ -111,7 +111,138 @@ def create_spark_session():
 
 
 def create_route_mapping_df(spark):
-    """Create route mapping DataFrame from embedded data."""
+    """Create route mapping DataFrame from flight routing table CSV.
+    
+    CSV format: FlightNo,Origin,Destination,ScheduledDepartureTime
+    """
+    import os
+    
+    csv_path = "/opt/airflow/data/routes.csv"
+    
+    # Try to load from CSV first
+    if os.path.exists(csv_path):
+        try:
+            print(f"Loading routes from CSV: {csv_path}")
+            df = spark.read.csv(csv_path, header=True, inferSchema=True)
+            
+            # Keep FlightNo separate and extract airline info from it
+            df = df.select(
+                col("FlightNo").alias("flight_number"),
+                col("Origin").alias("origin_code"),
+                col("Destination").alias("destination_code")
+            )
+            
+            # Filter out invalid routes (self-loops, nulls, etc.)
+            df = df.filter(
+                (col("flight_number").isNotNull()) &
+                (col("origin_code").isNotNull()) &
+                (col("destination_code").isNotNull()) &
+                (col("origin_code") != col("destination_code"))
+            )
+            
+            # Extract airline IATA code from flight number (e.g., "6E102" -> "6E")
+            df = df.withColumn(
+                "airline_iata",
+                when(col("flight_number").rlike("^6E[0-9]+"), "6E")
+                .when(col("flight_number").rlike("^AI[0-9]+"), "AI")
+                .when(col("flight_number").rlike("^IX[0-9]+"), "IX")
+                .when(col("flight_number").rlike("^SG[0-9]+"), "SG")
+                .when(col("flight_number").rlike("^UK[0-9]+"), "UK")
+                .when(col("flight_number").rlike("^QP[0-9]+"), "QP")
+                .when(col("flight_number").rlike("^G8[0-9]+"), "G8")
+                .when(col("flight_number").rlike("^9I[0-9]+"), "9I")
+                .otherwise("XX")
+            )
+            
+            # Map IATA to airline name and ICAO prefix
+            df = df.withColumn(
+                "airline_name",
+                when(col("airline_iata") == "6E", "IndiGo")
+                .when(col("airline_iata") == "AI", "Air India")
+                .when(col("airline_iata") == "IX", "Air India Express")
+                .when(col("airline_iata") == "SG", "SpiceJet")
+                .when(col("airline_iata") == "UK", "Vistara")
+                .when(col("airline_iata") == "QP", "Akasa Air")
+                .when(col("airline_iata") == "G8", "Go First")
+                .when(col("airline_iata") == "9I", "Alliance Air")
+                .otherwise("Unknown")
+            ).withColumn(
+                "airline_prefix",
+                when(col("airline_iata") == "6E", "IGO")
+                .when(col("airline_iata") == "AI", "AIC")
+                .when(col("airline_iata") == "IX", "IAD")
+                .when(col("airline_iata") == "SG", "SEJ")
+                .when(col("airline_iata") == "UK", "VTI")
+                .when(col("airline_iata") == "QP", "AKJ")
+                .when(col("airline_iata") == "G8", "GOW")
+                .when(col("airline_iata") == "9I", "LLR")
+                .otherwise("UNK")
+            ).withColumn(
+                "airline_icao",
+                col("airline_prefix")
+            )
+            
+            # Extract numeric part from flight number (e.g., "6E102" -> "102")
+            df = df.withColumn(
+                "flight_num_only",
+                regexp_extract(col("flight_number"), r"(\d+)$", 1)
+            )
+            
+            # Generate callsign by combining ICAO prefix with the numeric flight number
+            # e.g., "6E102" -> "IGO102" (matches actual OpenSky/mock callsign format)
+            df = df.withColumn(
+                "callsign",
+                concat(col("airline_prefix"), col("flight_num_only"))
+            )
+            
+            # Add airport detail columns from INDIAN_AIRPORTS lookup
+            # Build origin airport details
+            origin_city_expr = lit(None).cast(StringType())
+            origin_airport_expr = lit(None).cast(StringType())
+            origin_lat_expr = lit(None).cast(DoubleType())
+            origin_lon_expr = lit(None).cast(DoubleType())
+            dest_city_expr = lit(None).cast(StringType())
+            dest_airport_expr = lit(None).cast(StringType())
+            dest_lat_expr = lit(None).cast(DoubleType())
+            dest_lon_expr = lit(None).cast(DoubleType())
+            
+            for code, info in INDIAN_AIRPORTS.items():
+                origin_city_expr = when(col("origin_code") == code, lit(info["city"])).otherwise(origin_city_expr)
+                origin_airport_expr = when(col("origin_code") == code, lit(info["name"])).otherwise(origin_airport_expr)
+                origin_lat_expr = when(col("origin_code") == code, lit(info["lat"])).otherwise(origin_lat_expr)
+                origin_lon_expr = when(col("origin_code") == code, lit(info["lon"])).otherwise(origin_lon_expr)
+                dest_city_expr = when(col("destination_code") == code, lit(info["city"])).otherwise(dest_city_expr)
+                dest_airport_expr = when(col("destination_code") == code, lit(info["name"])).otherwise(dest_airport_expr)
+                dest_lat_expr = when(col("destination_code") == code, lit(info["lat"])).otherwise(dest_lat_expr)
+                dest_lon_expr = when(col("destination_code") == code, lit(info["lon"])).otherwise(dest_lon_expr)
+            
+            df = (df
+                .withColumn("origin_city", origin_city_expr)
+                .withColumn("origin_airport", origin_airport_expr)
+                .withColumn("origin_lat", origin_lat_expr)
+                .withColumn("origin_lon", origin_lon_expr)
+                .withColumn("destination_city", dest_city_expr)
+                .withColumn("destination_airport", dest_airport_expr)
+                .withColumn("destination_lat", dest_lat_expr)
+                .withColumn("destination_lon", dest_lon_expr)
+            )
+            
+            # Remove duplicates
+            df = df.dropDuplicates(["callsign"])
+            
+            route_count = df.count()
+            print(f"✓ Loaded {route_count} routes from CSV: {csv_path}")
+            print(f"✓ Using flight number-based route matching")
+            print(f"✓ Sample callsigns: IGO102, AIC176, etc.")
+            return df
+        except Exception as e:
+            import traceback
+            print(f"⚠️ Error loading CSV: {e}")
+            print(f"⚠️ Traceback: {traceback.format_exc()}")
+            print("Falling back to pattern-based routing...")
+    
+    # Fallback: pattern-based routing
+    print("Using pattern-based routing as fallback...")
     rows = []
     for prefix, routes in ROUTE_PATTERNS.items():
         airline = INDIAN_AIRLINES.get(prefix, {})
@@ -128,13 +259,13 @@ def create_route_mapping_df(spark):
                 "origin_code": origin,
                 "origin_city": origin_info.get("city", ""),
                 "origin_airport": origin_info.get("name", ""),
-                "origin_lat": origin_info.get("lat"),
-                "origin_lon": origin_info.get("lon"),
+                "origin_lat": origin_info.get("lat", 0.0),
+                "origin_lon": origin_info.get("lon", 0.0),
                 "destination_code": dest,
                 "destination_city": dest_info.get("city", ""),
                 "destination_airport": dest_info.get("name", ""),
-                "destination_lat": dest_info.get("lat"),
-                "destination_lon": dest_info.get("lon"),
+                "destination_lat": dest_info.get("lat", 0.0),
+                "destination_lon": dest_info.get("lon", 0.0),
             })
     
     return spark.createDataFrame(rows)
@@ -177,7 +308,10 @@ def run_enrichment_stream():
         .select(from_json(col("value").cast("string"), FLIGHT_SCHEMA).alias("flight"))
         .select("flight.*"))
     
-    # Extract airline prefix and flight number from callsign
+    # Clean and trim callsign
+    flights = flights.withColumn("callsign", expr("trim(callsign)"))
+    
+    # Extract airline prefix
     flights_with_extracted = flights.withColumn(
         "airline_prefix",
         when(col("callsign").rlike("^IGO"), lit("IGO"))
@@ -185,6 +319,7 @@ def run_enrichment_stream():
         .when(col("callsign").rlike("^VTI"), lit("VTI"))
         .when(col("callsign").rlike("^SEJ"), lit("SEJ"))
         .when(col("callsign").rlike("^AKJ"), lit("AKJ"))
+        .when(col("callsign").rlike("^AXB"), lit("AXB"))
         .otherwise(lit(None))
     ).withColumn(
         "flight_number",
@@ -192,35 +327,74 @@ def run_enrichment_stream():
     )
     
     print("[DEBUG] Joining with route mapping...")
-    # Join with route mapping
-    enriched = flights_with_extracted.join(
-        route_mapping_df,
-        (flights_with_extracted.airline_prefix == route_mapping_df.airline_prefix) &
-        (flights_with_extracted.flight_number >= route_mapping_df.min_flight_num) &
-        (flights_with_extracted.flight_number <= route_mapping_df.max_flight_num),
-        "left"
-    ).select(
-        # Original fields
-        flights_with_extracted["*"],
-        # Enriched fields (from route_mapping_df)
-        route_mapping_df.airline_name,
-        route_mapping_df.airline_iata,
-        route_mapping_df.airline_icao,
-        route_mapping_df.origin_code,
-        route_mapping_df.origin_city,
-        route_mapping_df.origin_airport,
-        route_mapping_df.origin_lat,
-        route_mapping_df.origin_lon,
-        route_mapping_df.destination_code,
-        route_mapping_df.destination_city,
-        route_mapping_df.destination_airport,
-        route_mapping_df.destination_lat,
-        route_mapping_df.destination_lon
+    # Check if route_mapping has 'callsign' column (CSV mode) or flight number ranges (pattern mode)
+    route_columns = route_mapping_df.columns
+    
+    if "callsign" in route_columns:
+        print("  Using CSV-based exact callsign matching")
+        # Exact callsign match (from CSV)
+        enriched = flights_with_extracted.join(
+            route_mapping_df,
+            flights_with_extracted.callsign == route_mapping_df.callsign,
+            "left"
+        ).select(
+            # Original fields
+            flights_with_extracted["*"],
+            # Enriched fields (from route_mapping_df)
+            route_mapping_df.airline_name,
+            route_mapping_df.airline_iata,
+            route_mapping_df.airline_icao,
+            route_mapping_df.origin_code,
+            route_mapping_df.origin_city,
+            route_mapping_df.origin_airport,
+            route_mapping_df.origin_lat,
+            route_mapping_df.origin_lon,
+            route_mapping_df.destination_code,
+            route_mapping_df.destination_city,
+            route_mapping_df.destination_airport,
+            route_mapping_df.destination_lat,
+            route_mapping_df.destination_lon
+        )
+    else:
+        print("  Using pattern-based flight number range matching")
+        # Pattern-based matching (fallback)
+        enriched = flights_with_extracted.join(
+            route_mapping_df,
+            (flights_with_extracted.airline_prefix == route_mapping_df.airline_prefix) &
+            (flights_with_extracted.flight_number >= route_mapping_df.min_flight_num) &
+            (flights_with_extracted.flight_number <= route_mapping_df.max_flight_num),
+            "left"
+        ).select(
+            # Original fields
+            flights_with_extracted["*"],
+            # Enriched fields (from route_mapping_df)
+            route_mapping_df.airline_name,
+            route_mapping_df.airline_iata,
+            route_mapping_df.airline_icao,
+            route_mapping_df.origin_code,
+            route_mapping_df.origin_city,
+            route_mapping_df.origin_airport,
+            route_mapping_df.origin_lat,
+            route_mapping_df.origin_lon,
+            route_mapping_df.destination_code,
+            route_mapping_df.destination_city,
+            route_mapping_df.destination_airport,
+            route_mapping_df.destination_lat,
+            route_mapping_df.destination_lon
+        )
+    
+    print("[DEBUG] Filtering records with valid routes...")
+    # Filter to only include records that have route information
+    # A valid route must have origin_code and destination_code populated
+    enriched_with_routes = enriched.filter(
+        (col("origin_code").isNotNull()) & 
+        (col("destination_code").isNotNull())
     )
+    print("✓ Filtering enabled: Only flights with routes will be sent to next topic")
     
     print("[DEBUG] Setting up output stream to Kafka...")
     # Convert to JSON and write to Kafka
-    output_stream = (enriched
+    output_stream = (enriched_with_routes
         .select(to_json(struct("*")).alias("value"))
         .writeStream
         .format("kafka")

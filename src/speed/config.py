@@ -3,6 +3,17 @@ Speed Layer Configuration
 Kafka and OpenSky API settings
 """
 import os
+import logging
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+logging.basicConfig(
+    level=LOG_LEVEL,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 
 # =============================================================================
 # OPENSKY API
