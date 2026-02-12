@@ -333,7 +333,7 @@ services:
     environment:
       PYTHONPATH: /opt/airflow
       PYTHONUNBUFFERED: "1"
-      USE_MOCK_DATA: "true"
+      USE_MOCK_DATA: "false"
     depends_on:
       kafka:
         condition: service_healthy
@@ -388,6 +388,31 @@ services:
       - airflow-net
     restart: unless-stopped
 
+  # =============================================================================
+  # AI OPERATIONS (Log Analysis & Chatbot)
+  # =============================================================================
+  ai-ops:
+    image: python:3.9-slim
+    container_name: ai-ops
+    working_dir: /opt/airflow
+    command: >
+      bash -c "
+      
+      pip install streamlit google-generativeai &&
+      streamlit run src/monitoring/ai_dashboard.py --server.port 8501 --server.address 0.0.0.0
+      "
+    environment:
+      # GET YOUR KEY HERE: https://aistudio.google.com/app/apikey
+      GEMINI_API_KEY: "AIzaSyB-Qm4PywFnmGA6pVON4Z5biEzwvww59yI"
+    volumes:
+      - ./logs:/opt/airflow/logs:ro  # Read-only access to logs
+      - ./src:/opt/airflow/src:ro    # Read-only access to code
+    ports:
+      - "8501:8501"                  # Access dashboard at http://localhost:8501
+    networks:
+      - airflow-net
+    restart: unless-stopped
+
 # =============================================================================
 # VOLUMES & NETWORKS
 # =============================================================================
@@ -418,3 +443,6 @@ networks:
 #   2. bronze_to_silver_dag → Bronze → Silver (Enriched Parquet)
 #   3. silver_to_gold_dag → Silver → Gold (Aggregated analytics)
 # =============================================================================
+
+
+

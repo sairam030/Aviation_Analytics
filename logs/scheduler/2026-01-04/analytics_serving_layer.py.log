@@ -2695,3 +2695,17 @@ ImportError: cannot import name 'create_s3_client' from 'src.batch.minio_utils' 
 [2026-01-04T17:36:22.832+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:22.832+0000] {dag.py:3096} INFO - Sync 1 DAGs
 [2026-01-04T17:36:22.871+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:22.871+0000] {dag.py:3954} INFO - Setting next_dagrun for analytics_serving_layer to 2026-01-04 12:00:00+00:00, run_after=2026-01-04 18:00:00+00:00
 [2026-01-04T17:36:22.894+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/analytics_serving_layer.py took 0.368 seconds
+[2026-01-04T17:36:53.740+0000] {processor.py:161} INFO - Started process (PID=4641) to work on /opt/airflow/dags/analytics_serving_layer.py
+[2026-01-04T17:36:53.742+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/analytics_serving_layer.py for tasks to queue
+[2026-01-04T17:36:53.745+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:53.744+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/analytics_serving_layer.py
+[2026-01-04T17:36:54.100+0000] {processor.py:840} INFO - DAG(s) 'analytics_serving_layer' retrieved from /opt/airflow/dags/analytics_serving_layer.py
+[2026-01-04T17:36:54.163+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:54.163+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2026-01-04T17:36:54.207+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:54.206+0000] {dag.py:3954} INFO - Setting next_dagrun for analytics_serving_layer to 2026-01-04 12:00:00+00:00, run_after=2026-01-04 18:00:00+00:00
+[2026-01-04T17:36:54.240+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/analytics_serving_layer.py took 0.515 seconds
+[2026-01-04T17:37:24.388+0000] {processor.py:161} INFO - Started process (PID=4668) to work on /opt/airflow/dags/analytics_serving_layer.py
+[2026-01-04T17:37:24.390+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/analytics_serving_layer.py for tasks to queue
+[2026-01-04T17:37:24.394+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:37:24.393+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/analytics_serving_layer.py
+[2026-01-04T17:37:24.772+0000] {processor.py:840} INFO - DAG(s) 'analytics_serving_layer' retrieved from /opt/airflow/dags/analytics_serving_layer.py
+[2026-01-04T17:37:24.863+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:37:24.863+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2026-01-04T17:37:24.915+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:37:24.915+0000] {dag.py:3954} INFO - Setting next_dagrun for analytics_serving_layer to 2026-01-04 12:00:00+00:00, run_after=2026-01-04 18:00:00+00:00
+[2026-01-04T17:37:24.939+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/analytics_serving_layer.py took 0.567 seconds

@@ -71,6 +71,7 @@ RUN pip install --upgrade pip &&\
     psycopg2-binary==2.9.9 \
     fastapi==0.109.0 \
     uvicorn==0.27.0 \
-    websockets==12.0
+    websockets==12.0 \
+    google-generativeai
 
 WORKDIR /opt/airflow

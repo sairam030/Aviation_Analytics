@@ -13960,3 +13960,17 @@ ImportError: cannot import name 'create_s3_client' from 'src.batch.minio_utils' 
 [2026-01-04T17:36:20.953+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:20.952+0000] {dag.py:3096} INFO - Sync 1 DAGs
 [2026-01-04T17:36:20.978+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:20.978+0000] {dag.py:3954} INFO - Setting next_dagrun for aviation_states_pipeline to None, run_after=None
 [2026-01-04T17:36:21.004+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/aviation_states_pipeline.py took 0.539 seconds
+[2026-01-04T17:36:51.157+0000] {processor.py:161} INFO - Started process (PID=4631) to work on /opt/airflow/dags/aviation_states_pipeline.py
+[2026-01-04T17:36:51.158+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/aviation_states_pipeline.py for tasks to queue
+[2026-01-04T17:36:51.161+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:51.161+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/aviation_states_pipeline.py
+[2026-01-04T17:36:51.592+0000] {processor.py:840} INFO - DAG(s) 'aviation_states_pipeline' retrieved from /opt/airflow/dags/aviation_states_pipeline.py
+[2026-01-04T17:36:51.630+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:51.630+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2026-01-04T17:36:51.652+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:36:51.651+0000] {dag.py:3954} INFO - Setting next_dagrun for aviation_states_pipeline to None, run_after=None
+[2026-01-04T17:36:51.677+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/aviation_states_pipeline.py took 0.531 seconds
+[2026-01-04T17:37:22.472+0000] {processor.py:161} INFO - Started process (PID=4658) to work on /opt/airflow/dags/aviation_states_pipeline.py
+[2026-01-04T17:37:22.474+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/aviation_states_pipeline.py for tasks to queue
+[2026-01-04T17:37:22.480+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:37:22.478+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/aviation_states_pipeline.py
+[2026-01-04T17:37:23.171+0000] {processor.py:840} INFO - DAG(s) 'aviation_states_pipeline' retrieved from /opt/airflow/dags/aviation_states_pipeline.py
+[2026-01-04T17:37:23.240+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:37:23.240+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2026-01-04T17:37:23.274+0000] {logging_mixin.py:188} INFO - [2026-01-04T17:37:23.274+0000] {dag.py:3954} INFO - Setting next_dagrun for aviation_states_pipeline to None, run_after=None
+[2026-01-04T17:37:23.311+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/aviation_states_pipeline.py took 0.854 seconds
