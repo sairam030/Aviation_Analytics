@@ -410,7 +410,7 @@ services:
       "
     environment:
       # GET YOUR KEY HERE: https://aistudio.google.com/app/apikey
-      GEMINI_API_KEY: "AIzaSyB-Qm4PywFnmGA6pVON4Z5biEzwvww59yI"
+      GEMINI_API_KEY: "[GCP_API_KEY]"
     volumes:
       - ./logs:/opt/airflow/logs:ro  # Read-only access to logs
       - ./src:/opt/airflow/src:ro    # Read-only access to code
